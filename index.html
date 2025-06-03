@@ -1,12 +1,14 @@
-<!DOCTYPE html>
-<html lang="ru">
 <head>
   <meta charset="UTF-8">
+  <!-- 1. Мета-тег для адаптивности -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ФНС – Самодекларация</title>
   <!-- Подключаем шрифт PT Sans -->
   <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700&display=swap&subset=cyrillic" rel="stylesheet">
   <style>
-    /* ========== Базовые стили страницы ========== */
+    /* ===========================================
+       ========== Базовые стили страницы ==========
+       =========================================== */
     body {
       font-family: 'PT Sans', sans-serif;
       margin: 0;
@@ -40,7 +42,9 @@
       pointer-events: none;
     }
 
-    /* ========== Шапка ========== */
+    /* ===========================================
+       ========== Шапка (header) ==========
+       =========================================== */
     header {
       display: flex;
       align-items: center;
@@ -52,6 +56,7 @@
     }
     header img {
       height: 55px;
+      object-fit: contain;
     }
     header .title {
       flex: 1;
@@ -59,9 +64,29 @@
       color: #005294;
       font-size: 20px;
       font-weight: 700;
+      padding: 0 10px;
     }
 
-    /* ========== Навигация ========== */
+    /* При узких экранах (≤600px) меняем шапку: столбиком, уменьшаем логотипы и шрифт */
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        align-items: center;
+        padding: 15px 0;
+      }
+      header img {
+        height: 45px;
+        margin-bottom: 8px;
+      }
+      header .title {
+        font-size: 18px;
+        margin-bottom: 8px;
+      }
+    }
+
+    /* ===========================================
+       ========== Навигация (nav) ==========
+       =========================================== */
     nav {
       background: #005294;
       padding: 10px 0;
@@ -69,6 +94,9 @@
       border-radius: 4px;
       margin-bottom: 25px;
       z-index: 1;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap; /* Позволяет ссылкам переноситься на новую строку */
     }
     nav a {
       color: #fff;
@@ -77,12 +105,28 @@
       font-weight: 600;
       font-size: 14px;
       transition: color 0.2s;
+      white-space: nowrap;
     }
     nav a:hover {
       color: #ffdd57;
     }
 
-    /* ========== Уведомление ========== */
+    /* На очень узких экранах (≤480px) делаем ссылки блочными для удобства нажатия */
+    @media (max-width: 480px) {
+      nav {
+        flex-direction: column;
+        padding: 12px 0;
+      }
+      nav a {
+        display: block;
+        margin: 6px 0;
+        font-size: 16px;
+      }
+    }
+
+    /* ===========================================
+       ========== Уведомление ==========
+       =========================================== */
     #notification {
       background: #fff8e5;
       border-left: 5px solid #f17b35;
@@ -103,7 +147,9 @@
       line-height: 1.5;
     }
 
-    /* ========== Группы полей ========== */
+    /* ===========================================
+       ========== Группы полей ==========
+       =========================================== */
     fieldset.group {
       border: 1px solid #005294;
       border-radius: 5px;
@@ -121,7 +167,9 @@
       width: auto;
     }
 
-    /* ========== Строка формы ========== */
+    /* ===========================================
+       ========== Строка формы (form-row) ==========
+       =========================================== */
     .form-row {
       display: flex;
       flex-wrap: wrap;
@@ -138,6 +186,8 @@
     .form-row .field {
       width: 68%;
     }
+
+    /* При узких экранах (≤767px) формируем строки столбиком */
     @media (max-width: 767px) {
       .form-row {
         display: block;
@@ -146,9 +196,14 @@
       .form-row .field {
         width: 100%;
       }
+      .form-row label {
+        margin-bottom: 6px;
+      }
     }
 
-    /* ========== Поля ввода ========== */
+    /* ===========================================
+       ========== Поля ввода ==========
+       =========================================== */
     .form-row input[type="text"],
     .form-row input[type="number"],
     .form-row textarea {
@@ -171,7 +226,9 @@
       line-height: 1.4;
     }
 
-    /* ========== Блоки валют ========== */
+    /* ===========================================
+       ========== Блоки валют ==========
+       =========================================== */
     .currency-item {
       margin-bottom: 10px;
     }
@@ -185,7 +242,9 @@
       margin-top: 6px;
     }
 
-    /* ========== Кнопки ========== */
+    /* ===========================================
+       ========== Кнопки ==========
+       =========================================== */
     button {
       background: #005294;
       color: #fff;
@@ -208,7 +267,18 @@
       transform: translateY(-1px);
     }
 
-    /* ========== Сообщение об успешной отправке ========== */
+    /* Кнопка full-width на узких экранах (≤600px) */
+    @media (max-width: 600px) {
+      button {
+        width: 100%;
+        padding: 15px 0;
+        font-size: 18px;
+      }
+    }
+
+    /* ===========================================
+       ========== Сообщение об успешной отправке ==========
+       =========================================== */
     #success-message {
       display: none;
       background: #e9f7ef;
@@ -222,7 +292,9 @@
       font-size: 14px;
     }
 
-    /* ========== Подвал ========== */
+    /* ===========================================
+       ========== Подвал (footer) ==========
+       =========================================== */
     footer {
       margin-top: 40px;
       padding-top: 12px;
@@ -243,7 +315,9 @@
       text-decoration: underline;
     }
 
-    /* ========== PDF-контент ========== */
+    /* ===========================================
+       ========== PDF-контент ==========
+       =========================================== */
     #pdfContent {
       display: none;
       background: #fff;
@@ -270,7 +344,9 @@
       display: none;
     }
 
-    /* ========== Шапка PDF ========== */
+    /* ===========================================
+       ========== Шапка PDF ==========
+       =========================================== */
     #pdfHeader {
       text-align: center;
       margin-bottom: 10px;
@@ -302,7 +378,9 @@
       margin: 8px 0 12px;
     }
 
-    /* ========== Таблица с реквизитами (данные формы) ========== */
+    /* ===========================================
+       ========== Таблица с реквизитами (PDF) ==========
+       =========================================== */
     #pdfTable {
       width: 100%;
       border-collapse: collapse;
@@ -324,7 +402,9 @@
       border: 1px solid #000;
     }
 
-    /* ========== Блок с описанием (текстовые абзацы) ========== */
+    /* ===========================================
+       ========== Текстовая часть PDF ==========
+       =========================================== */
     #pdfBody {
       margin: 12px 0;
       font-size: 12px;
@@ -349,7 +429,9 @@
       line-height: 1.2;
     }
 
-    /* ========== Подпись и дата сбоку ========== */
+    /* ===========================================
+       ========== Подпись и дата (PDF) ==========
+       =========================================== */
     #pdfSignature {
       margin-top: 24px;
       font-size: 12px;
@@ -361,7 +443,9 @@
       width: 260px;
     }
 
-    /* ========== Печать (отметка) ========== */
+    /* ===========================================
+       ========== Печать (stamp) ==========
+       =========================================== */
     #pdfStamp {
       position: absolute;
       bottom: 50px;
@@ -369,7 +453,9 @@
       opacity: 0.35;
     }
 
-    /* ========== Подвал PDF ========== */
+    /* ===========================================
+       ========== Подвал PDF ==========
+       =========================================== */
     #pdfFooter {
       position: absolute;
       bottom: 15px;
@@ -381,7 +467,9 @@
       justify-content: space-between;
     }
 
-    /* ========== Стили печати (print) ========== */
+    /* ===========================================
+       ========== Стили печати ==========
+       =========================================== */
     @media print {
       @page {
         margin: 20mm 15mm 20mm 15mm; /* поля A4 */
@@ -408,346 +496,7 @@
         margin: 0;
       }
     }
-
-    /* ========== Кнопка full-width на узких экранах ========== */
-    @media (max-width: 600px) {
-      button {
-        width: 100%;
-        padding: 15px 0;
-        font-size: 18px;
-      }
-    }
   </style>
   <!-- Подключаем html2pdf.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 </head>
-<body>
-  <div class="container">
-    <!-- ========== Шапка страницы ========== -->
-    <header>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Coat_of_Arms_of_the_Russian_Federation.svg/1731px-Coat_of_Arms_of_the_Russian_Federation.svg.png" alt="Герб РФ">
-      <span class="title">ФЕДЕРАЛЬНАЯ НАЛОГОВАЯ СЛУЖБА</span>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Emblem_of_the_Federal_Tax_Service.svg/1964px-Emblem_of_the_Federal_Tax_Service.svg.png" alt="Эмблема ФНС России">
-    </header>
-
-    <!-- ========== Навигация ========== -->
-    <nav>
-      <a href="https://www.nalog.gov.ru/rn77/about_fts/" target="_blank">О ФНС России</a>
-      <a href="https://www.nalog.gov.ru/rn77/menu_act/" target="_blank">Деятельность</a>
-      <a href="https://www.nalog.gov.ru/rn77/about_fts/el_usl/" target="_blank">Услуги</a>
-      <a href="https://www.nalog.gov.ru/rn77/documents/" target="_blank">Документы</a>
-      <a href="https://www.nalog.gov.ru/rn77/contacts/" target="_blank">Контакты</a>
-    </nav>
-
-    <!-- ========== Уведомление ========== -->
-    <div id="notification">
-      <h2>Уведомление от ФСБ России</h2>
-      <p>В ходе совместных мероприятий ФСБ и ФНС у Вас выявлены незадекларированные наличные денежные средства. Просим добровольно подать самодекларацию о данных средствах.</p>
-      <p>Невыполнение этого требования приведет к ответственности согласно Налоговому кодексу РФ.</p>
-    </div>
-
-    <!-- ========== Форма декларации ========== -->
-    <form id="declarationForm">
-      <!-- Регистрационные данные -->
-      <fieldset class="group">
-        <legend>Регистрационные данные</legend>
-        <div class="form-row">
-          <label for="declNum">Номер декларации:</label>
-          <div class="field">
-            <input type="text" id="declNum" name="declNum" readonly>
-          </div>
-        </div>
-        <div class="form-row">
-          <label for="inn">ИНН (при наличии):</label>
-          <div class="field">
-            <input type="text" id="inn" name="inn" placeholder="1234567890">
-          </div>
-        </div>
-      </fieldset>
-
-      <!-- Личные данные -->
-      <fieldset class="group">
-        <legend>Личные данные</legend>
-        <div class="form-row">
-          <label for="fullName">Фамилия, имя, отчество:</label>
-          <div class="field">
-            <input type="text" id="fullName" name="fullName" placeholder="Иванов Иван Иванович" required>
-          </div>
-        </div>
-        <div class="form-row">
-          <label for="birthYear">Год рождения:</label>
-          <div class="field">
-            <input type="number" id="birthYear" name="birthYear" placeholder="1985" required>
-          </div>
-        </div>
-      </fieldset>
-
-      <!-- Суммы наличных средств -->
-      <fieldset class="group">
-        <legend>Суммы наличных средств</legend>
-        <div class="form-row">
-          <label for="amountRub">Рубли:</label>
-          <div class="field">
-            <input type="number" id="amountRub" name="amountRub" min="0" step="any" placeholder="12345.67" required>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <label>Иностранная валюта:</label>
-          <div class="field">
-            <div class="currency-item">
-              <input type="checkbox" id="chkUsd" class="currency-checkbox" name="currencyTypes" value="usd">
-              <label for="chkUsd">USD</label>
-              <div id="blockUsd" class="currency-block">
-                <input type="number" id="amountUsd" name="amountUsd" min="0" step="any" placeholder="Сумма в USD">
-              </div>
-            </div>
-            <div class="currency-item">
-              <input type="checkbox" id="chkEur" class="currency-checkbox" name="currencyTypes" value="eur">
-              <label for="chkEur">EUR</label>
-              <div id="blockEur" class="currency-block">
-                <input type="number" id="amountEur" name="amountEur" min="0" step="any" placeholder="Сумма в EUR">
-              </div>
-            </div>
-            <div class="currency-item">
-              <input type="checkbox" id="chkOther" class="currency-checkbox" name="currencyTypes" value="other">
-              <label for="chkOther">Другая валюта</label>
-              <div id="blockOther" class="currency-block">
-                <input type="text" id="otherCurrencyName" name="otherCurrencyName" placeholder="Например: GBP, JPY" style="margin-bottom: 6px;">
-                <input type="number" id="otherCurrencyAmount" name="otherCurrencyAmount" min="0" step="any" placeholder="Сумма">
-              </div>
-            </div>
-          </div>
-        </div>
-      </fieldset>
-
-      <!-- Источник происхождения средств -->
-      <fieldset class="group">
-        <legend>Источник происхождения средств</legend>
-        <div class="form-row">
-          <label for="source">Источник:</label>
-          <div class="field">
-            <textarea id="source" name="source" rows="3" placeholder="Например: заработная плата, продажа имущества..." required></textarea>
-          </div>
-        </div>
-        <div class="form-row">
-          <label></label>
-          <div class="field">
-            <input type="checkbox" id="agreement" required>
-            <label for="agreement">Согласен с правилами подачи самодекларации и даю согласие на обработку моих данных</label>
-          </div>
-        </div>
-      </fieldset>
-
-      <button type="submit" id="submitBtn" disabled>Отправить самодекларацию</button>
-    </form>
-
-    <div id="success-message">
-      <p><strong>Спасибо!</strong> Ваши данные переданы в Отдел финансовой самодисциплины ФНС России.</p>
-    </div>
-
-    <!-- ========== Подвал страницы ========== -->
-    <footer>
-      <p>ФНС России, 119991, г. Москва, ул. Налоговая, д. 15<br>
-         Тел.: 8-800-222-22-22, E-mail: info@nalog.ru</p>
-      <p><a href="#">Проверить подлинность документа</a></p>
-    </footer>
-  </div>
-
-  <!-- ========== Разметка PDF-контента ========== -->
-  <div id="pdfContent">
-    <!-- Шапка PDF -->
-    <div id="pdfHeader">
-      <div class="hdr-top">Министерство финансов Российской Федерации</div>
-      <div class="hdr-title">ФЕДЕРАЛЬНАЯ НАЛОГОВАЯ СЛУЖБА</div>
-      <div class="hdr-subtitle">САМОДЕКЛАРАЦИЯ О НЕЗАДЕКЛАРИРОВАННЫХ НАЛИЧНЫХ ДЕНЕЖНЫХ СРЕДСТВАХ</div>
-      <div class="hdr-info">
-        Исх. № <span id="pdfDeclNumHeader"></span>  &nbsp;&nbsp;  Дата: <span id="pdfDateHeader"></span><br>
-        Отдел финансовой самодисциплины ФНС России
-      </div>
-      <hr>
-    </div>
-
-    <!-- Таблица с реквизитами формы -->
-    <table id="pdfTable">
-      <tr>
-        <td class="label">Номер декларации:</td>
-        <td class="value"><span id="pdfDeclNumTable"></span></td>
-      </tr>
-      <tr>
-        <td class="label">ИНН (при наличии):</td>
-        <td class="value"><span id="pdfINN"></span></td>
-      </tr>
-      <tr>
-        <td class="label">ФИО:</td>
-        <td class="value"><span id="pdfFullNameTable"></span></td>
-      </tr>
-      <tr>
-        <td class="label">Год рождения:</td>
-        <td class="value"><span id="pdfBirthYearTable"></span></td>
-      </tr>
-    </table>
-
-    <!-- Текстовая часть с описанием остальной информации -->
-    <div id="pdfBody">
-      <p>Настоящим я, <strong><span id="pdfFullNameBody"></span></strong>, <strong><span id="pdfBirthYearBody"></span></strong> года рождения, по состоянию на <strong><span id="pdfDateBody"></span></strong> заявляю о наличии незадекларированных наличных денежных средств, а именно:</p>
-      <ul>
-        <li>В рублях: <strong><span id="pdfRub"></span> руб.</strong></li>
-        <li id="pdfUsdBlock">В долларах США (USD): <strong><span id="pdfUsd"></span> USD</strong></li>
-        <li id="pdfEurBlock">В евро (EUR): <strong><span id="pdfEur"></span> EUR</strong></li>
-        <li id="pdfOtherBlock">В <strong><span id="pdfOtherName"></span></strong>: <strong><span id="pdfOtherAmount"></span></strong> единиц</li>
-      </ul>
-      <p><strong>Источник происхождения средств:</strong> <span id="pdfSource"></span>.</p>
-      <p>
-        <strong>Я осознаю ответственность за предоставление недостоверных сведений, предусмотренную законодательством Российской Федерации,</strong> в том числе ответственность, установленную статьями 198 и 199 Налогового кодекса Российской Федерации, а также возможные административные и уголовные последствия за сокрытие или искажение сведений о денежных средствах. Настоящая самодекларация составлена мною добровольно и в полном объёме, без принуждения, достоверно и полно отражаю все имеющиеся у меня наличные денежные средства. Я подтверждаю, что ознакомлен(а) с правами и обязанностями, предусмотренными законодательством, и обязуюсь предоставить любые дополнительные документы или сведения по запросу ФНС.
-      </p>
-    </div>
-
-    <!-- Блок с подписью и датой -->
-    <div id="pdfSignature">
-      <div>Подпись: <span class="sig-line"></span></div>
-      <div style="margin-top: 8px;">Дата подачи: <strong><span id="pdfDate2"></span></strong></div>
-    </div>
-
-    <!-- Печать ФНС -->
-    <div id="pdfStamp">
-      <img src="seal.png" alt="Печать ФНС" width="130">
-    </div>
-
-    <!-- (При необходимости можно добавить #pdfFooter, если нужен колонтитул) -->
-  </div>
-
-  <!-- ========== Скрипт для работы формы и генерации PDF ========== -->
-  <script>
-    // 1. Генерация случайного номера декларации: XXX-XX-YYYY-NNNNNN
-    function generateDeclNum() {
-      const part1 = String(Math.floor(Math.random() * 900) + 100);     // 100–999
-      const part2 = String(Math.floor(Math.random() * 90) + 10);       // 10–99
-      const year  = new Date().getFullYear();
-      const part4 = String(Math.floor(Math.random() * 900000) + 100000); // 100000–999999
-      return `${part1}-${part2}-${year}-${part4}`;
-    }
-
-    // 2. Показ/скрытие полей для валют
-    function toggleCurrencyBlock(checkboxId, blockId) {
-      const chk = document.getElementById(checkboxId);
-      const block = document.getElementById(blockId);
-      if (chk.checked) {
-        block.style.display = 'block';
-      } else {
-        block.style.display = 'none';
-        block.querySelectorAll('input').forEach(i => i.value = '');
-      }
-    }
-
-    // 3. Форматирование даты в dd.mm.yyyy
-    function formatDate(date) {
-      const d = String(date.getDate()).padStart(2, '0');
-      const m = String(date.getMonth() + 1).padStart(2, '0');
-      const y = date.getFullYear();
-      return `${d}.${m}.${y}`;
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      // 4. Присвоение сгенерированного номера декларации полю declNum
-      document.getElementById('declNum').value = generateDeclNum();
-
-      // 5. Назначаем слушатели на чекбоксы валют
-      document.getElementById('chkUsd').addEventListener('change', () => toggleCurrencyBlock('chkUsd', 'blockUsd'));
-      document.getElementById('chkEur').addEventListener('change', () => toggleCurrencyBlock('chkEur', 'blockEur'));
-      document.getElementById('chkOther').addEventListener('change', () => toggleCurrencyBlock('chkOther', 'blockOther'));
-
-      // 6. Разблокируем кнопку "Отправить" при согласии
-      document.getElementById('agreement').addEventListener('change', function() {
-        document.getElementById('submitBtn').disabled = !this.checked;
-      });
-
-      // 7. Обработка отправки формы
-      document.getElementById('declarationForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        // ----- Считываем значения с формы -----
-        const declNum = document.getElementById('declNum').value;
-        const inn = document.getElementById('inn').value.trim() || '—';
-        const fullName = document.getElementById('fullName').value.trim();
-        const birthYear = document.getElementById('birthYear').value.trim();
-        const amountRub = document.getElementById('amountRub').value;
-        const hasUsd = document.getElementById('chkUsd').checked;
-        const amountUsd = document.getElementById('amountUsd').value;
-        const hasEur = document.getElementById('chkEur').checked;
-        const amountEur = document.getElementById('amountEur').value;
-        const hasOther = document.getElementById('chkOther').checked;
-        const otherName = document.getElementById('otherCurrencyName').value.trim();
-        const otherAmount = document.getElementById('otherCurrencyAmount').value;
-        const source = document.getElementById('source').value.trim();
-        const today = new Date();
-        const formattedDate = formatDate(today);
-
-        // ----- Заполняем шапку PDF -----
-        document.getElementById('pdfDeclNumHeader').textContent = declNum;
-        document.getElementById('pdfDateHeader').textContent = formattedDate;
-
-        // ----- Заполняем таблицу PDF -----
-        document.getElementById('pdfDeclNumTable').textContent = declNum;
-        document.getElementById('pdfINN').textContent = inn;
-        document.getElementById('pdfFullNameTable').textContent = fullName;
-        document.getElementById('pdfBirthYearTable').textContent = birthYear;
-
-        // ----- Заполняем тело PDF -----
-        document.getElementById('pdfFullNameBody').textContent = fullName;
-        document.getElementById('pdfBirthYearBody').textContent = birthYear;
-        document.getElementById('pdfDateBody').textContent = formattedDate;
-        document.getElementById('pdfDate2').textContent = formattedDate;
-
-        // ----- Заполняем суммы -----
-        document.getElementById('pdfRub').textContent = amountRub;
-
-        if (hasUsd && amountUsd) {
-          document.getElementById('pdfUsdBlock').style.display = 'list-item';
-          document.getElementById('pdfUsd').textContent = amountUsd;
-        } else {
-          document.getElementById('pdfUsdBlock').style.display = 'none';
-        }
-
-        if (hasEur && amountEur) {
-          document.getElementById('pdfEurBlock').style.display = 'list-item';
-          document.getElementById('pdfEur').textContent = amountEur;
-        } else {
-          document.getElementById('pdfEurBlock').style.display = 'none';
-        }
-
-        if (hasOther && otherName && otherAmount) {
-          document.getElementById('pdfOtherBlock').style.display = 'list-item';
-          document.getElementById('pdfOtherName').textContent = otherName;
-          document.getElementById('pdfOtherAmount').textContent = otherAmount;
-        } else {
-          document.getElementById('pdfOtherBlock').style.display = 'none';
-        }
-
-        // ----- Источник -----
-        document.getElementById('pdfSource').textContent = source;
-
-        // ----- Показываем PDF-контент, скрываем форму -----
-        const pdfElement = document.getElementById('pdfContent');
-        pdfElement.style.display = 'block';
-
-        // ----- Опции для html2pdf -----
-        const opt = {
-          margin:       [10, 10, 10, 10], // отступы (мм)
-          filename:     'declaration.pdf',
-          image:        { type: 'jpeg', quality: 0.98 },
-          html2canvas:  { scale: 2 },
-          jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        };
-
-        // ----- Генерируем PDF, а затем скрываем PDF-контент и форму, показываем сообщение об успехе -----
-        html2pdf().from(pdfElement).set(opt).save().then(() => {
-          pdfElement.style.display = 'none';
-          document.getElementById('declarationForm').style.display = 'none';
-          document.getElementById('success-message').style.display = 'block';
-        });
-      });
-    });
-  </script>
-</body>
-</html>
