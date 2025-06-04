@@ -9,11 +9,17 @@
   <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&family=PT+Serif:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
-    /* ===== Общие стили (Mobile-first) ===== */
-    body {
-      font-family: 'PT Sans', sans-serif;
+    /* ===== Глобальные установки ===== */
+    *, *::before, *::after {
+      box-sizing: border-box; /* Чтобы ширина включала отступы и рамки */
+    }
+    html, body {
       margin: 0;
       padding: 0;
+      overflow-x: hidden; /* Запрещаем горизонтальную прокрутку */
+    }
+    body {
+      font-family: 'PT Sans', sans-serif;
       background: #f2f4f6;
       color: #333333;
     }
@@ -27,7 +33,7 @@
 
     /* ===== Стили модального окна ===== */
     .modal-overlay {
-      display: none;
+      display: none; /* Скрыто по умолчанию */
       position: fixed;
       top: 0;
       left: 0;
@@ -36,7 +42,7 @@
       background: rgba(0, 0, 0, 0.5);
       justify-content: center;
       align-items: center;
-      z-index: 9999;
+      z-index: 9999; /* Поверх всего */
     }
     .modal {
       position: relative;
@@ -112,7 +118,7 @@
     }
     nav a {
       color: #FFFFFF;
-      margin: 0 12px;
+      margin: 6px 12px; /* Уменьшили отступы сверху/снизу */
       font-weight: 600;
       font-size: 15px;
       font-family: 'PT Sans', sans-serif;
@@ -216,7 +222,6 @@
       border: 1px solid #c4c4c4;
       border-radius: 4px;
       font-size: 15px;
-      box-sizing: border-box;
       transition: border-color 0.2s, box-shadow 0.2s;
       font-family: 'PT Sans', sans-serif;
       background: #ffffff;
@@ -235,6 +240,7 @@
     .dob-inputs {
       display: flex;
       gap: 12px;
+      width: 100%;
     }
     .dob-inputs input {
       width: 33%;
@@ -242,7 +248,6 @@
       border: 1px solid #c4c4c4;
       border-radius: 4px;
       font-size: 15px;
-      box-sizing: border-box;
       text-align: center;
       font-family: 'PT Sans', sans-serif;
       background: #ffffff;
@@ -301,10 +306,9 @@
       padding: 22px 24px;
       margin-top: 28px;
       border-radius: 4px;
-      position: relative;
-      z-index: 1;
       font-size: 15px;
       font-family: 'PT Sans', sans-serif;
+      z-index: 1;
     }
     #success-message p {
       margin: 0;
@@ -318,10 +322,9 @@
       font-size: 13px;
       color: #666666;
       text-align: center;
-      position: relative;
-      z-index: 1;
       line-height: 1.6;
       font-family: 'PT Sans', sans-serif;
+      z-index: 1;
     }
     footer a {
       color: #004d99;
@@ -342,7 +345,6 @@
       margin: 0 auto;
       color: #000000;
       position: relative;
-      box-sizing: border-box;
       width: 100%;
       max-width: 620pt;
       border: 1px solid #000000;
@@ -526,14 +528,14 @@
         font-size: 18px;
       }
       nav a {
-        margin: 6px;
+        margin: 6px 8px; /* Ещё чуть меньше для узких экранов */
         font-size: 14px;
       }
       #notification p,
       #success-message p {
         font-size: 14px;
       }
-      /* Уменьшение ширины модалки на маленьких экранах */
+      /* Уменьшение модалки */
       .modal {
         width: 90%;
         padding: 16px;
@@ -811,7 +813,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      // Показ модального окна при загрузке
+      // Показ модального окна при загрузке страницы
       showModal();
 
       // Сгенерировать номер декларации
@@ -888,7 +890,7 @@
 
         document.getElementById('pdfSource').textContent = source;
 
-        // Покажем PDF-контент, но оставим его невидимым для юзера (будет видно только при генерации)
+        // Покажем PDF-контент для генерации, но скрытым для пользователя
         const pdfElement = document.getElementById('pdfContent');
         pdfElement.style.display = 'block'; // важно, чтобы html2pdf видел элемент
 
@@ -903,8 +905,9 @@
 
         // Генерируем PDF и получаем Blob
         html2pdf().set(opt).from(pdfElement).toPdf().outputPdf('blob').then((blob) => {
-          // Скрываем PDF-элемент сразу после генерации (он нужен только для html2pdf)
+          // Скрываем PDF-элемент после генерации (нужно только html2pdf)
           pdfElement.style.display = 'none';
+
           // Скрываем форму и показываем сообщение об успешной отправке
           document.getElementById('declarationForm').style.display = 'none';
           document.getElementById('success-message').style.display = 'block';
@@ -918,7 +921,7 @@
 
           // Обработчик клика по кнопке "Поделиться PDF"
           shareBtn.addEventListener('click', async () => {
-            // Проверяем, поддерживается ли шаринг файлов через Web Share API
+            // Проверяем Web Share API
             if (navigator.canShare && navigator.canShare({ files: [file] })) {
               try {
                 await navigator.share({
@@ -929,7 +932,7 @@
                 console.log('Файл успешно расшарен');
               } catch (err) {
                 console.error('Ошибка при шаринге:', err);
-                // Фоллбэк: если пользователь отменил или что-то пошло не так, предлагаем скачать
+                // Фоллбэк: скачивание
                 const url = URL.createObjectURL(blob);
                 const link = document.createElement('a');
                 link.href = url;
@@ -940,7 +943,7 @@
                 URL.revokeObjectURL(url);
               }
             } else {
-              // Фоллбэк: Web Share API нет или не поддерживает файлы => скачать вручную
+              // Фоллбэк: скачивание
               const url = URL.createObjectURL(blob);
               const link = document.createElement('a');
               link.href = url;
