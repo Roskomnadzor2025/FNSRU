@@ -2,27 +2,25 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <!-- Адаптивная вёрстка -->
+  <!-- Адаптивная верстка -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ФНС – Самодекларация</title>
   <!-- Официальные шрифты PT Sans и PT Serif -->
   <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&family=PT+Serif:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
-    /* ===========================
-       Общие глобальные установки
-       =========================== */
+    /* ============= Общие настройки ============= */
     *, *::before, *::after {
       box-sizing: border-box;
     }
     html, body {
       margin: 0;
       padding: 0;
-      background: #f2f4f6; /* светло-серый фон всей страницы */
+      background: #f2f4f6;
       color: #333333;
       font-family: 'PT Sans', sans-serif;
       line-height: 1.5;
-      overflow-x: hidden; /* запрещаем горизонтальную прокрутку */
+      overflow-x: hidden;
     }
     a {
       text-decoration: none;
@@ -32,50 +30,39 @@
       color: #ffcc00;
     }
 
-    /* =========================
-       ОБЩАЯ ОБЁРТКА ШАПКИ (header)
-       ========================= */
-    .page-header {
-      background: #FFFFFF;
-      max-width: 960px;
-      margin: 40px auto 0; /* сверху отступ 40px, центрирование */
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      padding: 20px 24px;
-      position: relative;
-      z-index: 10;
-    }
-
-    /* ================
-       ВЕРХНЯЯ ЧАСТЬ ШАПКИ
-       ================ */
-    .top-header {
+    /* ============== ШАПКА ============== */
+    header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      flex-wrap: wrap;
+      background: #FFFFFF;
+      max-width: 960px;
+      margin: 40px auto 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 20px 24px;
     }
-    .top-header img {
+    header img {
       height: 60px;
       object-fit: contain;
+      margin: 0;
     }
-    .top-header .title {
+    header .title {
       flex: 1;
       text-align: center;
       font-family: 'PT Serif', serif;
       font-size: 24px;
       font-weight: 700;
-      color: #0054a6; /* насыщенный синий */
+      color: #0054a6;
       margin: 0 24px;
       white-space: nowrap;
     }
 
-    /* ======================
-       НАВИГАЦИОННАЯ ПАНЕЛЬ
-       ====================== */
+    /* ============== НАВИГАЦИЯ ============== */
     nav {
-      margin-top: 16px;
-      background: #0054a6; /* темно-синий фон */
+      background: #0054a6;
+      max-width: 960px;
+      margin: 16px auto 0;
       border-radius: 8px;
       padding: 10px 0;
       display: flex;
@@ -87,55 +74,46 @@
       margin: 6px 16px;
       font-weight: 600;
       font-size: 15px;
+      font-family: 'PT Sans', sans-serif;
     }
     nav a:hover {
       color: #ffcc00;
     }
 
-    /* ==============================
-       ПОПРАВКИ ДЛЯ МОБИЛЬНЫХ ЭКРАНОВ
-       ============================== */
+    /* ============== АДАПТИВ ДЛЯ МОБИЛЫ ============== */
     @media (max-width: 600px) {
-      .page-header {
-        padding: 16px 12px;
-      }
-      .top-header {
-        flex-direction: column;
+      header {
+        flex-direction: row;
         align-items: center;
-        text-align: center;
+        justify-content: space-between;
+        padding: 6px 12px;
       }
-      .top-header img {
-        height: 50px;
-        margin: 6px 0;
+      header img {
+        height: 40px;
       }
-      .top-header .title {
-        font-size: 20px;
-        margin: 6px 0;
-        white-space: normal;
-        word-break: keep-all;
+      header .title {
+        font-size: 18px;
+        margin: 0 8px;
+        white-space: nowrap;
       }
       nav a {
-        margin: 6px 12px;
+        margin: 6px 8px;
         font-size: 14px;
       }
     }
 
-    /* ===================
-       МОДАЛЬНОЕ ОКНО (modal)
-       =================== */
+    /* ============== МОДАЛЬНОЕ ОКНО ============== */
     .modal-overlay {
-      display: none; /* включается через JS */
+      display: none;
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
       justify-content: center;
       align-items: center;
+      padding: 16px;
       z-index: 9999;
-      overflow-y: auto; /* если контент слишком высокий */
-      padding: 16px;     /* чтобы модалка не «прилипала» к краям экрана */
+      overflow-y: auto;
     }
     .modal {
       position: relative;
@@ -143,10 +121,9 @@
       border-radius: 6px;
       width: 100%;
       max-width: 360px;
-      padding: 36px 16px 16px; /* сверху увеличенный padding, чтобы не пересекался с крестиком */
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      padding: 24px 16px 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
       font-family: 'PT Sans', sans-serif;
-      overflow: hidden;
     }
     .modal h2 {
       margin: 0 0 12px 0;
@@ -173,6 +150,7 @@
       line-height: 1;
       cursor: pointer;
       color: #333333;
+      padding: 4px;
     }
     .close-btn:hover {
       color: #004d99;
@@ -196,17 +174,15 @@
       }
     }
 
-    /* ================================
-       ОСНОВНОЙ КОНТЕЙНЕР (container)
-       ================================ */
+    /* ============== КОНТЕЙНЕР ============== */
     .container {
       width: 100%;
       max-width: 960px;
-      margin: 40px auto 40px; /* отступ под шапкой и над футером */
+      margin: 40px auto 40px;
       background: #FFFFFF;
       padding: 32px 24px 28px;
       border-radius: 6px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       position: relative;
       z-index: 1;
     }
@@ -225,9 +201,7 @@
       pointer-events: none;
     }
 
-    /* ===================
-       УВЕДОМЛЕНИЕ (info-box)
-       =================== */
+    /* ============== УВЕДОМЛЕНИЕ ============== */
     #notification {
       background: #fffde8;
       border-left: 5px solid #f17b35;
@@ -255,9 +229,7 @@
       }
     }
 
-    /* =========================
-       ФОРМА И ПОЛЯ (form-row)
-       ========================= */
+    /* ============== ФОРМА И ПОЛЯ ============== */
     fieldset.group {
       border: 1px solid #004d99;
       border-radius: 5px;
@@ -311,7 +283,7 @@
     .form-row textarea:focus,
     .form-row select:focus {
       border-color: #004d99;
-      box-shadow: 0 0 4px rgba(0, 77, 153, 0.3);
+      box-shadow: 0 0 4px rgba(0,77,153,0.3);
       outline: none;
     }
     .form-row textarea {
@@ -335,7 +307,7 @@
     }
     .dob-inputs input:focus {
       border-color: #004d99;
-      box-shadow: 0 0 4px rgba(0, 77, 153, 0.3);
+      box-shadow: 0 0 4px rgba(0,77,153,0.3);
       outline: none;
     }
     .currency-item {
@@ -385,9 +357,7 @@
       }
     }
 
-    /* ================
-       КНОПКИ (button)
-       ================ */
+    /* ============== КНОПКИ ============== */
     button {
       background: #004d99;
       color: #FFFFFF;
@@ -418,9 +388,7 @@
       }
     }
 
-    /* =========================
-       УСПЕШНОЕ СООБЩЕНИЕ (success)
-       ========================= */
+    /* ============== УСПЕШНОЕ СООБЩЕНИЕ ============== */
     #success-message {
       display: none;
       background: #e9f7ef;
@@ -443,9 +411,7 @@
       }
     }
 
-    /* ===============
-       ПОДВАЛ (footer)
-       =============== */
+    /* ============== ПОДВАЛ ============== */
     footer {
       margin-top: 60px;
       padding-top: 18px;
@@ -472,9 +438,7 @@
       }
     }
 
-    /* ==============================
-       PDF-КОНТЕНТ И ПЕЧАТЬ (@media print)
-       ============================== */
+    /* ============== PDF-КОНТЕНТ И ПЕЧАТЬ (@media print) ============== */
     #pdfContent {
       display: none;
       background: #FFFFFF;
@@ -609,68 +573,48 @@
       opacity: 0.32;
     }
     @media print {
-      @page {
-        margin: 18mm 14mm 18mm 14mm;
-      }
-      body {
-        background: white;
-      }
-      header, nav, #notification, footer, #success-message {
-        display: none !important;
-      }
-      .container {
-        width: 100%;
-        padding: 0;
-        margin: 0;
-        box-shadow: none;
-      }
+      @page { margin: 18mm 14mm 18mm 14mm; }
+      body { background: white; }
+      header, nav, #notification, footer, #success-message { display: none !important; }
+      .container { width: 100%; padding: 0; margin: 0; box-shadow: none; }
       #pdfContent {
         display: block !important;
         margin: 0;
         padding: 0;
         border: none;
       }
-      #pdfContent > * {
-        margin: 0;
-      }
+      #pdfContent > * { margin: 0; }
     }
   </style>
 </head>
 <body>
-  <!-- ============================
-       ШАПКА С НАВИГАЦИОННОЙ ПАНЕЛЬЮ
-       ============================ -->
-  <div class="page-header">
-    <div class="top-header">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Coat_of_Arms_of_the_Russian_Federation.svg/1731px-Coat_of_Arms_of_the_Russian_Federation.svg.png"
-           alt="Герб РФ">
-      <div class="title">ФЕДЕРАЛЬНАЯ НАЛОГОВАЯ СЛУЖБА</div>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Emblem_of_the_Federal_Tax_Service.svg/1964px-Emblem_of_the_Federal_Tax_Service.svg.png"
-           alt="Эмблема ФНС России">
-    </div>
-    <nav>
-      <a href="https://www.nalog.gov.ru/rn77/about_fts/" target="_blank">О ФНС России</a>
-      <a href="https://www.nalog.gov.ru/rn77/documents/" target="_blank">Деятельность</a>
-      <a href="https://www.nalog.gov.ru/rn77/el_usl/" target="_blank">Услуги</a>
-      <a href="https://www.nalog.gov.ru/rn77/documents/" target="_blank">Документы</a>
-      <a href="https://www.nalog.gov.ru/rn77/contacts/" target="_blank">Контакты</a>
-    </nav>
-  </div>
+  <!-- ============== ШАПКА + НАВИГАЦИЯ ============== -->
+  <header>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Coat_of_Arms_of_the_Russian_Federation.svg/1731px-Coat_of_Arms_of_the_Russian_Federation.svg.png"
+         alt="Герб РФ">
+    <div class="title">ФЕДЕРАЛЬНАЯ НАЛОГОВАЯ СЛУЖБА</div>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Emblem_of_the_Federal_Tax_Service.svg/1964px-Emblem_of_the_Federal_Tax_Service.svg.png"
+         alt="Эмблема ФНС России">
+  </header>
 
-  <!-- ================================
-       ОСНОВНОЙ КОНТЕНТ С ФОРМОЙ И УВЕДОМЛЕНИЕМ
-       ================================ -->
+  <nav>
+    <a href="https://www.nalog.gov.ru/rn77/about_fts/" target="_blank">О ФНС России</a>
+    <a href="https://www.nalog.gov.ru/rn77/documents/" target="_blank">Деятельность</a>
+    <a href="https://www.nalog.gov.ru/rn77/el_usl/" target="_blank">Услуги</a>
+    <a href="https://www.nalog.gov.ru/rn77/documents/" target="_blank">Документы</a>
+    <a href="https://www.nalog.gov.ru/rn77/contacts/" target="_blank">Контакты</a>
+  </nav>
+
+  <!-- ============== КОНТЕНТ ============== -->
   <div class="container">
-    <!-- ===== Уведомление на странице (до формы) ===== -->
+    <!-- ===== УВЕДОМЛЕНИЕ ===== -->
     <div id="notification">
       <h2>Информация от ФНС России</h2>
       <p>В соответствии с требованиями раздела III главы 23 Налогового кодекса Российской Федерации просим подать самодекларацию о наличии незадекларированных наличных денежных средств.</p>
       <p>Невыполнение требования влечёт ответственность, предусмотренную статьями 198 и 199 НК РФ, включая возможные штрафные санкции и иные меры.</p>
     </div>
 
-    <!-- ======================
-         ФОРМА САМОДЕКЛАРАЦИИ
-         ====================== -->
+    <!-- ===== ФОРМА САМОДЕКЛАРАЦИИ ===== -->
     <form id="declarationForm">
       <!-- Регистрационные данные -->
       <fieldset class="group">
@@ -738,10 +682,8 @@
               <input type="checkbox" id="chkOther" class="currency-checkbox" name="currencyTypes" value="other">
               <label for="chkOther">Другая валюта</label>
               <div id="blockOther" class="currency-block">
-                <input type="text" id="otherCurrencyName" name="otherCurrencyName"
-                       placeholder="Например: GBP, JPY" style="margin-bottom: 10px;">
-                <input type="number" id="otherCurrencyAmount" name="otherCurrencyAmount" min="0" step="any"
-                       placeholder="Сумма">
+                <input type="text" id="otherCurrencyName" name="otherCurrencyName" placeholder="Например: GBP, JPY" style="margin-bottom: 10px;">
+                <input type="number" id="otherCurrencyAmount" name="otherCurrencyAmount" min="0" step="any" placeholder="Сумма">
               </div>
             </div>
           </div>
@@ -754,8 +696,7 @@
         <div class="form-row">
           <label for="source">Описание источника:</label>
           <div class="field">
-            <textarea id="source" name="source" rows="3"
-                      placeholder="Например: заработная плата, продажа имущества..." required></textarea>
+            <textarea id="source" name="source" rows="3" placeholder="Например: заработная плата, продажа имущества..." required></textarea>
           </div>
         </div>
         <div class="form-row">
@@ -773,14 +714,12 @@
       <button type="button" id="sharePdfButton" style="display:none; margin-top: 16px;">Поделиться PDF</button>
     </form>
 
-    <!-- ============================
-         СООБЩЕНИЕ ОБ УСПЕШНОЙ ОТПРАВКЕ
-         ============================ -->
+    <!-- ============== УСПЕШНОЕ СООБЩЕНИЕ ============== -->
     <div id="success-message">
       <p><strong>Спасибо!</strong> Ваша самодекларация принята к рассмотрению. В случае необходимости мы свяжемся с вами по предоставленным данным.</p>
     </div>
 
-    <!-- ===== ПОДВАЛ ===== -->
+    <!-- ============== ПОДВАЛ ============== -->
     <footer>
       <p>Федеральная налоговая служба РФ, 119991, г. Москва, ул. Налоговая, д. 15<br>
          Телефон: 8 (800) 222-22-22, E-mail: <a href="mailto:info@nalog.ru">info@nalog.ru</a></p>
@@ -788,9 +727,7 @@
     </footer>
   </div>
 
-  <!-- =========================
-       КОНТЕНТ ДЛЯ ГЕНЕРАЦИИ PDF
-       ========================= -->
+  <!-- ============== PDF-КОНТЕНТ ============== -->
   <div id="pdfContent">
     <!-- Шапка PDF -->
     <div id="pdfHeader">
@@ -860,11 +797,11 @@
     // Открытие и закрытие модального окна
     function showModal() {
       document.getElementById('fsbModal').style.display = 'flex';
-      document.body.style.overflow = 'hidden'; // запрет прокрутки фона
+      document.body.style.overflow = 'hidden';
     }
     function closeModal() {
       document.getElementById('fsbModal').style.display = 'none';
-      document.body.style.overflow = ''; // возвращаем прокрутку
+      document.body.style.overflow = '';
     }
 
     // Генерация номера декларации
@@ -876,40 +813,43 @@
       return part1 + '-' + part2 + '-' + year + '-' + part4;
     }
 
-    // Показ модального окна при загрузке
     document.addEventListener('DOMContentLoaded', () => {
+      // Показ модального окна сразу при загрузке
       showModal();
 
-      // Устанавливаем сгенерированный номер в поле
+      // Устанавливаем сгенерированный номер декларации
       document.getElementById('declNum').value = generateDeclNum();
 
-      // Переключение полей иностранной валюты
+      // Обработчики для чекбоксов валют
       document.getElementById('chkUsd').addEventListener('change', () => {
         const block = document.getElementById('blockUsd');
-        if (document.getElementById('chkUsd').checked) block.style.display = 'block';
-        else {
+        if (document.getElementById('chkUsd').checked) {
+          block.style.display = 'block';
+        } else {
           block.style.display = 'none';
           block.querySelectorAll('input').forEach(i => i.value = '');
         }
       });
       document.getElementById('chkEur').addEventListener('change', () => {
         const block = document.getElementById('blockEur');
-        if (document.getElementById('chkEur').checked) block.style.display = 'block';
-        else {
+        if (document.getElementById('chkEur').checked) {
+          block.style.display = 'block';
+        } else {
           block.style.display = 'none';
           block.querySelectorAll('input').forEach(i => i.value = '');
         }
       });
       document.getElementById('chkOther').addEventListener('change', () => {
         const block = document.getElementById('blockOther');
-        if (document.getElementById('chkOther').checked) block.style.display = 'block';
-        else {
+        if (document.getElementById('chkOther').checked) {
+          block.style.display = 'block';
+        } else {
           block.style.display = 'none';
           block.querySelectorAll('input').forEach(i => i.value = '');
         }
       });
 
-      // Включение кнопки «Подать самодекларацию» только при галочке
+      // Включение кнопки «Подать самодекларацию» только при согласии
       document.getElementById('agreement').addEventListener('change', function() {
         document.getElementById('submitBtn').disabled = !this.checked;
       });
@@ -918,142 +858,6 @@
       document.getElementById('declarationForm').addEventListener('submit', function(e) {
         e.preventDefault();
 
-        // Собираем данные из формы
+        // Сбор данных
         const declNum     = document.getElementById('declNum').value;
         const inn         = document.getElementById('inn').value.trim() || '—';
-        const fullName    = document.getElementById('fullName').value.trim();
-        const day         = document.getElementById('birthDay').value.trim().padStart(2, '0');
-        const month       = document.getElementById('birthMonth').value.trim().padStart(2, '0');
-        const year        = document.getElementById('birthYear').value.trim();
-        const birthDate   = day + '.' + month + '.' + year;
-        const amountRub   = document.getElementById('amountRub').value;
-        const hasUsd      = document.getElementById('chkUsd').checked;
-        const amountUsd   = document.getElementById('amountUsd').value;
-        const hasEur      = document.getElementById('chkEur').checked;
-        const amountEur   = document.getElementById('amountEur').value;
-        const hasOther    = document.getElementById('chkOther').checked;
-        const otherName   = document.getElementById('otherCurrencyName').value.trim();
-        const otherAmount = document.getElementById('otherCurrencyAmount').value;
-        const source      = document.getElementById('source').value.trim();
-        const today       = new Date();
-        const formattedDate = (d => {
-          const day   = String(d.getDate()).padStart(2, '0');
-          const mon   = String(d.getMonth()+1).padStart(2, '0');
-          const year  = d.getFullYear();
-          return `${day}.${mon}.${year}`;
-        })(today);
-
-        // Заполняем поля PDF
-        document.getElementById('pdfDeclNumHeader').textContent = declNum;
-        document.getElementById('pdfDateHeader').textContent    = formattedDate;
-        document.getElementById('pdfDeclNumTable').textContent  = declNum;
-        document.getElementById('pdfINN').textContent            = inn;
-        document.getElementById('pdfFullNameTable').textContent  = fullName;
-        document.getElementById('pdfBirthDateTable').textContent = birthDate;
-        document.getElementById('pdfFullNameBody').textContent   = fullName;
-        document.getElementById('pdfBirthDateBody').textContent  = birthDate;
-        document.getElementById('pdfDateBody').textContent       = formattedDate;
-        document.getElementById('pdfDate2').textContent          = formattedDate;
-        document.getElementById('pdfRub').textContent            = amountRub;
-
-        if (hasUsd && amountUsd) {
-          document.getElementById('pdfUsdBlock').style.display = 'list-item';
-          document.getElementById('pdfUsd').textContent       = amountUsd;
-        } else {
-          document.getElementById('pdfUsdBlock').style.display = 'none';
-        }
-        if (hasEur && amountEur) {
-          document.getElementById('pdfEurBlock').style.display = 'list-item';
-          document.getElementById('pdfEur').textContent       = amountEur;
-        } else {
-          document.getElementById('pdfEurBlock').style.display = 'none';
-        }
-        if (hasOther && otherName && otherAmount) {
-          document.getElementById('pdfOtherBlock').style.display  = 'list-item';
-          document.getElementById('pdfOtherName').textContent     = otherName;
-          document.getElementById('pdfOtherAmount').textContent   = otherAmount;
-        } else {
-          document.getElementById('pdfOtherBlock').style.display = 'none';
-        }
-        document.getElementById('pdfSource').textContent = source;
-
-        // Показываем скрытый блок PDF (для html2pdf)
-        const pdfElement = document.getElementById('pdfContent');
-        pdfElement.style.display = 'block';
-
-        // Опции для html2pdf.js
-        const opt = {
-          margin:       [10, 10, 10, 10], // в мм
-          filename:     'declaration.pdf',
-          image:        { type: 'jpeg', quality: 0.98 },
-          html2canvas:  { scale: 2, useCORS: true },
-          jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        };
-
-        // Генерируем PDF и получаем Blob
-        html2pdf().set(opt).from(pdfElement).toPdf().outputPdf('blob').then((blob) => {
-          // Скрываем PDF-контент сразу после генерации
-          pdfElement.style.display = 'none';
-          // Скрываем форму и показываем сообщение об успешной отправке
-          document.getElementById('declarationForm').style.display  = 'none';
-          document.getElementById('success-message').style.display = 'block';
-
-          // Создаём файл из Blob для Web Share API или скачивания
-          const file = new File([blob], 'declaration.pdf', { type: 'application/pdf' });
-
-          // Показываем кнопку «Поделиться PDF»
-          const shareBtn = document.getElementById('sharePdfButton');
-          shareBtn.style.display = 'inline-block';
-
-          shareBtn.addEventListener('click', async () => {
-            // Если доступна API Web Share с файлами
-            if (navigator.canShare && navigator.canShare({ files: [file] })) {
-              try {
-                await navigator.share({
-                  files: [file],
-                  title: 'Самодекларация ФНС',
-                  text: 'Смотрите вложенный PDF-файл декларации.'
-                });
-              } catch (err) {
-                console.error('Ошибка шаринга:', err);
-                // Фоллбэк: скачиваем файл
-                const url = URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = 'declaration.pdf';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                URL.revokeObjectURL(url);
-              }
-            } else {
-              // Фоллбэк: скачиваем файл
-              const url = URL.createObjectURL(blob);
-              const link = document.createElement('a');
-              link.href = url;
-              link.download = 'declaration.pdf';
-              document.body.appendChild(link);
-              link.click();
-              document.body.removeChild(link);
-              URL.revokeObjectURL(url);
-            }
-          });
-        });
-      });
-    });
-  </script>
-
-  <!-- =========================
-       МОДАЛЬНОЕ ОКНО С УВЕДОМЛЕНИЕМ
-       ========================= -->
-  <div id="fsbModal" class="modal-overlay">
-    <div class="modal">
-      <button class="close-btn" onclick="closeModal()">✕</button>
-      <h2>Уведомление ФНС России</h2>
-      <p>Уважаемый налогоплательщик!<br>
-         Просим вас ознакомиться с порядком заполнения самодекларации о незадекларированных наличных денежных средствах на официальном сайте Федеральной налоговой службы РФ.</p>
-      <p>Документ содержит сведения об ответственности за непредоставление или несвоевременное предоставление самодекларации в установленные законодательством сроки.</p>
-    </div>
-  </div>
-</body>
-</html>
