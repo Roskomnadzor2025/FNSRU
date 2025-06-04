@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&family=PT+Serif:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
-    /* ===== Общие стили (Mobile-first) ===== */
+    /* ===== Основные стили (Mobile-first) ===== */
     body {
       font-family: 'PT Sans', sans-serif;
       margin: 0;
@@ -28,6 +28,7 @@
     /* ===== Шапка сайта ===== */
     header {
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
       background: #FFFFFF;
@@ -39,15 +40,17 @@
       height: 60px;
       object-fit: contain;
       margin: 0 12px;
+      flex-shrink: 0;
     }
     header .title {
-      flex: 1;
+      flex: 1 1 100%;
       text-align: center;
       color: #002b5c;
       font-family: 'PT Serif', serif;
       font-size: 24px;
       font-weight: 700;
       padding: 0 12px;
+      word-break: break-word;
     }
 
     /* ===== Навигация ===== */
@@ -68,10 +71,14 @@
       color: #FFFFFF;
       margin: 0 12px;
       font-weight: 600;
-      font-size: 15px;
+      font-size: 16px;
       font-family: 'PT Sans', sans-serif;
+      padding: 6px 8px;
+      border-radius: 3px;
+      transition: background 0.2s, color 0.2s;
     }
     nav a:hover {
+      background: #003366;
       color: #ffcc00;
     }
 
@@ -151,7 +158,7 @@
     }
     .form-row label {
       width: 32%;
-      min-width: 140px;
+      min-width: 120px;
       line-height: 1.4;
       font-weight: 600;
       font-size: 15px;
@@ -159,21 +166,22 @@
       font-family: 'PT Sans', sans-serif;
     }
     .form-row .field {
-      width: 66%;
+      width: 68%;
     }
     .form-row input[type="text"],
     .form-row input[type="number"],
     .form-row textarea,
     .form-row select {
       width: 100%;
-      padding: 12px 14px;
+      padding: 14px 16px;
       border: 1px solid #c4c4c4;
       border-radius: 4px;
-      font-size: 15px;
+      font-size: 16px;
       box-sizing: border-box;
       transition: border-color 0.2s, box-shadow 0.2s;
       font-family: 'PT Sans', sans-serif;
       background: #ffffff;
+      min-height: 44px;
     }
     .form-row input:focus,
     .form-row textarea:focus,
@@ -200,11 +208,7 @@
       text-align: center;
       font-family: 'PT Sans', sans-serif;
       background: #ffffff;
-    }
-    .dob-inputs input:focus {
-      border-color: #004d99;
-      box-shadow: 0 0 4px rgba(0, 77, 153, 0.3);
-      outline: none;
+      min-height: 44px;
     }
     .currency-item {
       margin-bottom: 14px;
@@ -233,6 +237,7 @@
       border-radius: 4px;
       cursor: pointer;
       margin-top: 16px;
+      margin-bottom: 8px;
       transition: background 0.2s, transform 0.1s;
       font-family: 'PT Sans', sans-serif;
       z-index: 1;
@@ -421,7 +426,54 @@
       right: 48px;
       opacity: 0.32;
     }
-    /* Печать */
+
+    /* ===== Модальное окно ===== */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    .modal {
+      background: #ffffff;
+      border-radius: 6px;
+      max-width: 500px;
+      width: 90%;
+      padding: 24px 20px;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      font-family: 'PT Sans', sans-serif;
+      color: #333;
+    }
+    .close-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: transparent;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: #666;
+    }
+    .modal h2 {
+      margin-top: 0;
+      font-family: 'PT Serif', serif;
+      font-size: 20px;
+      color: #002b5c;
+    }
+    .modal p {
+      font-size: 15px;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    /* ===== Печать (print) ===== */
     @media print {
       @page {
         margin: 18mm 14mm 18mm 14mm;
@@ -449,7 +501,7 @@
       }
     }
 
-    /* ===== Медиазапросы для экранов ≤767px и ≤600px ===== */
+    /* ===== Медиазапросы для планшетов и телефонов ===== */
     @media (max-width: 767px) {
       .form-row {
         display: block;
@@ -462,30 +514,90 @@
         margin-bottom: 8px;
       }
     }
+
     @media (max-width: 600px) {
+      /* Шапка */
       header {
+        flex-direction: column;
         padding: 8px 0;
       }
       header img {
         height: 45px;
-        margin: 0 8px;
+        margin: 6px 0;
       }
       header .title {
         font-size: 20px;
         padding: 0 6px;
+        margin-top: 4px;
       }
+
+      /* Навигация */
+      nav a {
+        margin: 6px;
+        font-size: 15px;
+        padding: 8px 12px;
+      }
+
+      /* Контейнер */
+      .container {
+        width: 96%;
+        padding: 20px 16px 16px;
+        margin-bottom: 20px;
+      }
+
+      /* Кнопки */
       button {
         width: 100%;
         padding: 18px 0;
         font-size: 18px;
+        margin-bottom: 12px;
       }
-      nav a {
-        margin: 6px;
-        font-size: 14px;
-      }
+
+      /* Уменьшаем шрифт в уведомлениях и success-message */
       #notification p,
       #success-message p {
         font-size: 14px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      /* Навигация в колонку */
+      nav {
+        flex-direction: column;
+        padding: 10px 0;
+      }
+      nav a {
+        display: block;
+        width: 100%;
+        margin: 4px 0;
+        text-align: center;
+      }
+
+      /* Дата рождения: поля в колонку */
+      .dob-inputs {
+        flex-direction: column;
+      }
+      .dob-inputs input {
+        width: 100%;
+        margin-bottom: 8px;
+      }
+
+      /* Модальное окно */
+      .modal {
+        padding: 18px 12px;
+        max-width: 95%;
+      }
+      .modal h2 {
+        font-size: 18px;
+      }
+      .modal p {
+        font-size: 14px;
+        line-height: 1.4;
+      }
+      .close-btn {
+        top: 8px;
+        right: 8px;
+        font-size: 18px;
       }
     }
   </style>
@@ -511,11 +623,11 @@
   <div class="container">
     <!-- ===== Шапка ===== -->
     <header>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Coat_of_Arms_of_the_Russian_Federation.svg/1731px-Coat_of_Arms_of_the_Russian_Federation.svg.png"
-           alt="Герб РФ">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Coat_of_Arms_of_the_Russian_Federation.svg/150px-Coat_of_Arms_of_the_Russian_Federation.svg.png"
+           alt="Герб РФ" loading="eager">
       <span class="title">ФЕДЕРАЛЬНАЯ НАЛОГОВАЯ СЛУЖБА</span>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Emblem_of_the_Federal_Tax_Service.svg/1964px-Emblem_of_the_Federal_Tax_Service.svg.png"
-           alt="Эмблема ФНС России">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Emblem_of_the_Federal_Tax_Service.svg/150px-Emblem_of_the_Federal_Tax_Service.svg.png"
+           alt="Эмблема ФНС России" loading="eager">
     </header>
 
     <!-- ===== Навигация ===== -->
@@ -634,7 +746,7 @@
       <!-- Кнопка отправки -->
       <button type="submit" id="submitBtn" disabled>Подать самодекларацию</button>
       <!-- Кнопка «Поделиться PDF» (скрыта, пока PDF не сгенерирован) -->
-      <button type="button" id="sharePdfButton" style="display:none; margin-left:10px;">Поделиться PDF</button>
+      <button type="button" id="sharePdfButton" style="display:none;">Поделиться PDF</button>
     </form>
 
     <!-- ===== Сообщение об успешной отправке ===== -->
@@ -832,16 +944,16 @@
 
         // Опции для html2pdf.js
         const opt = {
-          margin:       [10, 10, 10, 10], // отступы в мм
+          margin:       [10, 10, 10, 10],
           filename:     'declaration.pdf',
           image:        { type: 'jpeg', quality: 0.98 },
           html2canvas:  { scale: 2, useCORS: true },
           jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
 
-        // Генерируем PDF и получаем Blob (outputPdf('blob')) :contentReference[oaicite:2]{index=2}
+        // Генерируем PDF и получаем Blob
         html2pdf().set(opt).from(pdfElement).toPdf().outputPdf('blob').then((blob) => {
-          // Скрываем PDF-элемент сразу после генерации (он нужен только для html2pdf)
+          // Скрываем PDF-элемент сразу после генерации
           pdfElement.style.display = 'none';
           // Скрываем форму и показываем сообщение об успешной отправке
           document.getElementById('declarationForm').style.display = 'none';
@@ -856,7 +968,6 @@
 
           // Обработчик клика по кнопке "Поделиться PDF"
           shareBtn.addEventListener('click', async () => {
-            // Проверяем, поддерживается ли шаринг файлов через Web Share API
             if (navigator.canShare && navigator.canShare({ files: [file] })) {
               try {
                 await navigator.share({
@@ -864,10 +975,7 @@
                   title: 'Самодекларация ФНС',
                   text: 'Смотрите вложенный PDF-файл декларации.'
                 });
-                console.log('Файл успешно расшарен');
               } catch (err) {
-                console.error('Ошибка при шаринге:', err);
-                // Фоллбэк: если пользователь отменил или что-то пошло не так, предлагаем скачать
                 const url = URL.createObjectURL(blob);
                 const link = document.createElement('a');
                 link.href = url;
@@ -878,7 +986,6 @@
                 URL.revokeObjectURL(url);
               }
             } else {
-              // Фоллбэк: Web Share API нет или не поддерживает файлы => скачать вручную
               const url = URL.createObjectURL(blob);
               const link = document.createElement('a');
               link.href = url;
