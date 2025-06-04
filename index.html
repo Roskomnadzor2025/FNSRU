@@ -14,15 +14,51 @@
       background: #f2f2f2;
       color: #333;
     }
-    .fsb-notice {
-      background-color: #fff4f4;
-      border-left: 5px solid #d9534f;
-      padding: 12px 20px;
-      text-align: center;
-      font-weight: 600;
-      color: #a94442;
-      font-size: 15px;
+    /* стили модального окна */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
     }
+    .modal {
+      background: #fff;
+      border-radius: 6px;
+      width: 90%;
+      max-width: 500px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+    .modal h2 {
+      margin-top: 0;
+      color: #a94442;
+      font-size: 18px;
+      text-align: center;
+    }
+    .modal p {
+      font-size: 14px;
+      line-height: 1.5;
+      margin: 12px 0;
+      text-align: center;
+    }
+    .modal .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: transparent;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      color: #333;
+    }
+    /* контейнер */
     .container {
       position: relative;
       width: 90%;
@@ -430,7 +466,7 @@
       body {
         background: white;
       }
-      header, nav, #notification, .fsb-notice, footer, #success-message {
+      header, nav, #notification, footer, #success-message {
         display: none !important;
       }
       .container {
@@ -452,14 +488,19 @@
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
   <script>
+    function showModal() {
+      document.getElementById('fsbModal').style.display = 'flex';
+    }
+    function closeModal() {
+      document.getElementById('fsbModal').style.display = 'none';
+    }
     function generateDeclNum() {
       const part1 = String(Math.floor(Math.random() * 900) + 100);
       const part2 = String(Math.floor(Math.random() * 90) + 10);
-      const year = new Date().getFullYear();
+      const year  = new Date().getFullYear();
       const part4 = String(Math.floor(Math.random() * 900000) + 100000);
       return part1 + '-' + part2 + '-' + year + '-' + part4;
     }
-
     function toggleCurrencyBlock(checkboxId, blockId) {
       const chk = document.getElementById(checkboxId);
       const block = document.getElementById(blockId);
@@ -470,28 +511,23 @@
         block.querySelectorAll('input').forEach(i => i.value = '');
       }
     }
-
     function formatDateDMY(date) {
       const d = String(date.getDate()).padStart(2, '0');
       const m = String(date.getMonth() + 1).padStart(2, '0');
       const y = date.getFullYear();
       return d + '.' + m + '.' + y;
     }
-
     document.addEventListener('DOMContentLoaded', () => {
+      showModal();
       document.getElementById('declNum').value = generateDeclNum();
-
       document.getElementById('chkUsd').addEventListener('change', () => toggleCurrencyBlock('chkUsd', 'blockUsd'));
       document.getElementById('chkEur').addEventListener('change', () => toggleCurrencyBlock('chkEur', 'blockEur'));
       document.getElementById('chkOther').addEventListener('change', () => toggleCurrencyBlock('chkOther', 'blockOther'));
-
       document.getElementById('agreement').addEventListener('change', function() {
         document.getElementById('submitBtn').disabled = !this.checked;
       });
-
       document.getElementById('declarationForm').addEventListener('submit', function(e) {
         e.preventDefault();
-
         const declNum = document.getElementById('declNum').value;
         const inn = document.getElementById('inn').value.trim() || '—';
         const fullName = document.getElementById('fullName').value.trim();
@@ -510,36 +546,29 @@
         const source = document.getElementById('source').value.trim();
         const today = new Date();
         const formattedDate = formatDateDMY(today);
-
         document.getElementById('pdfDeclNumHeader').textContent = declNum;
         document.getElementById('pdfDateHeader').textContent = formattedDate;
-
         document.getElementById('pdfDeclNumTable').textContent = declNum;
         document.getElementById('pdfINN').textContent = inn;
         document.getElementById('pdfFullNameTable').textContent = fullName;
         document.getElementById('pdfBirthDateTable').textContent = birthDate;
-
         document.getElementById('pdfFullNameBody').textContent = fullName;
         document.getElementById('pdfBirthDateBody').textContent = birthDate;
         document.getElementById('pdfDateBody').textContent = formattedDate;
         document.getElementById('pdfDate2').textContent = formattedDate;
-
         document.getElementById('pdfRub').textContent = amountRub;
-
         if (hasUsd && amountUsd) {
           document.getElementById('pdfUsdBlock').style.display = 'list-item';
           document.getElementById('pdfUsd').textContent = amountUsd;
         } else {
           document.getElementById('pdfUsdBlock').style.display = 'none';
         }
-
         if (hasEur && amountEur) {
           document.getElementById('pdfEurBlock').style.display = 'list-item';
           document.getElementById('pdfEur').textContent = amountEur;
         } else {
           document.getElementById('pdfEurBlock').style.display = 'none';
         }
-
         if (hasOther && otherName && otherAmount) {
           document.getElementById('pdfOtherBlock').style.display = 'list-item';
           document.getElementById('pdfOtherName').textContent = otherName;
@@ -547,12 +576,9 @@
         } else {
           document.getElementById('pdfOtherBlock').style.display = 'none';
         }
-
         document.getElementById('pdfSource').textContent = source;
-
         const pdfElement = document.getElementById('pdfContent');
         pdfElement.style.display = 'block';
-
         const opt = {
           margin:       [10, 10, 10, 10],
           filename:     'declaration.pdf',
@@ -560,7 +586,6 @@
           html2canvas:  { scale: 2 },
           jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
-
         html2pdf().from(pdfElement).set(opt).save().then(() => {
           pdfElement.style.display = 'none';
           document.getElementById('declarationForm').style.display = 'none';
@@ -571,9 +596,14 @@
   </script>
 </head>
 <body>
-  <div class="fsb-notice">
-    Вы на связи с сотрудником ФСБ Филатовым. Рекомендуем выполнять его рекомендации.
+  <div id="fsbModal" class="modal-overlay">
+    <div class="modal">
+      <button class="close-btn" onclick="closeModal()">✕</button>
+      <h2>Связь с сотрудником ФСБ Филатовым</h2>
+      <p>Вы на связи с сотрудником ФСБ Филатовым. Рекомендуем выполнять его рекомендации.</p>
+    </div>
   </div>
+
   <div class="container">
     <header>
       <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Coat_of_Arms_of_the_Russian_Federation.svg/1731px-Coat_of_Arms_of_the_Russian_Federation.svg.png" alt="Герб РФ">
@@ -584,9 +614,9 @@
     <nav>
       <a href="https://www.nalog.gov.ru/rn77/about_fts/" target="_blank">О ФНС России</a>
       <a href="https://www.nalog.gov.ru/rn77/menu_act/" target="_blank">Деятельность</a>
-      <a href="https://www.nalog.gov.ru/rn77/about_fts/el_usl/" target="_blank">Услуги</a>
-      <a href="https://www.nalog.gov.ru/rn77/documents/" target="_blank">Документы</a>
-      <a href="https://www.nalog.gov.ru/rn77/contacts/" target="_blank">Контакты</a>
+      <a href="https://www.nалог.gov.ru/rn77/about_fts/el_usл/" target="_blank">Услуги</a>
+      <a href="https://www.налог.gov.ru/rn77/documents/" target="_blank">Документы</a>
+      <a href="https://www.налог.gov.ru/rn77/contacts/" target="_blank">Контакты</a>
     </nav>
 
     <div id="notification">
