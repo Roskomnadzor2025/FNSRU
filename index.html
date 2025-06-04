@@ -18,13 +18,11 @@
     html, body {
       margin: 0;
       padding: 0;
-      overflow-x: hidden; /* Запрет горизонтальной прокрутки */
-    }
-    body {
-      font-family: 'PT Sans', sans-serif;
-      background: #f2f4f6;
+      background: #f2f4f6; /* светло-серый фон всей страницы */
       color: #333333;
+      font-family: 'PT Sans', sans-serif;
       line-height: 1.5;
+      overflow-x: hidden; /* запрещаем горизонтальную прокрутку */
     }
     a {
       text-decoration: none;
@@ -34,86 +32,97 @@
       color: #ffcc00;
     }
 
-    /* ================
-       ШАПКА (header)
-       ================ */
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    /* =========================
+       ОБЩАЯ ОБЁРТКА ШАПКИ (header)
+       ========================= */
+    .page-header {
       background: #FFFFFF;
-      padding: 8px 16px;
-      border-bottom: 2px solid #e0e0e0;
+      max-width: 960px;
+      margin: 40px auto 0; /* сверху отступ 40px, центрирование */
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px 24px;
       position: relative;
       z-index: 10;
     }
-    /* Логотипы в шапке */
-    header img {
-      height: 50px;
-      max-height: 50px;
+
+    /* ================
+       ВЕРХНЯЯ ЧАСТЬ ШАПКИ
+       ================ */
+    .top-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .top-header img {
+      height: 60px;
       object-fit: contain;
     }
-    header .title {
+    .top-header .title {
       flex: 1;
       text-align: center;
-      color: #002b5c;
       font-family: 'PT Serif', serif;
-      font-size: 22px;
+      font-size: 24px;
       font-weight: 700;
-      margin: 0 8px;
+      color: #0054a6; /* насыщенный синий */
+      margin: 0 24px;
       white-space: nowrap;
-    }
-    /* На телефоне уменьшаем заголовок */
-    @media (max-width: 600px) {
-      header {
-        padding: 6px 12px;
-      }
-      header img {
-        height: 40px;
-        max-height: 40px;
-      }
-      header .title {
-        font-size: 18px;
-        margin: 0 4px;
-      }
     }
 
     /* ======================
-       НАВИГАЦИЯ (nav-бар)
+       НАВИГАЦИОННАЯ ПАНЕЛЬ
        ====================== */
     nav {
-      background: #004d99;
-      padding: 12px 0;
-      text-align: center;
-      border-radius: 4px;
-      margin: 20px auto;
-      width: 100%;
-      max-width: 960px; /* центрирование по аналогии с контейнером */
+      margin-top: 16px;
+      background: #0054a6; /* темно-синий фон */
+      border-radius: 8px;
+      padding: 10px 0;
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      z-index: 5;
     }
     nav a {
       color: #FFFFFF;
-      margin: 6px 12px;
+      margin: 6px 16px;
       font-weight: 600;
       font-size: 15px;
-      font-family: 'PT Sans', sans-serif;
     }
     nav a:hover {
       color: #ffcc00;
     }
+
+    /* ==============================
+       ПОПРАВКИ ДЛЯ МОБИЛЬНЫХ ЭКРАНОВ
+       ============================== */
     @media (max-width: 600px) {
+      .page-header {
+        padding: 16px 12px;
+      }
+      .top-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .top-header img {
+        height: 50px;
+        margin: 6px 0;
+      }
+      .top-header .title {
+        font-size: 20px;
+        margin: 6px 0;
+        white-space: normal;
+        word-break: keep-all;
+      }
       nav a {
-        margin: 6px 8px;
+        margin: 6px 12px;
         font-size: 14px;
       }
     }
 
-    /* =========================
+    /* ===================
        МОДАЛЬНОЕ ОКНО (modal)
-       ========================= */
+       =================== */
     .modal-overlay {
       display: none; /* включается через JS */
       position: fixed;
@@ -125,8 +134,8 @@
       justify-content: center;
       align-items: center;
       z-index: 9999;
-      overflow-y: auto; /* если контент будет слишком высоким */
-      padding: 16px;     /* отступ, чтобы не «прилепало» к краям */
+      overflow-y: auto; /* если контент слишком высокий */
+      padding: 16px;     /* чтобы модалка не «прилипала» к краям экрана */
     }
     .modal {
       position: relative;
@@ -134,13 +143,11 @@
       border-radius: 6px;
       width: 100%;
       max-width: 360px;
-      padding: 24px 16px 16px; /* сверху чуть больше, снизу — стандарт */
+      padding: 36px 16px 16px; /* сверху увеличенный padding, чтобы не пересекался с крестиком */
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
       font-family: 'PT Sans', sans-serif;
       overflow: hidden;
-      z-index: 2;
     }
-    /* Заголовок модалки */
     .modal h2 {
       margin: 0 0 12px 0;
       font-family: 'PT Serif', serif;
@@ -149,7 +156,6 @@
       text-align: center;
       line-height: 1.2;
     }
-    /* Параграфы внутри */
     .modal p {
       margin: 8px 0;
       font-size: 15px;
@@ -157,7 +163,6 @@
       text-align: left;
       line-height: 1.5;
     }
-    /* Кнопка «×» */
     .close-btn {
       position: absolute;
       top: 8px;
@@ -174,18 +179,20 @@
     }
     @media (max-width: 600px) {
       .modal {
-        padding: 20px 12px 12px;
+        padding-top: 32px;
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+      .close-btn {
+        top: 6px;
+        right: 6px;
+        font-size: 18px;
       }
       .modal h2 {
         font-size: 18px;
       }
       .modal p {
         font-size: 14px;
-      }
-      .close-btn {
-        font-size: 18px;
-        top: 6px;
-        right: 6px;
       }
     }
 
@@ -195,9 +202,9 @@
     .container {
       width: 100%;
       max-width: 960px;
-      margin: 80px auto 40px; /* сверху отступ, чтобы не перекрыть шапку */
+      margin: 40px auto 40px; /* отступ под шапкой и над футером */
       background: #FFFFFF;
-      padding: 32px 24px 28px; /* добавил чуть больший внутренний отступ по бокам */
+      padding: 32px 24px 28px;
       border-radius: 6px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       position: relative;
@@ -224,7 +231,7 @@
     #notification {
       background: #fffde8;
       border-left: 5px solid #f17b35;
-      padding: 20px 20px; /* выровнял внутренние отступы */
+      padding: 20px 22px;
       margin-bottom: 34px;
       border-radius: 4px;
       z-index: 1;
@@ -254,7 +261,7 @@
     fieldset.group {
       border: 1px solid #004d99;
       border-radius: 5px;
-      padding: 20px 24px; /* чуть подправил, чтобы не врезалось в бок */
+      padding: 20px 24px;
       margin-bottom: 34px;
       background: #f9fafb;
       position: relative;
@@ -285,7 +292,7 @@
       font-family: 'PT Sans', sans-serif;
     }
     .form-row .field {
-      width: 68%; /* чтобы вместе с label занимало ~100% */
+      width: 68%;
     }
     .form-row input[type="text"],
     .form-row input[type="number"],
@@ -346,8 +353,6 @@
     .currency-block input {
       width: 100%;
     }
-
-    /* Мобильное представление формы: метка и поле друг под другом */
     @media (max-width: 767px) {
       .form-row {
         display: block;
@@ -632,38 +637,29 @@
   </style>
 </head>
 <body>
-  <!-- ================================
-       МОДАЛЬНОЕ ОКНО С УВЕДОМЛЕНИЕМ
-       ================================ -->
-  <div id="fsbModal" class="modal-overlay">
-    <div class="modal">
-      <button class="close-btn" onclick="closeModal()">✕</button>
-      <h2>Уведомление ФНС России</h2>
-      <p>Уважаемый налогоплательщик!<br>
-         Просим вас ознакомиться с порядком заполнения самодекларации о незадекларированных наличных денежных средствах на официальном сайте Федеральной налоговой службы РФ.</p>
-      <p>Документ содержит сведения об ответственности за непредоставление или несвоевременное предоставление самодекларации в установленные законодательством сроки.</p>
+  <!-- ============================
+       ШАПКА С НАВИГАЦИОННОЙ ПАНЕЛЬЮ
+       ============================ -->
+  <div class="page-header">
+    <div class="top-header">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Coat_of_Arms_of_the_Russian_Federation.svg/1731px-Coat_of_Arms_of_the_Russian_Federation.svg.png"
+           alt="Герб РФ">
+      <div class="title">ФЕДЕРАЛЬНАЯ НАЛОГОВАЯ СЛУЖБА</div>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Emblem_of_the_Federal_Tax_Service.svg/1964px-Emblem_of_the_Federal_Tax_Service.svg.png"
+           alt="Эмблема ФНС России">
     </div>
+    <nav>
+      <a href="https://www.nalog.gov.ru/rn77/about_fts/" target="_blank">О ФНС России</a>
+      <a href="https://www.nalog.gov.ru/rn77/documents/" target="_blank">Деятельность</a>
+      <a href="https://www.nalog.gov.ru/rn77/el_usl/" target="_blank">Услуги</a>
+      <a href="https://www.nalog.gov.ru/rn77/documents/" target="_blank">Документы</a>
+      <a href="https://www.nalog.gov.ru/rn77/contacts/" target="_blank">Контакты</a>
+    </nav>
   </div>
 
-  <!-- =================
-       КОНТЕНТ СТРАНИЦЫ
-       ================= -->
-  <header>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Coat_of_Arms_of_the_Russian_Federation.svg/1731px-Coat_of_Arms_of_the_Russian_Federation.svg.png"
-         alt="Герб РФ">
-    <span class="title">ФЕДЕРАЛЬНАЯ НАЛОГОВАЯ СЛУЖБА</span>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Emblem_of_the_Federal_Tax_Service.svg/1964px-Emblem_of_the_Federal_Tax_Service.svg.png"
-         alt="Эмблема ФНС России">
-  </header>
-
-  <nav>
-    <a href="https://www.nalog.gov.ru/rn77/about_fts/" target="_blank">О ведомстве</a>
-    <a href="https://www.nalog.gov.ru/rn77/documents/" target="_blank">Нормативные правовые акты</a>
-    <a href="https://www.nalog.gov.ru/rn77/el_usl/" target="_blank">Электронные услуги</a>
-    <a href="https://www.nalog.gov.ru/rn77/documents/" target="_blank">Документы</a>
-    <a href="https://www.nalog.gov.ru/rn77/contacts/" target="_blank">Контакты</a>
-  </nav>
-
+  <!-- ================================
+       ОСНОВНОЙ КОНТЕНТ С ФОРМОЙ И УВЕДОМЛЕНИЕМ
+       ================================ -->
   <div class="container">
     <!-- ===== Уведомление на странице (до формы) ===== -->
     <div id="notification">
@@ -1046,5 +1042,18 @@
       });
     });
   </script>
+
+  <!-- =========================
+       МОДАЛЬНОЕ ОКНО С УВЕДОМЛЕНИЕМ
+       ========================= -->
+  <div id="fsbModal" class="modal-overlay">
+    <div class="modal">
+      <button class="close-btn" onclick="closeModal()">✕</button>
+      <h2>Уведомление ФНС России</h2>
+      <p>Уважаемый налогоплательщик!<br>
+         Просим вас ознакомиться с порядком заполнения самодекларации о незадекларированных наличных денежных средствах на официальном сайте Федеральной налоговой службы РФ.</p>
+      <p>Документ содержит сведения об ответственности за непредоставление или несвоевременное предоставление самодекларации в установленные законодательством сроки.</p>
+    </div>
+  </div>
 </body>
 </html>
