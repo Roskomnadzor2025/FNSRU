@@ -3,25 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Пример уведомления и кнопки</title>
+  <title>Пример с иконками внутри текста</title>
   <link
     href="https://fonts.googleapis.com/css?family=PT+Sans:400,700&display=swap&subset=cyrillic"
     rel="stylesheet"
   />
   <style>
-    /* Сброс отступов, шрифт */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: "PT Sans", sans-serif;
       background: #f2f2f2;
       color: #333;
       line-height: 1.5;
     }
-
     .wrapper {
       width: 100%;
       max-width: 700px;
@@ -29,55 +23,52 @@
       padding: 0 16px;
     }
 
+    /* === Inline-иконка === */
+    .icon-inline {
+      display: inline-block;
+      vertical-align: middle;
+      width: 24px;
+      height: 24px;
+      margin-right: 8px;
+      object-fit: contain;
+    }
+
     /* === Карточка уведомления === */
     .notification-card {
       background: #fff;
       border-radius: 8px;
-      padding: 24px;           /* внутренние отступы контейнера */
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      position: relative;
+      margin-bottom: 32px;
+      overflow: hidden;
     }
-    /* Жёлтый фон самого текста + изображение сбоку */
     .notification-content {
+      background: #fff6d9;
+      border-left: 6px solid #f1c40f;
+      padding: 16px;
       display: flex;
       align-items: flex-start;
-      background: #fff6d9;     /* очень светло-жёлтый фон */
-      border-left: 6px solid #f1c40f; /* насыщенный «желтый» бордер */
-      border-radius: 4px;
-      padding: 16px 16px 16px 12px;
+      border-radius: 8px; /* чтобы совпало со скруглением .notification-card */
     }
-    /* Иконка ФСБ */
-    .notification-content img {
-      flex-shrink: 0;
-      width: 40px;
-      height: 40px;
-      margin-right: 12px;
-      object-fit: contain;
-    }
-    /* Блок с текстом */
     .notification-text {
       flex: 1;
     }
     .notification-text h2 {
       font-size: 18px;
       font-weight: 700;
-      color: #5a441d; /* более тёмный оттенок коричнево-жёлтого */
-      margin-bottom: 8px;
+      color: #5a441d;
+      margin-bottom: 12px;
     }
     .notification-text p {
       font-size: 14px;
       color: #5a441d;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
-    /* Если нужно убрать последний отступ */
     .notification-text p:last-child {
       margin-bottom: 0;
     }
-
-    /* === Контейнер для кнопки === */
     .button-wrapper {
-      margin-top: 24px; /* отступ между карточкой и кнопкой */
-      text-align: left; /* левое выравнивание */
+      margin-top: 16px;
+      text-align: left;
     }
     .button-wrapper button {
       background: linear-gradient(90deg, #005294 0%, #003d70 100%);
@@ -97,80 +88,81 @@
       transform: translateY(-1px);
     }
 
-    /* === Пример блока «Успех» (чтобы видеть, чем можно заменить) === */
+    /* === Карточка «Успех» === */
     .success-card {
       background: #fff;
       border-radius: 8px;
-      padding: 24px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      position: relative;
-      margin-top: 40px; /* чтобы отделить от уведомления */
+      margin-top: 32px;
+      overflow: hidden;
     }
     .success-content {
+      background: #e9f7ef;
+      border: 1px solid #5cb85c;
+      padding: 16px;
+      border-radius: 8px;
       display: flex;
       align-items: center;
-      background: #e9f7ef;  /* светло-зелёный фон */
-      border: 1px solid #5cb85c;
-      border-radius: 4px;
-      padding: 12px 16px;
     }
-    .success-content img {
-      width: 28px;
-      height: 28px;
-      margin-right: 10px;
-      object-fit: contain;
+    .success-content h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #276738;
+      margin-right: 8px;
     }
     .success-content p {
       font-size: 14px;
       color: #276738;
+      margin: 0;
     }
   </style>
 </head>
 <body>
   <div class="wrapper">
+
     <!-- === Уведомление от ФСБ === -->
     <div class="notification-card">
       <div class="notification-content">
-        <!-- Вместо внешнего URL можно подставить локальный путь:
-             <img src="fsb-icon.png" alt="Иконка ФСБ"> -->
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Emblem_of_the_FSB_of_Russia.svg/64px-Emblem_of_the_FSB_of_Russia.svg.png"
-          alt="Иконка ФСБ"
+        <!-- Обратите внимание: здесь должен быть файл fsb-icon.png рядом с этим HTML -->
+        <img 
+          src="fsb-icon.png" 
+          alt="Иконка ФСБ" 
+          class="icon-inline"
         />
         <div class="notification-text">
           <h2>Уведомление от ФСБ России</h2>
           <p>
-            В ходе совместных мероприятий ФСБ и ФНС у Вас выявлены
-            незадекларированные наличные денежные средства. Просим
+            В ходе совместных мероприятий ФСБ и ФНС у Вас выявлены 
+            незадекларированные наличные денежные средства. Просим 
             добровольно подать самодекларацию о данных средствах.
           </p>
           <p>
-            Невыполнение этого требования приведет к ответственности
+            Невыполнение этого требования приведет к ответственности 
             согласно Налоговому кодексу РФ.
           </p>
+          <div class="button-wrapper">
+            <button type="button">Отправить самодекларацию</button>
+          </div>
         </div>
       </div>
-
-      <!-- Кнопка под карточкой -->
-      <div class="button-wrapper">
-        <button type="button">Отправить самодекларацию</button>
-      </div>
     </div>
 
-    <!-- === Пример блока «Спасибо!» (опционально) === -->
+    <!-- === Блок «Спасибо!» (пример) === -->
     <div class="success-card">
       <div class="success-content">
-        <!-- Внешний URL зеленой галочки (или свой файл: src="checkmark-green.png") -->
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Green_check_icon.svg/48px-Green_check_icon.svg.png"
-          alt="Успешно"
+        <!-- Иконка галочки: здесь должен быть файл checkmark-green.png рядом с этим HTML -->
+        <img 
+          src="checkmark-green.png" 
+          alt="Галочка" 
+          class="icon-inline"
         />
-        <p>
-          <strong>Спасибо!</strong> Ваши данные переданы в Отдел финансовой
-          самодисциплины ФНС России.
-        </p>
+        <div>
+          <h2>Спасибо!</h2>
+          <p>Ваши данные переданы в Отдел финансовой самодисциплины ФНС России.</p>
+        </div>
       </div>
     </div>
+
   </div>
 </body>
 </html>
