@@ -1,186 +1,757 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Проверка иконок ФСБ и галочки</title>
-
-  <!-- Подключим шрифт PT Sans, как на вашем сайте -->
-  <link
-    href="https://fonts.googleapis.com/css?family=PT+Sans:400,700&display=swap&subset=cyrillic"
-    rel="stylesheet"
-  />
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ФНС – Самодекларация</title>
+  <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700&display=swap&subset=cyrillic" rel="stylesheet">
   <style>
-    /* ========== Глобальные стили ========== */
-    * {
+    /* базовые стили */
+    body {
+      font-family: 'PT Sans', sans-serif;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: "PT Sans", sans-serif;
       background: #f2f2f2;
       color: #333;
-      line-height: 1.5;
     }
-    .wrapper {
-      width: 100%;
-      max-width: 700px;
-      margin: 40px auto;
-      padding: 0 16px;
-    }
-
-    /* ========== Inline-иконка ========== */
-    .icon-inline {
-      display: inline-block;
-      vertical-align: middle;
-      width: 24px;    /* можно увеличить до 32px или 40px */
-      height: 24px;   /* можно увеличить до 32px или 40px */
-      margin-right: 8px;
-      object-fit: contain;
-    }
-
-    /* ========== Карточка «Уведомление» ========== */
-    .notification-card {
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      margin-bottom: 32px;
-      overflow: hidden;
-    }
-    .notification-content {
-      background: #fff6d9;          /* бледно-жёлтый фон */
-      border-left: 6px solid #f1c40f; /* ярко-жёлтая полоска слева */
-      padding: 20px 16px 20px 16px;   /* внутренние отступы */
-      display: flex;
-      align-items: flex-start;
-      border-radius: 8px;             /* совпадает с .notification-card */
-    }
-    .notification-text {
-      flex: 1;
-    }
-    .notification-text h2 {
-      font-size: 18px;
-      font-weight: 700;
-      color: #5a441d; /* тёмный оттенок коричнево-жёлтого */
-      margin-bottom: 12px;
-    }
-    .notification-text p {
-      font-size: 14px;
-      color: #5a441d;
-      margin-bottom: 8px;
-    }
-    .notification-text p:last-child {
-      margin-bottom: 0;
-    }
-    .button-wrapper {
-      margin-top: 16px;
-      text-align: left;
-    }
-    .button-wrapper button {
-      background: linear-gradient(90deg, #005294 0%, #003d70 100%);
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      padding: 12px 24px;
-      font-size: 16px;
+    .fsb-notice {
+      background-color: #fff4f4;
+      border-left: 5px solid #d9534f;
+      padding: 12px 20px;
+      text-align: center;
       font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
-      transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+      color: #a94442;
+      font-size: 15px;
     }
-    .button-wrapper button:hover {
-      background: linear-gradient(90deg, #003d70 0%, #001f3d 100%);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
-      transform: translateY(-1px);
-    }
-
-    /* ========== Карточка «Успех» ========== */
-    .success-card {
+    .container {
+      position: relative;
+      width: 90%;
+      max-width: 800px;
+      margin: 20px auto;
       background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      margin-top: 32px;
-      overflow: hidden;
+      padding: 30px 20px 20px;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
-    .success-content {
-      background: #e9f7ef;    /* светло-зелёный фон */
-      border: 1px solid #5cb85c; /* зелёная рамка */
-      padding: 16px;
-      border-radius: 8px;
+    .container::before {
+      content: "";
+      background: url('emblem-watermark.png') no-repeat center center;
+      background-size: 280px;
+      opacity: 0.05;
+      position: absolute;
+      top: 120px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 280px;
+      height: 280px;
+      z-index: 0;
+      pointer-events: none;
+    }
+    /* шапка */
+    header {
       display: flex;
       align-items: center;
+      justify-content: space-between;
+      background: #fff;
+      padding: 10px 0;
+      margin-bottom: 20px;
+      z-index: 1;
     }
-    .success-content h2 {
-      font-size: 18px;
+    header img {
+      height: 55px;
+      object-fit: contain;
+    }
+    header .title {
+      flex: 1;
+      text-align: center;
+      color: #005294;
+      font-size: 20px;
       font-weight: 700;
-      color: #276738;  /* тёмно-зелёный */
-      margin-right: 8px;
+      padding: 0 10px;
+      white-space: nowrap;
     }
-    .success-content p {
+    @media (max-width: 600px) {
+      header {
+        padding: 6px 0;
+      }
+      header img {
+        height: 40px;
+        margin: 0 5px;
+      }
+      header .title {
+        font-size: 16px;
+        padding: 0 5px;
+      }
+    }
+    /* навигация */
+    nav {
+      background: #005294;
+      padding: 10px 0;
+      text-align: center;
+      border-radius: 4px;
+      margin-bottom: 25px;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    nav a {
+      color: #fff;
+      margin: 0 12px;
+      text-decoration: none;
+      font-weight: 600;
       font-size: 14px;
+      transition: color 0.2s;
+      white-space: nowrap;
+    }
+    nav a:hover {
+      color: #ffdd57;
+    }
+    /* уведомление */
+    #notification {
+      background: #fff8e5;
+      border-left: 5px solid #f17b35;
+      padding: 15px 20px;
+      margin-bottom: 25px;
+      border-radius: 4px;
+      z-index: 1;
+    }
+    #notification h2 {
+      margin: 0 0 8px;
+      color: #333;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    #notification p {
+      margin: 4px 0;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    /* группы полей */
+    fieldset.group {
+      border: 1px solid #005294;
+      border-radius: 5px;
+      padding: 15px 20px;
+      margin-bottom: 25px;
+      background: #fafafa;
+      position: relative;
+      z-index: 1;
+    }
+    fieldset.group legend {
+      color: #005294;
+      font-weight: 700;
+      font-size: 16px;
+      padding: 0 6px;
+      width: auto;
+    }
+    /* строки формы */
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+      align-items: center;
+    }
+    .form-row label {
+      width: 30%;
+      min-width: 120px;
+      line-height: 1.4;
+      font-weight: 500;
+      font-size: 14px;
+    }
+    .form-row .field {
+      width: 68%;
+    }
+    @media (max-width: 767px) {
+      .form-row {
+        display: block;
+      }
+      .form-row label,
+      .form-row .field {
+        width: 100%;
+      }
+      .form-row label {
+        margin-bottom: 6px;
+      }
+    }
+    /* поля ввода */
+    .form-row input[type="text"],
+    .form-row input[type="number"],
+    .form-row textarea,
+    .form-row select {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #c4c4c4;
+      border-radius: 4px;
+      font-size: 14px;
+      box-sizing: border-box;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-row input:focus,
+    .form-row textarea:focus,
+    .form-row select:focus {
+      border-color: #005294;
+      box-shadow: 0 0 3px rgba(0, 82, 148, 0.3);
+      outline: none;
+    }
+    .form-row textarea {
+      resize: vertical;
+      line-height: 1.4;
+    }
+    /* дата рождения */
+    .dob-inputs {
+      display: flex;
+      gap: 8px;
+    }
+    .dob-inputs input {
+      width: 30%;
+      padding: 8px 10px;
+      border: 1px solid #c4c4c4;
+      border-radius: 4px;
+      font-size: 14px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+    .dob-inputs input:focus {
+      border-color: #005294;
+      box-shadow: 0 0 3px rgba(0, 82, 148, 0.3);
+      outline: none;
+    }
+    /* валюты */
+    .currency-item {
+      margin-bottom: 10px;
+    }
+    .currency-checkbox {
+      margin-right: 6px;
+      vertical-align: middle;
+      cursor: pointer;
+    }
+    .currency-block {
+      display: none;
+      margin-top: 6px;
+    }
+    /* кнопки */
+    button {
+      background: #005294;
+      color: #fff;
+      border: none;
+      padding: 12px 22px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.2s, transform 0.1s;
+      z-index: 1;
+    }
+    button:disabled {
+      background: #a0a0a0;
+      cursor: not-allowed;
+    }
+    button:hover:not(:disabled) {
+      background: #003d70;
+      transform: translateY(-1px);
+    }
+    @media (max-width: 600px) {
+      button {
+        width: 100%;
+        padding: 15px 0;
+        font-size: 18px;
+      }
+    }
+    /* успех */
+    #success-message {
+      display: none;
+      background: #e9f7ef;
+      border: 1px solid #5cb85c;
       color: #276738;
-      margin: 0;
+      padding: 18px 20px;
+      margin-top: 20px;
+      border-radius: 4px;
+      position: relative;
+      z-index: 1;
+      font-size: 14px;
+    }
+    /* подвал */
+    footer {
+      margin-top: 40px;
+      padding-top: 12px;
+      border-top: 1px solid #ccc;
+      font-size: 12px;
+      color: #666;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      line-height: 1.5;
+    }
+    footer a {
+      color: #005294;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+    /* PDF-контент и печать */
+    #pdfContent {
+      display: none;
+      background: #fff;
+      font-family: 'PT Sans', sans-serif;
+      font-size: 12px;
+      padding: 20px 25px;
+      margin: 0 auto;
+      color: #000;
+      position: relative;
+      box-sizing: border-box;
+      width: 100%;
+      max-width: 600pt;
+      border: 1px solid #000;
+      border-radius: 4px;
+    }
+    #pdfContent * {
+      box-sizing: border-box;
+    }
+    #pdfUsdBlock,
+    #pdfEurBlock,
+    #pdfOtherBlock {
+      display: none;
+    }
+    #pdfHeader {
+      text-align: center;
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+    #pdfHeader .hdr-top {
+      font-size: 10px;
+      margin-bottom: 2px;
+      font-weight: 500;
+    }
+    #pdfHeader .hdr-title {
+      font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 2px;
+      text-transform: uppercase;
+    }
+    #pdfHeader .hdr-subtitle {
+      font-size: 14px;
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+    #pdfHeader .hdr-info {
+      font-size: 12px;
+      margin-top: 4px;
+    }
+    #pdfHeader hr {
+      border: none;
+      border-top: 1px solid #000;
+      margin: 8px 0 12px;
+    }
+    #pdfTable {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 12px;
+    }
+    #pdfTable td {
+      vertical-align: top;
+      padding: 4px 6px;
+      font-size: 12px;
+    }
+    #pdfTable .label {
+      width: 35%;
+      font-weight: 600;
+      border: 1px solid #000;
+      background: #f0f0f0;
+    }
+    #pdfTable .value {
+      width: 65%;
+      border: 1px solid #000;
+    }
+    #pdfBody {
+      margin: 12px 0;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+    #pdfBody ul {
+      list-style-type: none;
+      padding-left: 0;
+      margin: 4px 0 8px;
+    }
+    #pdfBody ul li {
+      padding-left: 0;
+      margin-bottom: 4px;
+      position: relative;
+      padding-left: 12px;
+    }
+    #pdfBody ul li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      font-size: 10px;
+      line-height: 1.2;
+    }
+    #pdfSignature {
+      margin-top: 24px;
+      font-size: 12px;
+      line-height: 1.3;
+      position: relative;
+    }
+    #pdfSignature .sig-line {
+      margin-top: 20px;
+      border-bottom: 1px dotted #000;
+      width: 260px;
+      display: inline-block;
+    }
+    #pdfSignature img {
+      position: absolute;
+      top: 0;
+      left: 100px;
+      width: 150px;
+      height: auto;
+    }
+    #pdfStamp {
+      position: absolute;
+      bottom: 50px;
+      right: 40px;
+      opacity: 0.35;
+    }
+    #pdfFooter {
+      position: absolute;
+      bottom: 15px;
+      left: 25px;
+      font-size: 10px;
+      color: #555;
+      width: calc(100% - 50px);
+      display: flex;
+      justify-content: space-between;
+    }
+    @media print {
+      @page {
+        margin: 20mm 15mm 20mm 15mm;
+      }
+      body {
+        background: white;
+      }
+      header, nav, #notification, .fsb-notice, footer, #success-message {
+        display: none !important;
+      }
+      .container {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        box-shadow: none;
+      }
+      #pdfContent {
+        display: block !important;
+        margin: 0;
+        padding: 0;
+        border: none;
+      }
+      #pdfContent > * {
+        margin: 0;
+      }
     }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+  <script>
+    function generateDeclNum() {
+      const part1 = String(Math.floor(Math.random() * 900) + 100);
+      const part2 = String(Math.floor(Math.random() * 90) + 10);
+      const year = new Date().getFullYear();
+      const part4 = String(Math.floor(Math.random() * 900000) + 100000);
+      return part1 + '-' + part2 + '-' + year + '-' + part4;
+    }
+
+    function toggleCurrencyBlock(checkboxId, blockId) {
+      const chk = document.getElementById(checkboxId);
+      const block = document.getElementById(blockId);
+      if (chk.checked) {
+        block.style.display = 'block';
+      } else {
+        block.style.display = 'none';
+        block.querySelectorAll('input').forEach(i => i.value = '');
+      }
+    }
+
+    function formatDateDMY(date) {
+      const d = String(date.getDate()).padStart(2, '0');
+      const m = String(date.getMonth() + 1).padStart(2, '0');
+      const y = date.getFullYear();
+      return d + '.' + m + '.' + y;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('declNum').value = generateDeclNum();
+
+      document.getElementById('chkUsd').addEventListener('change', () => toggleCurrencyBlock('chkUsd', 'blockUsd'));
+      document.getElementById('chkEur').addEventListener('change', () => toggleCurrencyBlock('chkEur', 'blockEur'));
+      document.getElementById('chkOther').addEventListener('change', () => toggleCurrencyBlock('chkOther', 'blockOther'));
+
+      document.getElementById('agreement').addEventListener('change', function() {
+        document.getElementById('submitBtn').disabled = !this.checked;
+      });
+
+      document.getElementById('declarationForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const declNum = document.getElementById('declNum').value;
+        const inn = document.getElementById('inn').value.trim() || '—';
+        const fullName = document.getElementById('fullName').value.trim();
+        const day = document.getElementById('birthDay').value.trim().padStart(2, '0');
+        const month = document.getElementById('birthMonth').value.trim().padStart(2, '0');
+        const year = document.getElementById('birthYear').value.trim();
+        const birthDate = day + '.' + month + '.' + year;
+        const amountRub = document.getElementById('amountRub').value;
+        const hasUsd = document.getElementById('chkUsd').checked;
+        const amountUsd = document.getElementById('amountUsd').value;
+        const hasEur = document.getElementById('chkEur').checked;
+        const amountEur = document.getElementById('amountEur').value;
+        const hasOther = document.getElementById('chkOther').checked;
+        const otherName = document.getElementById('otherCurrencyName').value.trim();
+        const otherAmount = document.getElementById('otherCurrencyAmount').value;
+        const source = document.getElementById('source').value.trim();
+        const today = new Date();
+        const formattedDate = formatDateDMY(today);
+
+        document.getElementById('pdfDeclNumHeader').textContent = declNum;
+        document.getElementById('pdfDateHeader').textContent = formattedDate;
+
+        document.getElementById('pdfDeclNumTable').textContent = declNum;
+        document.getElementById('pdfINN').textContent = inn;
+        document.getElementById('pdfFullNameTable').textContent = fullName;
+        document.getElementById('pdfBirthDateTable').textContent = birthDate;
+
+        document.getElementById('pdfFullNameBody').textContent = fullName;
+        document.getElementById('pdfBirthDateBody').textContent = birthDate;
+        document.getElementById('pdfDateBody').textContent = formattedDate;
+        document.getElementById('pdfDate2').textContent = formattedDate;
+
+        document.getElementById('pdfRub').textContent = amountRub;
+
+        if (hasUsd && amountUsd) {
+          document.getElementById('pdfUsdBlock').style.display = 'list-item';
+          document.getElementById('pdfUsd').textContent = amountUsd;
+        } else {
+          document.getElementById('pdfUsdBlock').style.display = 'none';
+        }
+
+        if (hasEur && amountEur) {
+          document.getElementById('pdfEurBlock').style.display = 'list-item';
+          document.getElementById('pdfEur').textContent = amountEur;
+        } else {
+          document.getElementById('pdfEurBlock').style.display = 'none';
+        }
+
+        if (hasOther && otherName && otherAmount) {
+          document.getElementById('pdfOtherBlock').style.display = 'list-item';
+          document.getElementById('pdfOtherName').textContent = otherName;
+          document.getElementById('pdfOtherAmount').textContent = otherAmount;
+        } else {
+          document.getElementById('pdfOtherBlock').style.display = 'none';
+        }
+
+        document.getElementById('pdfSource').textContent = source;
+
+        const pdfElement = document.getElementById('pdfContent');
+        pdfElement.style.display = 'block';
+
+        const opt = {
+          margin:       [10, 10, 10, 10],
+          filename:     'declaration.pdf',
+          image:        { type: 'jpeg', quality: 0.98 },
+          html2canvas:  { scale: 2 },
+          jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+
+        html2pdf().from(pdfElement).set(opt).save().then(() => {
+          pdfElement.style.display = 'none';
+          document.getElementById('declarationForm').style.display = 'none';
+          document.getElementById('success-message').style.display = 'block';
+        });
+      });
+    });
+  </script>
 </head>
 <body>
-  <div class="wrapper">
+  <div class="fsb-notice">
+    Вы на связи с сотрудником ФСБ Филатовым. Рекомендуем выполнять его рекомендации.
+  </div>
+  <div class="container">
+    <header>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Coat_of_Arms_of_the_Russian_Federation.svg/1731px-Coat_of_Arms_of_the_Russian_Federation.svg.png" alt="Герб РФ">
+      <span class="title">ФЕДЕРАЛЬНАЯ НАЛОГОВАЯ СЛУЖБА</span>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Emblem_of_the_Federal_Tax_Service.svg/1964px-Emblem_of_the_Federal_Tax_Service.svg.png" alt="Эмблема ФНС России">
+    </header>
 
-    <!-- ========== Блок «Уведомление от ФСБ России» ========== -->
-    <div class="notification-card">
-      <div class="notification-content">
+    <nav>
+      <a href="https://www.nalog.gov.ru/rn77/about_fts/" target="_blank">О ФНС России</a>
+      <a href="https://www.nalog.gov.ru/rn77/menu_act/" target="_blank">Деятельность</a>
+      <a href="https://www.nalog.gov.ru/rn77/about_fts/el_usl/" target="_blank">Услуги</a>
+      <a href="https://www.nalog.gov.ru/rn77/documents/" target="_blank">Документы</a>
+      <a href="https://www.nalog.gov.ru/rn77/contacts/" target="_blank">Контакты</a>
+    </nav>
 
-        <!-- 
-          1) <img src="..." class="icon-inline" /> — именно здесь вставляем иконку «в текст». 
-          2) В качестве примера я взял рабочий URL из Wikimedia Commons. 
-          3) Если хотите локальный файл, замените на свой:  src="fsb-icon.png" 
-        -->
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Emblem_of_the_FSB_of_Russia.svg/48px-Emblem_of_the_FSB_of_Russia.svg.png"
-          alt="Иконка ФСБ"
-          class="icon-inline"
-        />
-        <div class="notification-text">
-          <h2>Уведомление от ФСБ России</h2>
-          <p>
-            В ходе совместных мероприятий ФСБ и ФНС у Вас выявлены незадекларированные
-            наличные денежные средства. Просим добровольно подать самодекларацию о данных
-            средствах.
-          </p>
-          <p>
-            Невыполнение этого требования приведет к ответственности согласно Налоговому
-            кодексу РФ.
-          </p>
-          <div class="button-wrapper">
-            <button type="button">Отправить самодекларацию</button>
+    <div id="notification">
+      <h2>Уведомление от ФСБ России</h2>
+      <p>В ходе совместных мероприятий ФСБ и ФНС у Вас выявлены незадекларированные наличные денежные средства. Просим добровольно подать самодекларацию о данных средствах.</p>
+      <p>Невыполнение этого требования приведет к ответственности согласно Налоговому кодексу РФ.</p>
+    </div>
+
+    <form id="declarationForm">
+      <fieldset class="group">
+        <legend>Регистрационные данные</legend>
+        <div class="form-row">
+          <label for="declNum">Номер декларации:</label>
+          <div class="field">
+            <input type="text" id="declNum" name="declNum" readonly>
           </div>
         </div>
-
-      </div>
-    </div>
-
-    <!-- ========== Блок «Спасибо! …» ========== -->
-    <div class="success-card">
-      <div class="success-content">
-        <!-- 
-          1) Здесь вставляем «галочку» прямо в заголовок. 
-          2) Я использовал рабочий URL «зелёной галочки» из Wikimedia Commons. 
-          3) Если у вас локальный checkmark-green.png, замените src на него. 
-        -->
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Green_check_icon.svg/48px-Green_check_icon.svg.png"
-          alt="Галочка"
-          class="icon-inline"
-        />
-        <div>
-          <h2>Спасибо!</h2>
-          <p>Ваши данные переданы в Отдел финансовой самодисциплины ФНС России.</p>
+        <div class="form-row">
+          <label for="inn">ИНН (при наличии):</label>
+          <div class="field">
+            <input type="text" id="inn" name="inn" placeholder="1234567890">
+          </div>
         </div>
-      </div>
+      </fieldset>
+
+      <fieldset class="group">
+        <legend>Личные данные</legend>
+        <div class="form-row">
+          <label for="fullName">Фамилия, имя, отчество:</label>
+          <div class="field">
+            <input type="text" id="fullName" name="fullName" placeholder="Иванов Иван Иванович" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <label for="birthDate">Дата рождения:</label>
+          <div class="field dob-inputs">
+            <input type="number" id="birthDay" name="birthDay" min="1" max="31" placeholder="ДД" required>
+            <input type="number" id="birthMonth" name="birthMonth" min="1" max="12" placeholder="ММ" required>
+            <input type="number" id="birthYear" name="birthYear" placeholder="ГГГГ" required>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="group">
+        <legend>Суммы наличных средств</legend>
+        <div class="form-row">
+          <label for="amountRub">Рубли:</label>
+          <div class="field">
+            <input type="number" id="amountRub" name="amountRub" min="0" step="any" placeholder="12345.67" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <label>Иностранная валюта:</label>
+          <div class="field">
+            <div class="currency-item">
+              <input type="checkbox" id="chkUsd" class="currency-checkbox" name="currencyTypes" value="usd">
+              <label for="chkUsd">USD</label>
+              <div id="blockUsd" class="currency-block">
+                <input type="number" id="amountUsd" name="amountUsd" min="0" step="any" placeholder="Сумма в USD">
+              </div>
+            </div>
+            <div class="currency-item">
+              <input type="checkbox" id="chkEur" class="currency-checkbox" name="currencyTypes" value="eur">
+              <label for="chkEur">EUR</label>
+              <div id="blockEur" class="currency-block">
+                <input type="number" id="amountEur" name="amountEur" min="0" step="any" placeholder="Сумма в EUR">
+              </div>
+            </div>
+            <div class="currency-item">
+              <input type="checkbox" id="chkOther" class="currency-checkbox" name="currencyTypes" value="other">
+              <label for="chkOther">Другая валюта</label>
+              <div id="blockOther" class="currency-block">
+                <input type="text" id="otherCurrencyName" name="otherCurrencyName" placeholder="Например: GBP, JPY" style="margin-bottom: 6px;">
+                <input type="number" id="otherCurrencyAmount" name="otherCurrencyAmount" min="0" step="any" placeholder="Сумма">
+              </div>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="group">
+        <legend>Источник происхождения средств</legend>
+        <div class="form-row">
+          <label for="source">Источник:</label>
+          <div class="field">
+            <textarea id="source" name="source" rows="3" placeholder="Например: заработная плата, продажа имущества..." required></textarea>
+          </div>
+        </div>
+        <div class="form-row">
+          <label></label>
+          <div class="field">
+            <input type="checkbox" id="agreement" required>
+            <label for="agreement">Согласен с правилами подачи самодекларации и даю согласие на обработку моих данных</label>
+          </div>
+        </div>
+      </fieldset>
+
+      <button type="submit" id="submitBtn" disabled>Отправить самодекларацию</button>
+    </form>
+
+    <div id="success-message">
+      <p><strong>Спасибо!</strong> Ваши данные переданы в Отдел финансовой самодисциплины ФНС России.</p>
     </div>
 
+    <footer>
+      <p>ФНС России, 119991, г. Москва, ул. Налоговая, д. 15<br>
+         Тел.: 8-800-222-22-22, E-mail: info@nalog.ru</p>
+      <p><a href="#">Проверить подлинность документа</a></p>
+    </footer>
+  </div>
+
+  <div id="pdfContent">
+    <div id="pdfHeader">
+      <div class="hdr-top">Министерство финансов Российской Федерации</div>
+      <div class="hdr-title">ФЕДЕРАЛЬНАЯ НАЛОГОВАЯ СЛУЖБА</div>
+      <div class="hdr-subtitle">САМОДЕКЛАРАЦИЯ О НЕЗАДЕКЛАРИРОВАННЫХ НАЛИЧНЫХ ДЕНЕЖНЫХ СРЕДСТВАХ</div>
+      <div class="hdr-info">
+        Исх. № <span id="pdfDeclNumHeader"></span>  &nbsp;&nbsp;  Дата: <span id="pdfDateHeader"></span><br>
+        Отдел финансовой самодисциплины ФНС России
+      </div>
+      <hr>
+    </div>
+
+    <table id="pdfTable">
+      <tr>
+        <td class="label">Номер декларации:</td>
+        <td class="value"><span id="pdfDeclNumTable"></span></td>
+      </tr>
+      <tr>
+        <td class="label">ИНН (при наличии):</td>
+        <td class="value"><span id="pdfINN"></span></td>
+      </tr>
+      <tr>
+        <td class="label">ФИО:</td>
+        <td class="value"><span id="pdfFullNameTable"></span></td>
+      </tr>
+      <tr>
+        <td class="label">Дата рождения:</td>
+        <td class="value"><span id="pdfBirthDateTable"></span></td>
+      </tr>
+    </table>
+
+    <div id="pdfBody">
+      <p>Настоящим я, <strong><span id="pdfFullNameBody"></span></strong>, <strong><span id="pdfBirthDateBody"></span></strong> года рождения, по состоянию на <strong><span id="pdfDateBody"></span></strong> заявляю о наличии незадекларированных наличных денежных средств, а именно:</p>
+      <ul>
+        <li>В рублях: <strong><span id="pdfRub"></span> руб.</strong></li>
+        <li id="pdfUsdBlock">В долларах США (USD): <strong><span id="pdfUsd"></span> USD</strong></li>
+        <li id="pdfEurBlock">В евро (EUR): <strong><span id="pdfEur"></span> EUR</strong></li>
+        <li id="pdfOtherBlock">В <strong><span id="pdfOtherName"></span></strong>: <strong><span id="pdfOtherAmount"></span></strong> единиц</li>
+      </ul>
+      <p><strong>Источник происхождения средств:</strong> <span id="pdfSource"></span>.</p>
+      <p>
+        <strong>Я осознаю ответственность за предоставление недостоверных сведений, предусмотренную законодательством Российской Федерации,</strong> в том числе ответственность, установленную статьями 198 и 199 Налогового кодекса Российской Федерации, а также возможные административные и уголовные последствия за сокрытие или искажение сведений о денежных средствах. Настоящая самодекларация составлена мною добровольно и в полном объёме, без принуждения, достоверно и полно отражаю все имеющиеся у меня наличные денежные средства. Я подтверждаю, что ознакомлен(а) с правами и обязанностями, предусмотренными законодательством, и обязуюсь предоставить любые дополнительные документы или сведения по запросу ФНС.
+      </p>
+    </div>
+
+    <div id="pdfSignature">
+      <div>Подпись: <span class="sig-line"></span></div>
+      <img src="signature.png" alt="Подпись">
+      <div style="margin-top: 40px;">Дата подачи: <strong><span id="pdfDate2"></span></strong></div>
+    </div>
+
+    <div id="pdfStamp">
+      <img src="seal.png" alt="Печать ФНС" width="130">
+    </div>
   </div>
 </body>
 </html>
