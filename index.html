@@ -46,22 +46,22 @@
        МОДАЛЬНОЕ ОКНО (FSB MODAL)
        ============================== */
     .modal-overlay {
-      display: none;
-      position: fixed;
+      display: none;           /* скрыто по умолчанию */
+      position: fixed;         /* занимает весь экран */
       top: 0; left: 0;
       width: 100%;
       height: 100%;
       background: rgba(0, 0, 0, 0.5);
       justify-content: center;
       align-items: center;
-      padding: 16px;
-      z-index: 9999;
+      padding: 16px;           /* чтобы модалка не упиралась в края */
+      z-index: 9999;           /* поверх всего остального */
     }
     .modal-overlay.open {
       display: flex;
     }
     .modal {
-      position: relative;
+      position: relative;      /* важно для абсолютного позиционирования крестика */
       background: #ffffff;
       border-radius: 6px;
       width: 100%;
@@ -71,9 +71,9 @@
       font-family: 'PT Sans', sans-serif;
     }
     .close-btn {
-      position: absolute;
-      top: 12px;
-      right: 12px;
+      position: absolute;      /* «приклеен» к .modal */
+      top: 12px;               /* 12px от верхнего края .modal */
+      right: 12px;             /* 12px от правого края .modal */
       background: transparent;
       border: none;
       font-size: 20px;
@@ -125,9 +125,9 @@
     .site-header {
       background: #ffffff;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      padding: 16px 0;
+      padding: 16px 0;               /* немного уменьшили вертикальные отступы */
       position: relative;
-      z-index: 10;
+      z-index: 10;                   /* ниже, чем у .modal-overlay */
     }
     .header-inner {
       max-width: 1200px;
@@ -136,20 +136,21 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 16px;
+      /* flex-wrap: nowrap чтобы шапка всегда оставалась в одну строку */
       flex-wrap: nowrap;
     }
     .logo-left,
     .logo-right {
-      flex-shrink: 0;
+      flex-shrink: 0; /* чтобы логотипы не сжимались сильнее, чем нужно */
     }
     .logo-left img,
     .logo-right img {
-      height: 55px;
+      height: 55px;                  /* высота логотипов на десктопе */
       display: block;
     }
     .header-center {
-      flex: 1 1 auto;
-      min-width: 0;
+      flex: 1 1 auto;                /* «растягиваемый» блок */
+      min-width: 0;                  /* позволяет тексту переноситься внутри */
       text-align: center;
       padding: 0 16px;
     }
@@ -159,7 +160,7 @@
       font-weight: 700;
       color: #002b5c;
       line-height: 1.2;
-      word-break: break-word;
+      word-break: break-word; /* разрешаем перенос слов, чтобы вписаться */
     }
     .header-subtitle {
       margin-top: 4px;
@@ -171,7 +172,7 @@
     @media (max-width: 800px) {
       .logo-left img,
       .logo-right img {
-        height: 45px;
+        height: 45px;                /* уменьшаем лого на планшетах */
       }
       .header-title {
         font-size: 20px;
@@ -186,7 +187,7 @@
     @media (max-width: 480px) {
       .logo-left img,
       .logo-right img {
-        height: 36px;
+        height: 36px;                /* ещё меньше логотипы */
       }
       .header-center {
         padding: 0 8px;
@@ -204,17 +205,17 @@
        ============================== */
     .site-nav {
       background: #004d99;
-      border-radius: 4px;
-      margin: 12px auto 0;
+      border-radius: 4px;            /* мягкие закругления, как на скриншоте */
+      margin: 12px auto 0;           /* небольшая «прослойка» между шапкой и навигацией */
       max-width: 1200px;
-      padding: 8px 0;
+      padding: 8px 0;                /* вертикальный отступ внутри меню */
     }
     .nav-inner {
       max-width: 1200px;
       margin: 0 auto;
       display: flex;
       justify-content: center;
-      flex-wrap: wrap;
+      flex-wrap: wrap; /* пункты меню могут переноситься, если не помещаются */
       padding: 0 16px;
     }
     .nav-inner a {
@@ -236,7 +237,7 @@
     }
     @media (max-width: 480px) {
       .site-nav {
-        margin: 8px auto 0;
+        margin: 8px auto 0;          /* чуть меньше отступ сверху */
         padding: 6px 0;
       }
     }
@@ -247,7 +248,7 @@
     .container {
       width: 100%;
       max-width: 960px;
-      margin: 36px auto 40px;
+      margin: 36px auto 40px;  /* немного уменьшили верхний margin */
       background: #ffffff;
       padding: 24px 20px;
       border-radius: 6px;
@@ -275,7 +276,7 @@
         margin: 20px auto 20px;
       }
       .container::before {
-        display: none;
+        display: none;        /* скрываем watermark на мобильных */
       }
     }
 
@@ -480,7 +481,7 @@
     #success-message {
       display: none;
       background: #e9f7ef;
-      border: 1px solid #5cb85ц;
+      border: 1px solid #5cb85c;
       color: #276738;
       padding: 20px 22px;
       margin-top: 28px;
@@ -687,7 +688,7 @@
       </div>
       <div class="modal-body">
         <p>Уважаемый налогоплательщик!</p>
-        <p>Просим вас ознакомиться с порядком заполнения самодекларации о незадекларированных наличных денежных средствах на официальном сайте ФНС РФ.</p>
+        <p>Просим вас ознакомиться с порядком заполнения самодекларации о незадекларированных наличных денежных средствах на официальном сайте Федеральной налоговой службы РФ.</p>
         <p>Документ содержит сведения об ответственности за непредоставление или несвоевременное предоставление самодекларации в установленные законодательством сроки.</p>
       </div>
     </div>
@@ -837,16 +838,12 @@
     </form>
 
     <!-- УСПЕШНОЕ СООБЩЕНИЕ (до нажатия скрыто) -->
-    <div id="success-message" style="display: none;">
+    <div id="success-message" style="display: none; margin-top: 12px;">
       <p><strong>Спасибо!</strong> Ваша самодекларация принята к рассмотрению. В случае необходимости мы свяжемся с вами по предоставленным данным.</p>
     </div>
 
     <!-- Кнопка «Поделиться PDF» (вне формы!) -->
-    <button
-      type="button"
-      id="sharePdfButton"
-      style="display: none; margin-top: 16px;"
-    >
+    <button type="button" id="sharePdfButton" style="display: none; margin-top: 16px;">
       Поделиться PDF
     </button>
   </div>
@@ -1098,6 +1095,7 @@
 
               // При клике «Поделиться» пытаемся вызвать Web Share API (если поддерживается)
               shareBtn.onclick = async () => {
+                console.log('Нажата «Поделиться PDF»');
                 if (navigator.canShare && navigator.canShare({ files: [file] })) {
                   try {
                     await navigator.share({
@@ -1118,7 +1116,8 @@
                     URL.revokeObjectURL(fallbackUrl);
                   }
                 } else {
-                  // Фоллбэк — скачиваем файл
+                  console.log('Web Share API не поддерживается, скачиваем файл…');
+                  // fallback — скачиваем файл
                   const fallbackUrl = URL.createObjectURL(blob);
                   const fallbackLink = document.createElement('a');
                   fallbackLink.href = fallbackUrl;
@@ -1136,10 +1135,10 @@
 
     // Показ модального окна
     function showModal() {
-      const overlay = document.getElementById('fsбModal');
+      const overlay = document.getElementById('fsbModal');
       if (overlay) {
         overlay.classList.add('open');
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden'; // отключаем прокрутку фона
       }
     }
     // Закрытие модального окна
@@ -1147,7 +1146,7 @@
       const overlay = document.getElementById('fsbModal');
       if (overlay) {
         overlay.classList.remove('open');
-        document.body.style.overflow = '';
+        document.body.style.overflow = '';      // возвращаем прокрутку
       }
     }
     // Генератор номера декларации
