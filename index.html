@@ -47,7 +47,7 @@
        ============================== */
     .modal-overlay {
       display: none;           /* скрыто по умолчанию */
-      position: fixed;         /* занимает весь экран */
+      position: fixed;         /* закреплено на весь экран */
       top: 0; left: 0;
       width: 100%;
       height: 100%;
@@ -55,13 +55,13 @@
       justify-content: center;
       align-items: center;
       padding: 16px;           /* чтобы модалка не упиралась в края */
-      z-index: 9999;           /* поверх всего остального */
+      z-index: 9999;           /* поверх всего */
     }
     .modal-overlay.open {
       display: flex;
     }
     .modal {
-      position: relative;      /* важно для абсолютного позиционирования крестика */
+      position: relative;      /* нужно для абсолютного позиционирования крестика */
       background: #ffffff;
       border-radius: 6px;
       width: 100%;
@@ -125,9 +125,9 @@
     .site-header {
       background: #ffffff;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      padding: 16px 0;               /* немного уменьшили вертикальные отступы */
+      padding: 16px 0;
       position: relative;
-      z-index: 10;                   /* ниже, чем у .modal-overlay */
+      z-index: 10; /* ниже, чем у .modal-overlay */
     }
     .header-inner {
       max-width: 1200px;
@@ -136,21 +136,20 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 16px;
-      /* flex-wrap: nowrap чтобы шапка всегда оставалась в одну строку */
-      flex-wrap: nowrap;
+      flex-wrap: nowrap; /* шапка в одну строку */
     }
     .logo-left,
     .logo-right {
-      flex-shrink: 0; /* чтобы логотипы не сжимались сильнее, чем нужно */
+      flex-shrink: 0; /* чтобы лого не жались слишком */
     }
     .logo-left img,
     .logo-right img {
-      height: 55px;                  /* высота логотипов на десктопе */
+      height: 55px; /* десктоп: 55px */
       display: block;
     }
     .header-center {
-      flex: 1 1 auto;                /* «растягиваемый» блок */
-      min-width: 0;                  /* позволяет тексту переноситься внутри */
+      flex: 1 1 auto; /* расширяемый блок */
+      min-width: 0;   /* чтобы текст мог обрезаться */
       text-align: center;
       padding: 0 16px;
     }
@@ -160,7 +159,7 @@
       font-weight: 700;
       color: #002b5c;
       line-height: 1.2;
-      word-break: break-word; /* разрешаем перенос слов, чтобы вписаться */
+      word-break: break-word; /* перенос слов */
     }
     .header-subtitle {
       margin-top: 4px;
@@ -172,7 +171,7 @@
     @media (max-width: 800px) {
       .logo-left img,
       .logo-right img {
-        height: 45px;                /* уменьшаем лого на планшетах */
+        height: 45px;
       }
       .header-title {
         font-size: 20px;
@@ -187,7 +186,7 @@
     @media (max-width: 480px) {
       .logo-left img,
       .logo-right img {
-        height: 36px;                /* ещё меньше логотипы */
+        height: 36px;
       }
       .header-center {
         padding: 0 8px;
@@ -205,17 +204,17 @@
        ============================== */
     .site-nav {
       background: #004d99;
-      border-radius: 4px;            /* мягкие закругления, как на скриншоте */
-      margin: 12px auto 0;           /* небольшая «прослойка» между шапкой и навигацией */
+      border-radius: 4px;
+      margin: 12px auto 0; /* небольшой отступ сверху */
       max-width: 1200px;
-      padding: 8px 0;                /* вертикальный отступ внутри меню */
+      padding: 8px 0;
     }
     .nav-inner {
       max-width: 1200px;
       margin: 0 auto;
       display: flex;
       justify-content: center;
-      flex-wrap: wrap; /* пункты меню могут переноситься, если не помещаются */
+      flex-wrap: wrap;
       padding: 0 16px;
     }
     .nav-inner a {
@@ -237,7 +236,7 @@
     }
     @media (max-width: 480px) {
       .site-nav {
-        margin: 8px auto 0;          /* чуть меньше отступ сверху */
+        margin: 8px auto 0;
         padding: 6px 0;
       }
     }
@@ -248,7 +247,7 @@
     .container {
       width: 100%;
       max-width: 960px;
-      margin: 36px auto 40px;  /* немного уменьшили верхний margin */
+      margin: 36px auto 40px;
       background: #ffffff;
       padding: 24px 20px;
       border-radius: 6px;
@@ -837,7 +836,7 @@
       <button type="submit" id="submitBtn" disabled>Подать самодекларацию</button>
     </form>
 
-    <!-- УСПЕШНОЕ СООБЩЕНИЕ (до нажатия скрыто) -->
+    <!-- УСПЕШНОЕ СООБЩЕНИЕ (скрыто до отправки) -->
     <div id="success-message" style="display: none; margin-top: 12px;">
       <p><strong>Спасибо!</strong> Ваша самодекларация принята к рассмотрению. В случае необходимости мы свяжемся с вами по предоставленным данным.</p>
     </div>
@@ -1062,14 +1061,14 @@
             jsPDF:       { unit: 'mm', format: 'a4', orientation: 'portrait' }
           };
 
-          // Генерируем PDF → получаем Blob → сразу скачиваем → скрываем блок → показываем сообщение и кнопку «Поделиться»
+          // Генерируем PDF → получаем Blob → скачиваем → скрываем блок → показываем сообщение и кнопку «Поделиться»
           html2pdf()
             .set(opt)
             .from(pdfElement)
             .toPdf()
             .outputPdf('blob')
             .then((blob) => {
-              // 1) Принудительно скачиваем PDF
+              // 1) Автоматически скачиваем PDF
               const url = URL.createObjectURL(blob);
               const link = document.createElement('a');
               link.href = url;
@@ -1079,23 +1078,25 @@
               document.body.removeChild(link);
               URL.revokeObjectURL(url);
 
-              // 2) Скрываем PDF-блок (он нам больше не нужен на экране)
+              // 2) Скрываем PDF-блок (понятно, нам он теперь не нужен на экране)
               pdfElement.style.display = 'none';
 
-              // 3) Скрываем форму, показываем сообщение об успешной отправке
+              // 3) Скрываем форму, показываем сообщение об успехе
               document.getElementById('declarationForm').style.display = 'none';
               document.getElementById('success-message').style.display = 'block';
 
-              // 4) Создаём File из Blob — он понадобится для Web Share API
+              // 4) Создаём File из Blob для Web Share API
               const file = new File([blob], 'declaration.pdf', { type: 'application/pdf' });
 
-              // 5) Показываем кнопку «Поделиться PDF»
+              // 5) Показываем и активируем кнопку «Поделиться PDF»
               const shareBtn = document.getElementById('sharePdfButton');
               shareBtn.style.display = 'inline-block';
 
-              // При клике «Поделиться» пытаемся вызвать Web Share API (если поддерживается)
+              // Добавляем console.log, чтобы точно увидеть, что клик ловится
               shareBtn.onclick = async () => {
                 console.log('Нажата «Поделиться PDF»');
+
+                // Если поддерживается Web Share API с файлами
                 if (navigator.canShare && navigator.canShare({ files: [file] })) {
                   try {
                     await navigator.share({
@@ -1105,7 +1106,7 @@
                     });
                   } catch (err) {
                     console.error('Ошибка шаринга:', err);
-                    // Если Web Share API упадёт — просто скачиваем файл ещё раз
+                    // Если Web Share упадёт — просто скачиваем файл снова
                     const fallbackUrl = URL.createObjectURL(blob);
                     const fallbackLink = document.createElement('a');
                     fallbackLink.href = fallbackUrl;
@@ -1116,8 +1117,8 @@
                     URL.revokeObjectURL(fallbackUrl);
                   }
                 } else {
-                  console.log('Web Share API не поддерживается, скачиваем файл…');
-                  // fallback — скачиваем файл
+                  console.log('Web Share API не поддерживается, выполняем скачивание…');
+                  // fallback: скачиваем файл
                   const fallbackUrl = URL.createObjectURL(blob);
                   const fallbackLink = document.createElement('a');
                   fallbackLink.href = fallbackUrl;
