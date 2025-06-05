@@ -1084,10 +1084,11 @@
 
           // 5.6) Здесь — единственное изменение: убираем .toPdf()
           html2pdf()
-            .set(opt)
-            .from(pdfElement)
-            .outputPdf('blob')
-            .then((blob) => {
+              .set(opt)
+              .from(pdfElement)
+              .toPdf()
+              .output('blob')
+              .then(blob => {
               // 5.6.1) Автоматическая загрузка PDF
               const url = URL.createObjectURL(blob);
               const link = document.createElement('a');
