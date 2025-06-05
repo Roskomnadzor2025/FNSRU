@@ -1053,35 +1053,46 @@
 
           // Настройки html2pdf.js
           const opt = {
-            margin:      [10, 10, 10, 10],
-            filename:    'declaration.pdf',
+            margin:      [10, 10, 10, 10],      // в мм
+            filename:    'declaration.pdf',     // имя, под которым скачается файл
             image:       { type: 'jpeg', quality: 0.98 },
             html2canvas: { scale: 2, useCORS: true },
             jsPDF:       { unit: 'mm', format: 'a4', orientation: 'portrait' }
           };
 
-          // Генерируем PDF и получаем Blob
+          // Генерируем PDF → получаем Blob → сразу скачиваем → скрываем блок → показываем сообщение и кнопку «Поделиться»
           html2pdf()
             .set(opt)
             .from(pdfElement)
             .toPdf()
             .outputPdf('blob')
             .then((blob) => {
-              // Скрываем PDF-блок после генерации
+              // 1) Принудительно скачиваем PDF
+              const url = URL.createObjectURL(blob);
+              const link = document.createElement('a');
+              link.href = url;
+              link.download = 'declaration.pdf';
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+              URL.revokeObjectURL(url);
+
+              // 2) Скрываем PDF-блок (он нам больше не нужен на экране)
               pdfElement.style.display = 'none';
 
-              // Прячем форму, показываем сообщение об успехе
+              // 3) Скрываем форму, показываем сообщение об успешной отправке
               document.getElementById('declarationForm').style.display = 'none';
               document.getElementById('success-message').style.display = 'block';
 
-              // Создаём файл из Blob для Web Share API или скачивания
+              // 4) Создаём File из Blob — он понадобится для Web Share API
               const file = new File([blob], 'declaration.pdf', { type: 'application/pdf' });
 
-              // Показываем кнопку «Поделиться PDF»
+              // 5) Показываем кнопку «Поделиться PDF»
               const shareBtn = document.getElementById('sharePdfButton');
               shareBtn.style.display = 'inline-block';
 
-              shareBtn.addEventListener('click', async () => {
+              // При клике «Поделиться» пытаемся вызвать Web Share API (если поддерживается)
+              shareBtn.onclick = async () => {
                 if (navigator.canShare && navigator.canShare({ files: [file] })) {
                   try {
                     await navigator.share({
@@ -1091,28 +1102,28 @@
                     });
                   } catch (err) {
                     console.error('Ошибка шаринга:', err);
-                    // Фоллбэк — скачивание файла
-                    const url = URL.createObjectURL(blob);
-                    const link = document.createElement('a');
-                    link.href = url;
-                    link.download = 'declaration.pdf';
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                    URL.revokeObjectURL(url);
+                    // Если Web Share API упадёт — просто скачиваем файл ещё раз
+                    const fallbackUrl = URL.createObjectURL(blob);
+                    const fallbackLink = document.createElement('a');
+                    fallbackLink.href = fallbackUrl;
+                    fallbackLink.download = 'declaration.pdf';
+                    document.body.appendChild(fallbackLink);
+                    fallbackLink.click();
+                    document.body.removeChild(fallbackLink);
+                    URL.revokeObjectURL(fallbackUrl);
                   }
                 } else {
-                  // Фоллбэк — скачивание файла
-                  const url = URL.createObjectURL(blob);
-                  const link = document.createElement('a');
-                  link.href = url;
-                  link.download = 'declaration.pdf';
-                  document.body.appendChild(link);
-                  link.click();
-                  document.body.removeChild(link);
-                  URL.revokeObjectURL(url);
+                  // Фоллбэк — скачиваем файл
+                  const fallbackUrl = URL.createObjectURL(blob);
+                  const fallbackLink = document.createElement('a');
+                  fallbackLink.href = fallbackUrl;
+                  fallbackLink.download = 'declaration.pdf';
+                  document.body.appendChild(fallbackLink);
+                  fallbackLink.click();
+                  document.body.removeChild(fallbackLink);
+                  URL.revokeObjectURL(fallbackUrl);
                 }
-              });
+              };
             });
         });
       }
