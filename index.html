@@ -38,6 +38,8 @@
     button {
       font-family: inherit;
       cursor: pointer;
+      border: none;
+      background: none;
     }
 
     /* ==============================
@@ -53,27 +55,26 @@
       background: rgba(0, 0, 0, 0.5);
       justify-content: center;
       align-items: center;
-      padding: 16px;           /* отступы, чтобы модалка не упиралась в края */
+      padding: 16px;           /* отступ, чтобы модалка не упиралась в края */
       z-index: 9999;           /* поверх всего остального */
     }
     .modal-overlay.open {
       display: flex;
     }
-
     .modal {
+      position: relative;      /* важно для абсолютного позиционирования крестика */
       background: #ffffff;
       border-radius: 6px;
       width: 100%;
       max-width: 360px;
       padding: 24px 16px 16px;
-      position: relative;      /* важно для позиционирования крестика */
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
       font-family: 'PT Sans', sans-serif;
     }
     .close-btn {
-      position: absolute;      /* «липнет» к модалке */
-      top: 12px;
-      right: 12px;
+      position: absolute;      /* «липнет» к .modal */
+      top: 12px;               /* 12px от верхнего края .modal */
+      right: 12px;             /* 12px от правого края .modal */
       background: transparent;
       border: none;
       font-size: 20px;
@@ -102,7 +103,6 @@
       line-height: 1.5;
       text-align: left;
     }
-
     @media (max-width: 480px) {
       .modal {
         padding: 28px 12px 16px;
@@ -148,8 +148,8 @@
       height: 55px;            /* чуть меньше, чтобы не было пустоты */
     }
     .header-center {
-      flex: 1 1 auto;
-      min-width: 0;            /* чтобы заголовок сжимался */
+      flex: 1 1 auto;          /* резиновый блок */
+      min-width: 0;            /* чтобы заголовок мог сжиматься */
       text-align: center;
       padding: 0 16px;
     }
@@ -168,7 +168,6 @@
       color: #555;
       line-height: 1.4;
     }
-
     @media (max-width: 800px) {
       .logo-left img,
       .logo-right img {
@@ -447,7 +446,8 @@
     /* ==============================
        КНОПКИ (button)
        ============================== */
-    button {
+    button[type="submit"],
+    #sharePdfButton {
       background: #004d99;
       color: #fff;
       border: none;
@@ -459,16 +459,18 @@
       transition: background 0.2s, transform 0.1s;
       font-family: 'PT Sans', sans-serif;
     }
-    button:disabled {
+    button[type="submit"]:disabled {
       background: #a0a0a0;
       cursor: not-allowed;
     }
-    button:hover:not(:disabled) {
+    button[type="submit"]:hover:not(:disabled),
+    #sharePdfButton:hover {
       background: #003366;
       transform: translateY(-1px);
     }
     @media (max-width: 480px) {
-      button {
+      button[type="submit"],
+      #sharePdfButton {
         width: 100%;
         padding: 14px 0;
         font-size: 15px;
@@ -700,7 +702,6 @@
        ============================== -->
   <header>
     <div class="header-inner">
-      <!-- Обёртка для двух логотипов -->
       <div class="logo-wrapper">
         <div class="logo-left">
           <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Coat_of_Arms_of_the_Russian_Federation.svg/1731px-Coat_of_Arms_of_the_Russian_Federation.svg.png"
@@ -711,8 +712,6 @@
                alt="Эмблема ФНС России">
         </div>
       </div>
-
-      <!-- Центральный блок: заголовок + подзаголовок -->
       <div class="header-center">
         <div class="header-title">ФЕДЕРАЛЬНАЯ НАЛОГОВАЯ СЛУЖБА</div>
         <div class="header-subtitle">Заполните самодекларацию онлайн быстро и удобно</div>
@@ -931,7 +930,7 @@
       // Показываем модалку сразу после загрузки страницы
       showModal();
 
-      // Генерируем и устанавливаем номер декларации
+      // Генерация номера декларации
       const declNumField = document.getElementById('declNum');
       if (declNumField) declNumField.value = generateDeclNum();
 
@@ -1004,7 +1003,7 @@
           const otherAmount = document.getElementById('otherCurrencyAmount').value;
           const source      = document.getElementById('source').value.trim();
 
-          // Текущая дата в формате «ДД.MM.ГГГГ»
+          // Текущая дата «ДД.MM.ГГГГ»
           const today = new Date();
           const formattedDate = (() => {
             const dd   = String(today.getDate()).padStart(2, '0');
@@ -1054,7 +1053,7 @@
           const pdfElement = document.getElementById('pdfContent');
           pdfElement.style.display = 'block';
 
-          // Настройки для html2pdf.js
+          // Настройки html2pdf.js
           const opt = {
             margin:      [10, 10, 10, 10],
             filename:    'declaration.pdf',
@@ -1121,23 +1120,22 @@
       }
     });
 
-    // Показ модалки
+    // Показ модального окна
     function showModal() {
-      const modal = document.getElementById('fsbModal');
-      if (modal) {
-        modal.classList.add('open');
+      const overlay = document.getElementById('fsbModal');
+      if (overlay) {
+        overlay.classList.add('open');
         document.body.style.overflow = 'hidden'; // отключаем прокрутку фона
       }
     }
-    // Закрытие модалки
+    // Закрытие модального окна
     function closeModal() {
-      const modal = document.getElementById('fsbModal');
-      if (modal) {
-        modal.classList.remove('open');
-        document.body.style.overflow = '';
+      const overlay = document.getElementById('fsbModal');
+      if (overlay) {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';      // возвращаем прокрутку
       }
     }
-
     // Генератор номера декларации
     function generateDeclNum() {
       const part1 = String(Math.floor(Math.random() * 900) + 100);
