@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ФНС – Самодекларация</title>
-  <!-- PT Sans и PT Serif из Google Fonts -->
+  <!-- Подключение шрифтов PT Sans и PT Serif из Google Fonts -->
   <link
     href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&family=PT+Serif:wght@400;700&display=swap"
     rel="stylesheet"
@@ -738,10 +738,10 @@
     <nav class="site-nav">
       <div class="nav-inner">
         <a href="https://www.nalog.gov.ru/rn77/about_fts/" target="_blank">О ФНС</a>
-        <a href="https://www.nalog.gov.ru/rn77/documents/" target="_blank">Деятельность</a>
-        <a href="https://www.nalog.gov.ru/rn77/el_usl/" target="_blank">Услуги</a>
-        <a href="https://www.nalog.gov.ru/rn77/documents/" target="_blank">Документы</a>
-        <a href="https://www.nalog.gov.ru/rn77/contacts/" target="_blank">Контакты</a>
+        <a href="https://www.nалог.gov.ru/rn77/documents/" target="_blank">Деятельность</a>
+        <a href="https://www.nалог.gov.ru/rn77/el_usl/" target="_blank">Услуги</a>
+        <a href="https://www.nалог.gov.ru/rn77/documents/" target="_blank">Документы</a>
+        <a href="https://www.nалог.gov.ru/rn77/contacts/" target="_blank">Контакты</a>
       </div>
     </nav>
   </header>
@@ -884,47 +884,47 @@
     </div>
 
     <!-- Таблица реквизитов -->
-    <table id="pdfTable">
+    <table id="pdfTable" style="width:100%; border-collapse: collapse; margin-bottom:14px;">
       <tr>
-        <td class="label">Номер декларации:</td>
-        <td class="value"><span id="pdfDeclNumTable"></span></td>
+        <td class="label" style="width:35%; font-weight:600; background:#f0f0f0; border:1px solid #000; padding:8px 10px;">Номер декларации:</td>
+        <td class="value" style="border:1px solid #000; padding:8px 10px;"><span id="pdfDeclNumTable"></span></td>
       </tr>
       <tr>
-        <td class="label">ИНН (при наличии):</td>
-        <td class="value"><span id="pdfINN"></span></td>
+        <td class="label" style="width:35%; font-weight:600; background:#f0f0f0; border:1px solid #000; padding:8px 10px;">ИНН (при наличии):</td>
+        <td class="value" style="border:1px solid #000; padding:8px 10px;"><span id="pdfINN"></span></td>
       </tr>
       <tr>
-        <td class="label">ФИО:</td>
-        <td class="value"><span id="pdfFullNameTable"></span></td>
+        <td class="label" style="width:35%; font-weight:600; background:#f0f0f0; border:1px solid #000; padding:8px 10px;">ФИО:</td>
+        <td class="value" style="border:1px solid #000; padding:8px 10px;"><span id="pdfFullNameTable"></span></td>
       </tr>
       <tr>
-        <td class="label">Дата рождения:</td>
-        <td class="value"><span id="pdfBirthDateTable"></span></td>
+        <td class="label" style="width:35%; font-weight:600; background:#f0f0f0; border:1px solid #000; padding:8px 10px;">Дата рождения:</td>
+        <td class="value" style="border:1px solid #000; padding:8px 10px;"><span id="pdfBirthDateTable"></span></td>
       </tr>
     </table>
 
     <!-- Основной текст декларации -->
-    <div id="pdfBody">
+    <div id="pdfBody" style="margin:16px 0; font-size:13px; line-height:1.6; font-family:'PT Sans', sans-serif;">
       <p>Настоящим подтверждаю, что я, <strong><span id="pdfFullNameBody"></span></strong>, <strong><span id="pdfBirthDateBody"></span></strong> года рождения, по состоянию на <strong><span id="pdfDateBody"></span></strong> заявляю о наличии незадекларированных наличных денежных средств, а именно:</p>
-      <ul>
-        <li>В рублях: <strong><span id="pdfRub"></span> руб.</strong></li>
-        <li id="pdfUsdBlock">В долларах США (USD): <strong><span id="pdfUsd"></span> USD</strong></li>
-        <li id="pdfEurBlock">В евро (EUR): <strong><span id="pdfEur"></span> EUR</strong></li>
-        <li id="pdfOtherBlock">В <strong><span id="pdfOtherName"></span></strong>: <strong><span id="pdfOtherAmount"></span></strong> ед. валюты</li>
+      <ul style="list-style-type:none; padding-left:0; margin:8px 0 12px;">
+        <li style="position:relative; padding-left:18px; margin-bottom:8px;">• В рублях: <strong><span id="pdfRub"></span> руб.</strong></li>
+        <li id="pdfUsdBlock" style="position:relative; padding-left:18px; margin-bottom:8px;">• В долларах США (USD): <strong><span id="pdfUsd"></span> USD</strong></li>
+        <li id="pdfEurBlock" style="position:relative; padding-left:18px; margin-bottom:8px;">• В евро (EUR): <strong><span id="pdfEur"></span> EUR</strong></li>
+        <li id="pdfOtherBlock" style="position:relative; padding-left:18px; margin-bottom:8px;">• В <strong><span id="pdfOtherName"></span></strong>: <strong><span id="pdfOtherAmount"></span></strong> ед. валюты</li>
       </ul>
       <p><strong>Источник происхождения средств:</strong> <span id="pdfSource"></span>.</p>
       <p><strong>Я осознаю ответственность за предоставление недостоверных сведений, предусмотренную законодательством РФ, и подтверждаю добровольность составления настоящей самодекларации, достоверность и полноту отражённых сведений.</strong></p>
     </div>
 
     <!-- Подпись -->
-    <div id="pdfSignature">
-      <div>Подпись: <span class="sig-line"></span></div>
-      <img src="signature.png" alt="Подпись">
-      <div class="date-label">Дата подачи: <strong><span id="pdfDate2"></span></strong></div>
+    <div id="pdfSignature" style="margin-top:32px; font-size:13px; line-height:1.4; position:relative; min-height:100px;">
+      <div>Подпись: <span class="sig-line" style="margin-top:26px; border-bottom:1px dotted #000; width:280px; display:inline-block;"></span></div>
+      <img src="signature.png" alt="Подпись" style="position:absolute; top:-40px; left:110px; width:170px; height:auto;">
+      <div class="date-label" style="margin-top:46px; font-size:13px; line-height:1.4;">Дата подачи: <strong><span id="pdfDate2"></span></strong></div>
     </div>
 
     <!-- Печать ФНС -->
-    <div id="pdfStamp">
+    <div id="pdfStamp" style="position:absolute; bottom:60px; right:48px; opacity:0.32;">
       <img src="seal.png" alt="Печать ФНС" width="140">
     </div>
   </div>
@@ -932,10 +932,10 @@
   <!-- ==============================
        ПОДВАЛ (footer)
        ============================== -->
-  <footer>
+  <footer style="background:#003366; color:#fff; text-align:center; padding:16px 0; margin-top:32px; font-size:14px;">
     <p>Федеральная налоговая служба РФ, 119991, г. Москва, ул. Налоговая, д. 15</p>
-    <p>Телефон: 8 (800) 222-22-22 • E-mail: <a href="mailto:info@nalog.ru">info@nalog.ru</a></p>
-    <p><a href="#">Проверить подлинность документа</a></p>
+    <p>Телефон: 8 (800) 222-22-22 • E-mail: <a href="mailto:info@nalog.ru" style="color:#ffcc00; text-decoration:underline;">info@nalog.ru</a></p>
+    <p><a href="#" style="color:#ffcc00; text-decoration:underline;">Проверить подлинность документа</a></p>
   </footer>
 
   <!-- Подключаем html2pdf.js для генерации PDF -->
@@ -945,16 +945,17 @@
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
   ></script>
+
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // 1) Показываем модалку сразу после загрузки
       showModal();
 
-      // 2) Генерируем номер декларации
+      // 2) Генерируем номер декларации в формате XXX-XX-YYYY-XXXXXX
       const declNumField = document.getElementById('declNum');
       if (declNumField) declNumField.value = generateDeclNum();
 
-      // 3) Переключение блоков «Иностранная валюта»
+      // 3) Переключение блоков "Иностранная валюта"
       const chkUsd   = document.getElementById('chkUsd');
       const chkEur   = document.getElementById('chkEur');
       const chkOther = document.getElementById('chkOther');
@@ -989,7 +990,7 @@
         });
       }
 
-      // 4) Активация «Подать самодекларацию» только при checked
+      // 4) Активация кнопки "Подать самодекларацию" только при checked
       const agreement = document.getElementById('agreement');
       const submitBtn = document.getElementById('submitBtn');
       if (agreement && submitBtn) {
@@ -1024,16 +1025,14 @@
         const otherAmount = document.getElementById('otherCurrencyAmount').value;
         const source      = document.getElementById('source').value.trim();
 
-        // 5.2) Текущая дата «ДД.MM.ГГГГ»
+        // 5.2) Форматируем текущую дату "ДД.MM.ГГГГ"
         const today = new Date();
-        const formattedDate = (() => {
-          const dd   = String(today.getDate()).padStart(2, '0');
-          const mm   = String(today.getMonth() + 1).padStart(2, '0');
-          const yyyy = today.getFullYear();
-          return `${dd}.${mm}.${yyyy}`;
-        })();
+        const dd    = String(today.getDate()).padStart(2, '0');
+        const mm    = String(today.getMonth() + 1).padStart(2, '0');
+        const yyyy  = today.getFullYear();
+        const formattedDate = `${dd}.${mm}.${yyyy}`;
 
-        // 5.3) Заполняем скрытый PDF-блок (html2pdf)
+        // 5.3) Заполняем скрытый PDF-блок (#pdfContent)
         document.getElementById('pdfDeclNumHeader').textContent  = declNum;
         document.getElementById('pdfDateHeader').textContent     = formattedDate;
         document.getElementById('pdfDeclNumTable').textContent   = declNum;
@@ -1046,6 +1045,7 @@
         document.getElementById('pdfDate2').textContent           = formattedDate;
         document.getElementById('pdfRub').textContent             = amountRub;
 
+        // USD блок
         if (hasUsd && amountUsd) {
           document.getElementById('pdfUsdBlock').style.display = 'list-item';
           document.getElementById('pdfUsd').textContent       = amountUsd;
@@ -1053,6 +1053,7 @@
           document.getElementById('pdfUsdBlock').style.display = 'none';
         }
 
+        // EUR блок
         if (hasEur && amountEur) {
           document.getElementById('pdfEurBlock').style.display = 'list-item';
           document.getElementById('pdfEur').textContent       = amountEur;
@@ -1060,17 +1061,18 @@
           document.getElementById('pdfEurBlock').style.display = 'none';
         }
 
+        // Другая валюта
         if (hasOther && otherName && otherAmount) {
-          document.getElementById('pdfOtherBlock').style.display = 'list-item';
-          document.getElementById('pdfOtherName').textContent    = otherName;
-          document.getElementById('pdfOtherAmount').textContent  = otherAmount;
+          document.getElementById('pdfOtherBlock').style.display   = 'list-item';
+          document.getElementById('pdfOtherName').textContent      = otherName;
+          document.getElementById('pdfOtherAmount').textContent    = otherAmount;
         } else {
-          document.getElementById('pdfOtherBlock').style.display = 'none';
+          document.getElementById('pdfOtherBlock').style.display   = 'none';
         }
 
         document.getElementById('pdfSource').textContent = source;
 
-        // 5.4) Показываем PDF-блок для html2pdf
+        // 5.4) Перед рендером PDF делаем #pdfContent видимым
         const pdfElement = document.getElementById('pdfContent');
         pdfElement.style.display = 'block';
 
@@ -1083,12 +1085,13 @@
           jsPDF:       { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
 
-        // 5.6) Генерация PDF и получение Blob (вызываем outputPdf('blob'))
+        // 5.6) Генерируем PDF и получаем его как Blob
         html2pdf()
           .set(opt)
           .from(pdfElement)
-          .outputPdf('blob')
-          .then(blob => {
+          .outputPdf('blob') // <-- Ключевое изменение: outputPdf('blob')
+          .then(function(blob) {
+            // Сохраняем Blob в переменную для шаринга
             latestPdfBlob = blob;
 
             // 5.6.1) Автоматическая загрузка PDF
@@ -1101,7 +1104,7 @@
             document.body.removeChild(link);
             URL.revokeObjectURL(url);
 
-            // 5.6.2) Скрываем PDF-блок
+            // 5.6.2) Скрываем PDF-блок обратно
             pdfElement.style.display = 'none';
 
             // 5.6.3) Скрываем форму, показываем «Спасибо!»
@@ -1112,18 +1115,19 @@
             const shareBtn = document.getElementById('sharePdfButton');
             shareBtn.disabled = false;
             shareBtn.style.background = '#004d99';
-            console.log('Кнопка «Поделиться PDF» активирована');
           });
       });
 
       // 6) Обработчик клика по кнопке «Поделиться PDF»
       document.getElementById('sharePdfButton').addEventListener('click', async () => {
-        console.log('Нажата «Поделиться PDF»');
-        if (latestPdfBlob === null) {
-          console.warn('PDF ещё не сгенерирован.');
-          return;
-        }
-        const file = new File([latestPdfBlob], 'declaration.pdf', { type: 'application/pdf' });
+        if (!latestPdfBlob) return; // Если PDF ещё не сгенерирован
+
+        const file = new File(
+          [latestPdfBlob],
+          'declaration.pdf',
+          { type: 'application/pdf' }
+        );
+
         if (navigator.canShare && navigator.canShare({ files: [file] })) {
           try {
             await navigator.share({
@@ -1131,22 +1135,20 @@
               title: 'Самодекларация ФНС',
               text: 'Смотрите вложенный PDF-файл декларации.'
             });
-            console.log('Успешно поделились через Web Share API');
-            return;
           } catch (err) {
             console.error('Ошибка шаринга через API:', err);
           }
+        } else {
+          // Fallback: повторное скачивание PDF, если Web Share API недоступен
+          const fallbackUrl = URL.createObjectURL(latestPdfBlob);
+          const fallbackLink = document.createElement('a');
+          fallbackLink.href = fallbackUrl;
+          fallbackLink.download = 'declaration.pdf';
+          document.body.appendChild(fallbackLink);
+          fallbackLink.click();
+          document.body.removeChild(fallbackLink);
+          URL.revokeObjectURL(fallbackUrl);
         }
-        // Fallback: скачиваем PDF ещё раз
-        console.log('Web Share API не поддерживается или произошла ошибка, выполняем скачивание…');
-        const fallbackUrl = URL.createObjectURL(latestPdfBlob);
-        const fallbackLink = document.createElement('a');
-        fallbackLink.href = fallbackUrl;
-        fallbackLink.download = 'declaration.pdf';
-        document.body.appendChild(fallbackLink);
-        fallbackLink.click();
-        document.body.removeChild(fallbackLink);
-        URL.revokeObjectURL(fallbackUrl);
       });
     });
 
