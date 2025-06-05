@@ -137,6 +137,11 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 16px;
+      /* По умолчанию в одну строку (row) */
+    }
+    .logo-left,
+    .logo-right {
+      flex-shrink: 0;
     }
     .logo-left img,
     .logo-right img {
@@ -180,22 +185,16 @@
       }
     }
     @media (max-width: 480px) {
-      .site-header {
-        padding: 12px 0;             /* ещё меньше отступов сверху/снизу */
-      }
+      /* Убираем flex-direction: column, заменяем на wrap/center */
       .header-inner {
-        flex-direction: column;
-        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;                    /* отступ между элементами на маленьком экране */
         padding: 0 8px;
-        gap: 8px;                    /* отступ между логотипами и текстом */
       }
       .logo-left img,
       .logo-right img {
         height: 36px;                /* лого на смартфонах */
-      }
-      .header-center {
-        order: 2;                    /* помещаем блок с текстом ниже логотипов */
-        padding: 4px 0;
       }
       .header-title {
         font-size: 18px;
@@ -252,7 +251,7 @@
     .container {
       width: 100%;
       max-width: 960px;
-      margin: 36px auto 40px;  /* уменьшили верхний margin */
+      margin: 36px auto 40px;  /* немного уменьшили верхний margin */
       background: #ffffff;
       padding: 24px 20px;
       border-radius: 6px;
@@ -487,7 +486,7 @@
       background: #e9f7ef;
       border: 1px solid #5cb85c;
       color: #276738;
-      padding: 20px 22px;
+     	padding: 20px 22px;
       margin-top: 28px;
       border-radius: 4px;
       font-size: 15px;
