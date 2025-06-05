@@ -137,11 +137,12 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 16px;
-      /* По умолчанию в одну строку (row) */
+      /* ВНИМАНИЕ: flex-wrap: nowrap - чтобы шапка всегда оставалась в одну строку */
+      flex-wrap: nowrap;
     }
     .logo-left,
     .logo-right {
-      flex-shrink: 0;
+      flex-shrink: 0; /* чтобы логотипы не сжимались сильнее, чем нужно */
     }
     .logo-left img,
     .logo-right img {
@@ -150,7 +151,7 @@
     }
     .header-center {
       flex: 1 1 auto;                /* «растягиваемый» блок */
-      min-width: 0;                  /* чтобы текст мог сжиматься */
+      min-width: 0;                  /* позволяет тексту переноситься внутри */
       text-align: center;
       padding: 0 16px;
     }
@@ -160,7 +161,7 @@
       font-weight: 700;
       color: #002b5c;
       line-height: 1.2;
-      word-break: break-word;
+      word-break: break-word; /* разрешаем перенос слов, чтобы вписаться */
     }
     .header-subtitle {
       margin-top: 4px;
@@ -185,16 +186,12 @@
       }
     }
     @media (max-width: 480px) {
-      /* Убираем flex-direction: column, заменяем на wrap/center */
-      .header-inner {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 8px;                    /* отступ между элементами на маленьком экране */
-        padding: 0 8px;
-      }
       .logo-left img,
       .logo-right img {
-        height: 36px;                /* лого на смартфонах */
+        height: 36px;                /* ещё меньше логотипы */
+      }
+      .header-center {
+        padding: 0 8px;
       }
       .header-title {
         font-size: 18px;
@@ -215,9 +212,11 @@
       padding: 8px 0;                /* вертикальный отступ внутри меню */
     }
     .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
       display: flex;
       justify-content: center;
-      flex-wrap: wrap;
+      flex-wrap: wrap; /* пункты меню могут переноситься, если не помещаются */
       padding: 0 16px;
     }
     .nav-inner a {
@@ -240,7 +239,6 @@
     @media (max-width: 480px) {
       .site-nav {
         margin: 8px auto 0;          /* чуть меньше отступ сверху */
-        border-radius: 4px;
         padding: 6px 0;
       }
     }
@@ -486,7 +484,7 @@
       background: #e9f7ef;
       border: 1px solid #5cb85c;
       color: #276738;
-     	padding: 20px 22px;
+      padding: 20px 22px;
       margin-top: 28px;
       border-radius: 4px;
       font-size: 15px;
@@ -704,16 +702,20 @@
   <header class="site-header">
     <div class="header-inner">
       <div class="logo-left">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Coat_of_Arms_of_the_Russian_Federation.svg/1731px-Coat_of_Arms_of_the_Russian_Federation.svg.png"
-             alt="Герб РФ">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Coat_of_Arms_of_the_Russian_Federation.svg/1731px-Coat_of_Arms_of_the_Russian_Federation.svg.png"
+          alt="Герб РФ"
+        />
       </div>
       <div class="header-center">
         <div class="header-title">ФЕДЕРАЛЬНАЯ НАЛОГОВАЯ СЛУЖБА</div>
         <div class="header-subtitle">Заполните самодекларацию онлайн быстро и удобно</div>
       </div>
       <div class="logo-right">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Emblem_of_the_Federal_Tax_Service.svg/1964px-Emblem_of_the_Federal_Tax_Service.svg.png"
-             alt="Эмблема ФНС России">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Emblem_of_the_Federal_Tax_Service.svg/1964px-Emblem_of_the_Federal_Tax_Service.svg.png"
+          alt="Эмблема ФНС России"
+        />
       </div>
     </div>
 
