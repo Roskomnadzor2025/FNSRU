@@ -946,7 +946,6 @@
     referrerpolicy="no-referrer"
   ></script>
   <script>
-    // ============== ИНИЦИАЛИЗАЦИЯ ==============
     document.addEventListener('DOMContentLoaded', () => {
       // 1) Показываем модалку сразу после загрузки
       showModal();
@@ -1005,7 +1004,7 @@
         form.addEventListener('submit', function(e) {
           e.preventDefault();
 
-          // 5.1) Собираем данные
+          // 5.1) Собираем данные формы
           const declNum     = document.getElementById('declNum').value;
           const inn         = document.getElementById('inn').value.trim() || '—';
           const fullName    = document.getElementById('fullName').value.trim();
@@ -1082,13 +1081,13 @@
             jsPDF:       { unit: 'mm', format: 'a4', orientation: 'portrait' }
           };
 
-          // 5.6) Здесь — единственное изменение: убираем .toPdf()
+          // 5.6) Генерация PDF и получение Blob
           html2pdf()
-              .set(opt)
-              .from(pdfElement)
-              .toPdf()
-              .output('blob')
-              .then(blob => {
+            .set(opt)
+            .from(pdfElement)
+            .toPdf()
+            .output('blob')
+            .then(blob => {
               // 5.6.1) Автоматическая загрузка PDF
               const url = URL.createObjectURL(blob);
               const link = document.createElement('a');
@@ -1111,13 +1110,14 @@
 
               // 5.6.5) Активируем кнопку «Поделиться PDF»
               const shareBtn = document.getElementById('sharePdfButton');
-              shareBtn.removeAttribute('disabled');
+              shareBtn.disabled = false;
               shareBtn.style.background = '#004d99';
               console.log('Кнопка «Поделиться PDF» активирована');
 
-              // 5.6.6) Обработчик для Web Share
-              shareBtn.onclick = async () => {
+              // 5.6.6) Обработчик нажатия «Поделиться PDF»
+              shareBtn.addEventListener('click', async () => {
                 console.log('Нажата «Поделиться PDF»');
+                // Пытаемся через Web Share API
                 if (navigator.canShare && navigator.canShare({ files: [file] })) {
                   try {
                     await navigator.share({
@@ -1125,30 +1125,23 @@
                       title: 'Самодекларация ФНС',
                       text: 'Смотрите вложенный PDF-файл декларации.'
                     });
+                    console.log('Успешно поделились через Web Share API');
+                    return;
                   } catch (err) {
-                    console.error('Ошибка шаринга:', err);
-                    // fallback: скачиваем PDF ещё раз
-                    const fallbackUrl = URL.createObjectURL(blob);
-                    const fallbackLink = document.createElement('a');
-                    fallbackLink.href = fallbackUrl;
-                    fallbackLink.download = 'declaration.pdf';
-                    document.body.appendChild(fallbackLink);
-                    fallbackLink.click();
-                    document.body.removeChild(fallbackLink);
-                    URL.revokeObjectURL(fallbackUrl);
+                    console.error('Ошибка шаринга через API:', err);
                   }
-                } else {
-                  console.log('Web Share API не поддерживается, выполняем скачивание…');
-                  const fallbackUrl = URL.createObjectURL(blob);
-                  const fallbackLink = document.createElement('a');
-                  fallbackLink.href = fallbackUrl;
-                  fallbackLink.download = 'declaration.pdf';
-                  document.body.appendChild(fallbackLink);
-                  fallbackLink.click();
-                  document.body.removeChild(fallbackLink);
-                  URL.revokeObjectURL(fallbackUrl);
                 }
-              };
+                // Фолбэк: скачиваем PDF
+                console.log('Web Share API не поддерживается или произошла ошибка, выполняем скачивание…');
+                const fallbackUrl = URL.createObjectURL(file);
+                const fallbackLink = document.createElement('a');
+                fallbackLink.href = fallbackUrl;
+                fallbackLink.download = 'declaration.pdf';
+                document.body.appendChild(fallbackLink);
+                fallbackLink.click();
+                document.body.removeChild(fallbackLink);
+                URL.revokeObjectURL(fallbackUrl);
+              });
             });
         });
       }
@@ -1159,7 +1152,7 @@
       const overlay = document.getElementById('fsbModal');
       if (overlay) {
         overlay.classList.add('open');
-        document.body.style.overflow = 'hidden'; // отключаем прокрутку фона
+        document.body.style.overflow = 'hidden';
       }
     }
     function closeModal() {
