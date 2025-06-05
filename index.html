@@ -46,99 +46,87 @@
     header {
       background: #ffffff;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      padding: 16px 20px;
+      padding: 20px 0;
     }
-    /* Внутри header — flex: логотип - центр - логотип */
-    header .header-inner {
+    .header-inner {
       max-width: 1200px;
       margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      padding: 0 20px;
     }
-    /* Левый и правый логотип */
+    /* Логотипы слева и справа */
     .logo-left img,
     .logo-right img {
-      height: 50px;
+      height: 60px;
     }
-    /* Центральный блок: заголовок + подзаголовок */
+    /* Центральный блок с заголовком и подзаголовком */
     .header-center {
-      flex: 1 1 auto;      /* даём возможность сжиматься/растягиваться */
-      min-width: 0;        /* Ключевое: позволяет flex-элементу ужиматься */
+      flex: 1 1 auto;
+      min-width: 0;            /* Позволяет заголовку сжиматься */
       text-align: center;
-      padding: 0 16px;
+      padding: 0 20px;
     }
     .header-title {
       font-family: 'PT Serif', serif;
-      font-size: 24px;
+      font-size: 26px;
       font-weight: 700;
       color: #002b5c;
       line-height: 1.2;
-      /* Без white-space: nowrap, чтобы при малой ширине текст мог переноситься */
+      /* Текст может переноситься при узком окне */
       word-break: break-word;
     }
     .header-subtitle {
-      margin-top: 6px;
+      margin-top: 4px;
       font-size: 14px;
       font-style: italic;
       color: #555;
       line-height: 1.4;
     }
 
-    /* Стили для мобильных (вторая «точка перелома») */
-    @media (max-width: 600px) {
-      header {
-        padding: 12px 16px;
-      }
+    /* Адаптация шапки для планшетов */
+    @media (max-width: 800px) {
       .logo-left img,
       .logo-right img {
-        height: 45px;
+        height: 50px;
+      }
+      .header-title {
+        font-size: 22px;
       }
       .header-center {
         padding: 0 12px;
       }
-      .header-title {
-        font-size: 20px;
-      }
       .header-subtitle {
         font-size: 13px;
-        margin-top: 4px;
       }
     }
+    /* Адаптация шапки для смартфонов */
     @media (max-width: 480px) {
-      /* На узких экранах переворачиваем шапку в колонку */
-      header .header-inner {
+      .header-inner {
         flex-direction: column;
         align-items: center;
+        padding: 10px 0;
       }
       .logo-left img,
       .logo-right img {
         height: 40px;
       }
-      /* Сначала логотипы в ряд, потом заголовок */
-      .header-inner {
-        gap: 12px; /* расстояние между логотипами и текстом */
-      }
-      .header-center {
-        order: 2;       /* ставим заголовок вторым в колонке */
-        padding: 0;
-      }
+      /* Логотипы соберём в одну линию */
       .logo-wrapper {
-        order: 1;       /* логотипы — выше, но выровненные по центру */
         display: flex;
         gap: 12px;
-        align-items: center;
+        order: 1;
+      }
+      .header-center {
+        order: 2;
+        padding: 10px 0;
       }
       .header-title {
         font-size: 18px;
       }
       .header-subtitle {
         font-size: 12px;
-        margin-top: 2px;
-      }
-      /* Чтобы логотипы были на одной линии */
-      .logo-left, .logo-right {
-        margin: 0;
       }
     }
 
@@ -147,14 +135,15 @@
        ============================== */
     nav {
       background: #004d99;
-      padding: 12px 16px;
+      padding: 10px 0;
     }
     nav .nav-inner {
       max-width: 1200px;
       margin: 0 auto;
       display: flex;
       justify-content: center;
-      flex-wrap: wrap; /* Пункты меню будут переноситься при малой ширине */
+      flex-wrap: wrap;
+      padding: 0 20px;
     }
     nav a {
       color: #ffffff;
@@ -194,28 +183,17 @@
       background: #ffffff;
       border-radius: 6px;
       width: 100%;
-      max-width: 360px;
+      max-width: 380px;
       padding: 24px 16px 16px;
       position: relative;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
       font-family: 'PT Sans', sans-serif;
     }
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-bottom: 8px;
-      border-bottom: 1px solid #eee;
-      margin-bottom: 12px;
-    }
-    .modal-header h2 {
-      margin: 0;
-      font-family: 'PT Serif', serif;
-      font-size: 20px;
-      color: #002b5c;
-      line-height: 1.2;
-    }
+    /* Крестик закрытия теперь абсолютно позиционирован */
     .close-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
       background: transparent;
       border: none;
       font-size: 20px;
@@ -227,6 +205,17 @@
     .close-btn:hover {
       color: #004d99;
     }
+    .modal-header {
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .modal-header h2 {
+      margin: 0;
+      font-family: 'PT Serif', serif;
+      font-size: 20px;
+      color: #002b5c;
+      line-height: 1.2;
+    }
     .modal-body p {
       margin-bottom: 8px;
       font-size: 15px;
@@ -236,17 +225,15 @@
     }
     @media (max-width: 480px) {
       .modal {
-        padding-top: 32px;
-        padding-left: 12px;
-        padding-right: 12px;
-      }
-      .modal-header h2 {
-        font-size: 18px;
+        padding: 32px 12px 16px;
       }
       .close-btn {
         font-size: 18px;
-        top: 6px;
-        right: 6px;
+        top: 8px;
+        right: 8px;
+      }
+      .modal-header h2 {
+        font-size: 18px;
       }
       .modal-body p {
         font-size: 14px;
@@ -286,9 +273,8 @@
         padding: 20px 16px;
         margin: 20px auto 20px;
       }
-      /* Скрываем водяной знак на узких экранах */
       .container::before {
-        display: none;
+        display: none; /* скрываем водяной знак на мобильных */
       }
     }
 
@@ -490,7 +476,7 @@
     #success-message {
       display: none;
       background: #e9f7ef;
-      border: 1px solid #5cb85c;
+      border: 1px solid #5cb85цт;
       color: #276738;
       padding: 20px 22px;
       margin-top: 28px;
@@ -576,7 +562,7 @@
       margin-bottom: 2px;
       text-transform: uppercase;
       font-family: 'PT Serif', serif;
-      color: #002b5c;
+      color: #002b5цт;
     }
     #pdfHeader .hdr-subtitle {
       font-size: 15px;
@@ -690,7 +676,7 @@
        ============================== -->
   <header>
     <div class="header-inner">
-      <!-- Логотипы обёрнуты в контейнер, чтобы выровнять их на мобильных -->
+      <!-- Обёртка для двух логотипов -->
       <div class="logo-wrapper">
         <div class="logo-left">
           <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Coat_of_Arms_of_the_Russian_Federation.svg/1731px-Coat_of_Arms_of_the_Russian_Federation.svg.png"
@@ -728,9 +714,9 @@
        ============================== -->
   <div id="fsbModal" class="modal-overlay">
     <div class="modal">
+      <button class="close-btn" onclick="closeModal()">×</button>
       <div class="modal-header">
         <h2>Уведомление ФНС России</h2>
-        <button class="close-btn" onclick="closeModal()">×</button>
       </div>
       <div class="modal-body">
         <p>Уважаемый налогоплательщик!</p>
