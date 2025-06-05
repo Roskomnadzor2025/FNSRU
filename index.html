@@ -46,7 +46,7 @@
     header {
       background: #ffffff;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      padding: 20px 0;
+      padding: 16px 0; /* чуть уменьшили вертикальный padding */
     }
     .header-inner {
       max-width: 1200px;
@@ -54,27 +54,31 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 20px;
+      padding: 0 16px;
     }
-    /* Логотипы слева и справа */
+    /* Обёртка для логотипов, чтобы их легко было упаковать в одну линию */
+    .logo-wrapper {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
     .logo-left img,
     .logo-right img {
-      height: 60px;
+      height: 55px; /* чуть уменьшили высоту логотипов на десктопе, чтобы не было «слишком пусто» сверху */
     }
     /* Центральный блок с заголовком и подзаголовком */
     .header-center {
-      flex: 1 1 auto;
-      min-width: 0;            /* Позволяет заголовку сжиматься */
+      flex: 1 1 auto;   /* резиновый блок */
+      min-width: 0;     /* чтобы заголовок мог сжиматься */
       text-align: center;
-      padding: 0 20px;
+      padding: 0 16px;
     }
     .header-title {
       font-family: 'PT Serif', serif;
-      font-size: 26px;
+      font-size: 24px;
       font-weight: 700;
       color: #002b5c;
       line-height: 1.2;
-      /* Текст может переноситься при узком окне */
       word-break: break-word;
     }
     .header-subtitle {
@@ -85,42 +89,45 @@
       line-height: 1.4;
     }
 
-    /* Адаптация шапки для планшетов */
+    /* ========== Адаптация шапки ========== */
     @media (max-width: 800px) {
+      /* Для планшетов уменьшим лого и текст */
       .logo-left img,
       .logo-right img {
-        height: 50px;
+        height: 45px;
       }
       .header-title {
-        font-size: 22px;
-      }
-      .header-center {
-        padding: 0 12px;
+        font-size: 20px;
       }
       .header-subtitle {
         font-size: 13px;
       }
+      .header-inner {
+        padding: 0 12px;
+      }
     }
-    /* Адаптация шапки для смартфонов */
     @media (max-width: 480px) {
+      /* Для смартфонов: переворачиваем шапку в колонку и ещё уменьшаем padding */
+      header {
+        padding: 12px 0;
+      }
       .header-inner {
         flex-direction: column;
         align-items: center;
-        padding: 10px 0;
+        padding: 0 8px;
+        gap: 8px;
       }
       .logo-left img,
       .logo-right img {
-        height: 40px;
+        height: 36px;
       }
-      /* Логотипы соберём в одну линию */
       .logo-wrapper {
-        display: flex;
-        gap: 12px;
         order: 1;
+        gap: 12px;
       }
       .header-center {
         order: 2;
-        padding: 10px 0;
+        padding: 4px 0;
       }
       .header-title {
         font-size: 18px;
@@ -131,11 +138,11 @@
     }
 
     /* ==============================
-       НАВИГАЦИЯ (NAV-BAR) ПОД ШАПКОЙ
+       НАВИГАЦИЯ (NAV) ПОД ШАПКОЙ
        ============================== */
     nav {
       background: #004d99;
-      padding: 10px 0;
+      padding: 8px 0;  /* чуть уменьшили высоту меню */
     }
     nav .nav-inner {
       max-width: 1200px;
@@ -143,7 +150,7 @@
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      padding: 0 20px;
+      padding: 0 16px;
     }
     nav a {
       color: #ffffff;
@@ -183,13 +190,13 @@
       background: #ffffff;
       border-radius: 6px;
       width: 100%;
-      max-width: 380px;
+      max-width: 360px;
       padding: 24px 16px 16px;
-      position: relative;
+      position: relative; /* чтобы .close-btn мог позиционироваться */
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
       font-family: 'PT Sans', sans-serif;
     }
-    /* Крестик закрытия теперь абсолютно позиционирован */
+    /* Крестик закрытия: абсолютное позиционирование */
     .close-btn {
       position: absolute;
       top: 12px;
@@ -207,7 +214,8 @@
     }
     .modal-header {
       text-align: center;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
+      /* удалили flex внутри .modal-header, теперь .close-btn не влияет на расположение заголовка */
     }
     .modal-header h2 {
       margin: 0;
@@ -225,7 +233,7 @@
     }
     @media (max-width: 480px) {
       .modal {
-        padding: 32px 12px 16px;
+        padding: 28px 12px 16px;
       }
       .close-btn {
         font-size: 18px;
@@ -246,7 +254,7 @@
     .container {
       width: 100%;
       max-width: 960px;
-      margin: 40px auto 40px;
+      margin: 36px auto 40px; /* чуть уменьшили верхний margin */
       background: #ffffff;
       padding: 24px 20px;
       border-radius: 6px;
@@ -274,7 +282,7 @@
         margin: 20px auto 20px;
       }
       .container::before {
-        display: none; /* скрываем водяной знак на мобильных */
+        display: none; /* скрываем watermark на мобильных */
       }
     }
 
@@ -476,7 +484,7 @@
     #success-message {
       display: none;
       background: #e9f7ef;
-      border: 1px solid #5cb85цт;
+      border: 1px solid #5cb85c;
       color: #276738;
       padding: 20px 22px;
       margin-top: 28px;
@@ -562,7 +570,7 @@
       margin-bottom: 2px;
       text-transform: uppercase;
       font-family: 'PT Serif', serif;
-      color: #002b5цт;
+      color: #002b5c;
     }
     #pdfHeader .hdr-subtitle {
       font-size: 15px;
@@ -714,6 +722,7 @@
        ============================== -->
   <div id="fsbModal" class="modal-overlay">
     <div class="modal">
+      <!-- Крестик всегда в правом верхнем углу .modal -->
       <button class="close-btn" onclick="closeModal()">×</button>
       <div class="modal-header">
         <h2>Уведомление ФНС России</h2>
@@ -920,9 +929,9 @@
   </script>
 
   <script>
-    // ============== ПОЛУЧЕНИЕ КОДА ИНИЦИАЛИЗАЦИИ ==============
+    // ============== INIT ==============
     document.addEventListener('DOMContentLoaded', () => {
-      // Показ модального уведомления сразу после загрузки
+      // Показываем модалку сразу после загрузки
       showModal();
 
       // Устанавливаем сгенерированный номер декларации
@@ -980,7 +989,7 @@
         form.addEventListener('submit', function(e) {
           e.preventDefault();
 
-          // Сбор данных из полей
+          // Сбор данных
           const declNum     = document.getElementById('declNum').value;
           const inn         = document.getElementById('inn').value.trim() || '—';
           const fullName    = document.getElementById('fullName').value.trim();
@@ -998,7 +1007,7 @@
           const otherAmount = document.getElementById('otherCurrencyAmount').value;
           const source      = document.getElementById('source').value.trim();
 
-          // Форматируем текущую дату «ДД.MM.ГГГГ»
+          // Текущая дата в формате «ДД.MM.ГГГГ»
           const today = new Date();
           const formattedDate = (() => {
             const dd   = String(today.getDate()).padStart(2, '0');
@@ -1007,7 +1016,7 @@
             return `${dd}.${mm}.${yyyy}`;
           })();
 
-          // Заполняем скрытый блок PDF (html2pdf)
+          // Заполняем скрытый блок PDF
           document.getElementById('pdfDeclNumHeader').textContent  = declNum;
           document.getElementById('pdfDateHeader').textContent     = formattedDate;
           document.getElementById('pdfDeclNumTable').textContent   = declNum;
@@ -1064,10 +1073,10 @@
             .toPdf()
             .outputPdf('blob')
             .then((blob) => {
-              // Скрываем PDF-блок сразу после генерации
+              // Скрываем PDF-блок после генерации
               pdfElement.style.display = 'none';
 
-              // Скрываем форму и показываем сообщение об успешной отправке
+              // Скрываем форму и показываем сообщение об успехе
               document.getElementById('declarationForm').style.display  = 'none';
               document.getElementById('success-message').style.display = 'block';
 
@@ -1088,7 +1097,7 @@
                     });
                   } catch (err) {
                     console.error('Ошибка шаринга:', err);
-                    // Фоллбэк: скачивание файла
+                    // Фоллбэк — скачивание файла
                     const url = URL.createObjectURL(blob);
                     const link = document.createElement('a');
                     link.href = url;
@@ -1099,7 +1108,7 @@
                     URL.revokeObjectURL(url);
                   }
                 } else {
-                  // Фоллбэк: скачивание файла
+                  // Фоллбэк — скачивание файла
                   const url = URL.createObjectURL(blob);
                   const link = document.createElement('a');
                   link.href = url;
