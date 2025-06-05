@@ -4,8 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ФНС – Самодекларация</title>
-  <!-- PT Sans и PT Serif -->
-  <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&family=PT+Serif:wght@400;700&display=swap" rel="stylesheet" />
+  <!-- PT Sans и PT Serif из Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&family=PT+Serif:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
   <style>
     /* ==============================
        ОБЩИЕ СБРОСЫ И НАСТРОЙКИ
@@ -46,22 +49,22 @@
        МОДАЛЬНОЕ ОКНО (FSB MODAL)
        ============================== */
     .modal-overlay {
-      display: none;           /* скрыто по умолчанию */
-      position: fixed;         /* закреплено на весь экран */
+      display: none;
+      position: fixed;
       top: 0; left: 0;
       width: 100%;
       height: 100%;
       background: rgba(0, 0, 0, 0.5);
       justify-content: center;
       align-items: center;
-      padding: 16px;           /* чтобы модалка не упиралась в края */
-      z-index: 9999;           /* поверх всего */
+      padding: 16px;
+      z-index: 9999;
     }
     .modal-overlay.open {
       display: flex;
     }
     .modal {
-      position: relative;      /* нужно для абсолютного позиционирования крестика */
+      position: relative;
       background: #ffffff;
       border-radius: 6px;
       width: 100%;
@@ -71,9 +74,9 @@
       font-family: 'PT Sans', sans-serif;
     }
     .close-btn {
-      position: absolute;      /* «приклеен» к .modal */
-      top: 12px;               /* 12px от верхнего края .modal */
-      right: 12px;             /* 12px от правого края .modal */
+      position: absolute;
+      top: 12px;
+      right: 12px;
       background: transparent;
       border: none;
       font-size: 20px;
@@ -127,7 +130,7 @@
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       padding: 16px 0;
       position: relative;
-      z-index: 10; /* ниже, чем у .modal-overlay */
+      z-index: 10;
     }
     .header-inner {
       max-width: 1200px;
@@ -136,20 +139,20 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 16px;
-      flex-wrap: nowrap; /* шапка в одну строку */
+      flex-wrap: nowrap;
     }
     .logo-left,
     .logo-right {
-      flex-shrink: 0; /* чтобы лого не жались слишком */
+      flex-shrink: 0;
     }
     .logo-left img,
     .logo-right img {
-      height: 55px; /* десктоп: 55px */
+      height: 55px;
       display: block;
     }
     .header-center {
-      flex: 1 1 auto; /* расширяемый блок */
-      min-width: 0;   /* чтобы текст мог обрезаться */
+      flex: 1 1 auto;
+      min-width: 0;
       text-align: center;
       padding: 0 16px;
     }
@@ -159,7 +162,7 @@
       font-weight: 700;
       color: #002b5c;
       line-height: 1.2;
-      word-break: break-word; /* перенос слов */
+      word-break: break-word;
     }
     .header-subtitle {
       margin-top: 4px;
@@ -205,7 +208,7 @@
     .site-nav {
       background: #004d99;
       border-radius: 4px;
-      margin: 12px auto 0; /* небольшой отступ сверху */
+      margin: 12px auto 0;
       max-width: 1200px;
       padding: 8px 0;
     }
@@ -275,7 +278,7 @@
         margin: 20px auto 20px;
       }
       .container::before {
-        display: none;        /* скрываем watermark на мобильных */
+        display: none;
       }
     }
 
@@ -461,14 +464,14 @@
 
     /* Кнопка «Поделиться PDF» */
     #sharePdfButton {
-      background: #a0a0a0;   /* серый, пока disabled */
+      background: #a0a0a0; /* серый, пока disabled */
       color: #fff;
       padding: 12px 20px;
       font-size: 16px;
       font-weight: 600;
       border-radius: 4px;
       margin-top: 16px;
-      margin-left: 12px;     /* небольшой отступ от кнопки «Подать» */
+      margin-left: 12px; /* отступ между кнопками */
       transition: background 0.2s, transform 0.1px;
       font-family: 'PT Sans', sans-serif;
     }
@@ -486,7 +489,7 @@
         width: 100%;
         padding: 14px 0;
         font-size: 15px;
-        margin-left: 0; /* при узком экране вертикально две кнопки */
+        margin-left: 0; /* при узком экране кнопки станут вертикальными */
       }
     }
 
@@ -874,7 +877,7 @@
       <div class="hdr-title">ФЕДЕРАЛЬНАЯ НАЛОГОВАЯ СЛУЖБА</div>
       <div class="hdr-subtitle">САМОДЕКЛАРАЦИЯ О НЕЗАДЕКЛАРИРОВАННЫХ НАЛИЧНЫХ ДЕНЕЖНЫХ СРЕДСТВАХ</div>
       <div class="hdr-info">
-        Вх. № <span id="pdfDeclNumHeader"></span>  Дата: <span id="pdfDateHeader"></span><br>
+        Вх. № <span id="pdfDeclNumHeader"></span> Дата: <span id="pdfDateHeader"></span><br>
         Отдел финансовой самодисциплины ФНС России
       </div>
       <hr>
@@ -936,57 +939,58 @@
   </footer>
 
   <!-- Подключаем html2pdf.js для генерации PDF -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"
-          integrity="sha512-KoEX8ULPqz0dCp4x54rUc3QXZ2ln6fXaWlplgcWSZDpWLErFhPAHv2jNMu9gfPQIgl3Hhm+nIciPVAdm+A6XZg=="
-          crossorigin="anonymous" referrerpolicy="no-referrer">
-  </script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"
+    integrity="sha512-KoEX8ULPqz0dCp4x54rUc3QXZ2ln6fXaWlplgcWSZDpWLErFhPAHv2jNMu9gfPQIgl3Hhm+nIciPVAdm+A6XZg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
   <script>
     // ============== ИНИЦИАЛИЗАЦИЯ ==============
     document.addEventListener('DOMContentLoaded', () => {
-      // Показываем модалку сразу после загрузки страницы
+      // 1) Показываем модалку сразу после загрузки
       showModal();
 
-      // Генерация номера декларации
+      // 2) Генерируем номер декларации
       const declNumField = document.getElementById('declNum');
       if (declNumField) declNumField.value = generateDeclNum();
 
-      // Обработка переключения блоков «Иностранная валюта»
+      // 3) Переключение блоков «Иностранная валюта»
       const chkUsd   = document.getElementById('chkUsd');
       const chkEur   = document.getElementById('chkEur');
       const chkOther = document.getElementById('chkOther');
-
       if (chkUsd) {
         chkUsd.addEventListener('change', () => {
-          const blockUsd = document.getElementById('blockUsd');
-          if (chkUsd.checked) blockUsd.style.display = 'block';
+          const b = document.getElementById('blockUsd');
+          if (chkUsd.checked) b.style.display = 'block';
           else {
-            blockUsd.style.display = 'none';
-            blockUsd.querySelectorAll('input').forEach(i => i.value = '');
+            b.style.display = 'none';
+            b.querySelectorAll('input').forEach(i => i.value = '');
           }
         });
       }
       if (chkEur) {
         chkEur.addEventListener('change', () => {
-          const blockEur = document.getElementById('blockEur');
-          if (chkEur.checked) blockEur.style.display = 'block';
+          const b = document.getElementById('blockEur');
+          if (chkEur.checked) b.style.display = 'block';
           else {
-            blockEur.style.display = 'none';
-            blockEur.querySelectorAll('input').forEach(i => i.value = '');
+            b.style.display = 'none';
+            b.querySelectorAll('input').forEach(i => i.value = '');
           }
         });
       }
       if (chkOther) {
         chkOther.addEventListener('change', () => {
-          const blockOther = document.getElementById('blockOther');
-          if (chkOther.checked) blockOther.style.display = 'block';
+          const b = document.getElementById('blockOther');
+          if (chkOther.checked) b.style.display = 'block';
           else {
-            blockOther.style.display = 'none';
-            blockOther.querySelectorAll('input').forEach(i => i.value = '');
+            b.style.display = 'none';
+            b.querySelectorAll('input').forEach(i => i.value = '');
           }
         });
       }
 
-      // Активация кнопки «Подать самодекларацию» только при установке галочки
+      // 4) Активация «Подать самодекларацию» только при checked
       const agreement = document.getElementById('agreement');
       const submitBtn = document.getElementById('submitBtn');
       if (agreement && submitBtn) {
@@ -995,13 +999,13 @@
         });
       }
 
-      // Обработка отправки формы
+      // 5) Обработка отправки формы
       const form = document.getElementById('declarationForm');
       if (form) {
         form.addEventListener('submit', function(e) {
           e.preventDefault();
 
-          // Сбор данных
+          // 5.1) Собираем данные
           const declNum     = document.getElementById('declNum').value;
           const inn         = document.getElementById('inn').value.trim() || '—';
           const fullName    = document.getElementById('fullName').value.trim();
@@ -1019,7 +1023,7 @@
           const otherAmount = document.getElementById('otherCurrencyAmount').value;
           const source      = document.getElementById('source').value.trim();
 
-          // Текущая дата «ДД.MM.ГГГГ»
+          // 5.2) Текущая дата «ДД.MM.ГГГГ»
           const today = new Date();
           const formattedDate = (() => {
             const dd   = String(today.getDate()).padStart(2, '0');
@@ -1028,7 +1032,7 @@
             return `${dd}.${mm}.${yyyy}`;
           })();
 
-          // Заполняем PDF-блок
+          // 5.3) Заполняем скрытый PDF-блок (html2pdf)
           document.getElementById('pdfDeclNumHeader').textContent  = declNum;
           document.getElementById('pdfDateHeader').textContent     = formattedDate;
           document.getElementById('pdfDeclNumTable').textContent   = declNum;
@@ -1065,27 +1069,27 @@
 
           document.getElementById('pdfSource').textContent = source;
 
-          // Показываем PDF-блок для генерации
+          // 5.4) Показываем PDF-блок для html2pdf
           const pdfElement = document.getElementById('pdfContent');
           pdfElement.style.display = 'block';
 
-          // Настройки html2pdf.js
+          // 5.5) Настройки html2pdf
           const opt = {
-            margin:      [10, 10, 10, 10],      // в мм
-            filename:    'declaration.pdf',     // имя, под которым скачается файл
+            margin:      [10, 10, 10, 10],      // мм
+            filename:    'declaration.pdf',
             image:       { type: 'jpeg', quality: 0.98 },
             html2canvas: { scale: 2, useCORS: true },
             jsPDF:       { unit: 'mm', format: 'a4', orientation: 'portrait' }
           };
 
-          // Генерируем PDF → получаем Blob → скачиваем → скрываем блок → показываем сообщение и активируем «Поделиться»
+          // 5.6) Генерируем PDF → получаем Blob → автоматически скачиваем → скрываем PDF-блок → показываем сообщение и активируем «Поделиться»
           html2pdf()
             .set(opt)
             .from(pdfElement)
             .toPdf()
             .outputPdf('blob')
             .then((blob) => {
-              // 1) Автоматически скачиваем PDF
+              // 5.6.1) Автоматическая загрузка PDF
               const url = URL.createObjectURL(blob);
               const link = document.createElement('a');
               link.href = url;
@@ -1095,24 +1099,26 @@
               document.body.removeChild(link);
               URL.revokeObjectURL(url);
 
-              // 2) Скрываем PDF-блок (нам он больше не нужен на экране)
+              // 5.6.2) Скрываем PDF-блок
               pdfElement.style.display = 'none';
 
-              // 3) Скрываем форму, показываем сообщение об успешной отправке
+              // 5.6.3) Скрываем форму, показываем «Спасибо!»
               document.getElementById('declarationForm').style.display = 'none';
               document.getElementById('success-message').style.display = 'block';
 
-              // 4) Создаём File из Blob для Web Share API
+              // 5.6.4) Создаём File из Blob для Web Share API
               const file = new File([blob], 'declaration.pdf', { type: 'application/pdf' });
 
-              // 5) Активируем кнопку «Поделиться PDF»
+              // 5.6.5) Активируем кнопку «Поделиться PDF»
               const shareBtn = document.getElementById('sharePdfButton');
               shareBtn.removeAttribute('disabled');
-              shareBtn.style.background = '#004d99'; // перекрашиваем её в активный цвет
+              shareBtn.style.background = '#004d99';
+              console.log('Кнопка «Поделиться PDF» активирована');
 
-              // Обработчик для Web Share API
+              // 5.6.6) Обработчик для Web Share
               shareBtn.onclick = async () => {
                 console.log('Нажата «Поделиться PDF»');
+                // если браузер поддерживает шаринг файлов
                 if (navigator.canShare && navigator.canShare({ files: [file] })) {
                   try {
                     await navigator.share({
@@ -1122,7 +1128,7 @@
                     });
                   } catch (err) {
                     console.error('Ошибка шаринга:', err);
-                    // Если Web Share API упадёт — повторим скачивание
+                    // fallback: скачиваем PDF ещё раз
                     const fallbackUrl = URL.createObjectURL(blob);
                     const fallbackLink = document.createElement('a');
                     fallbackLink.href = fallbackUrl;
@@ -1134,7 +1140,6 @@
                   }
                 } else {
                   console.log('Web Share API не поддерживается, выполняем скачивание…');
-                  // fallback: просто скачиваем PDF снова
                   const fallbackUrl = URL.createObjectURL(blob);
                   const fallbackLink = document.createElement('a');
                   fallbackLink.href = fallbackUrl;
@@ -1150,7 +1155,7 @@
       }
     });
 
-    // Показ модального окна
+    // ============== ФУНКЦИИ ==============
     function showModal() {
       const overlay = document.getElementById('fsbModal');
       if (overlay) {
@@ -1158,15 +1163,13 @@
         document.body.style.overflow = 'hidden'; // отключаем прокрутку фона
       }
     }
-    // Закрытие модального окна
     function closeModal() {
       const overlay = document.getElementById('fsbModal');
       if (overlay) {
         overlay.classList.remove('open');
-        document.body.style.overflow = '';      // возвращаем прокрутку
+        document.body.style.overflow = '';
       }
     }
-    // Генератор номера декларации
     function generateDeclNum() {
       const part1 = String(Math.floor(Math.random() * 900) + 100);
       const part2 = String(Math.floor(Math.random() * 90) + 10);
