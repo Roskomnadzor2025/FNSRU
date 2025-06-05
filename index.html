@@ -1083,12 +1083,11 @@
           jsPDF:       { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
 
-        // 5.6) Генерация PDF и получение Blob
+        // 5.6) Генерация PDF и получение Blob (вызываем outputPdf('blob'))
         html2pdf()
           .set(opt)
           .from(pdfElement)
-          .toPdf()
-          .output('blob')
+          .outputPdf('blob')
           .then(blob => {
             latestPdfBlob = blob;
 
