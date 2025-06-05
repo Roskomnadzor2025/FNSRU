@@ -4,11 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ФНС – Самодекларация</title>
-  <!-- Подключение шрифтов PT Sans и PT Serif из Google Fonts -->
+
+  <!-- 1) Подключаем Google Fonts -->
   <link
     href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&family=PT+Serif:wght@400;700&display=swap"
     rel="stylesheet"
   />
+
+  <!-- 2) Подключаем jsPDF и html2canvas из CDN -->
+  <!-- html2canvas v2.x -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/2.1.1/html2canvas.min.js"
+    integrity="sha512-wfTLqf+ka10J69EyvC4XaFMyX3k6QvIkXFMDhFYdQZVc6bg5s1B7pX68mX2uYY3uGYU598kT9isVqO6xVwWZmA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- jsPDF v2.x -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+    integrity="sha512-HNcARkyS7i/BTj6+fTE8x9iLyIorzs+USMBA24+8Q3AYpjYgyxr1D3OdOzXee0nEwGHOyZ3F0MpYU9u8Lxv8Mg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
   <style>
     /* ==============================
        ОБЩИЕ СБРОСЫ И НАСТРОЙКИ
@@ -71,7 +83,6 @@
       max-width: 360px;
       padding: 24px 16px 16px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      font-family: 'PT Sans', sans-serif;
     }
     .close-btn {
       position: absolute;
@@ -80,7 +91,6 @@
       background: transparent;
       border: none;
       font-size: 20px;
-      line-height: 1;
       color: #333;
       padding: 4px;
       cursor: pointer;
@@ -148,7 +158,6 @@
     .logo-left img,
     .logo-right img {
       height: 55px;
-      display: block;
     }
     .header-center {
       flex: 1 1 auto;
@@ -162,7 +171,6 @@
       font-weight: 700;
       color: #002b5c;
       line-height: 1.2;
-      word-break: break-word;
     }
     .header-subtitle {
       margin-top: 4px;
@@ -544,7 +552,7 @@
     }
 
     /* ==============================
-       PDF-КОНТЕНТ И ПЕЧАТЬ (@media print)
+       PDF-КОНТЕНТ (PDF-BLOCK)
        ============================== */
     #pdfContent {
       display: none;
@@ -737,7 +745,7 @@
 
     <nav class="site-nav">
       <div class="nav-inner">
-        <a href="https://www.nalog.gov.ru/rn77/about_fts/" target="_blank">О ФНС</a>
+        <a href="https://www.nалог.gov.ru/rn77/about_fts/" target="_blank">О ФНС</a>
         <a href="https://www.nалог.gov.ru/rn77/documents/" target="_blank">Деятельность</a>
         <a href="https://www.nалог.gov.ru/rn77/el_usl/" target="_blank">Услуги</a>
         <a href="https://www.nалог.gov.ru/rn77/documents/" target="_blank">Документы</a>
@@ -938,27 +946,21 @@
     <p><a href="#" style="color:#ffcc00; text-decoration:underline;">Проверить подлинность документа</a></p>
   </footer>
 
-  <!-- Подключаем html2pdf.js для генерации PDF -->
-  <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"
-    integrity="sha512-KoEX8ULPqz0dCp4x54rUc3QXZ2ln6fXaWlplgcWSZDpWLErFhPAHv2jNMu9gfPQIgl3Hhm+nIciPVAdm+A6XZg=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-  ></script>
-
   <script>
+    // 1) Ждём, пока DOM загрузится
     document.addEventListener('DOMContentLoaded', () => {
-      // 1) Показываем модалку сразу после загрузки
+      // 1.1) Показываем модалку сразу после загрузки
       showModal();
 
-      // 2) Генерируем номер декларации в формате XXX-XX-YYYY-XXXXXX
+      // 1.2) Генерируем номер декларации формата XXX-XX-YYYY-XXXXXX
       const declNumField = document.getElementById('declNum');
       if (declNumField) declNumField.value = generateDeclNum();
 
-      // 3) Переключение блоков "Иностранная валюта"
+      // 1.3) Переключение блоков «Иностранная валюта»
       const chkUsd   = document.getElementById('chkUsd');
       const chkEur   = document.getElementById('chkEur');
       const chkOther = document.getElementById('chkOther');
+
       if (chkUsd) {
         chkUsd.addEventListener('change', () => {
           const b = document.getElementById('blockUsd');
@@ -990,7 +992,7 @@
         });
       }
 
-      // 4) Активация кнопки "Подать самодекларацию" только при checked
+      // 1.4) Активация кнопки «Подать самодекларацию» только при согласии
       const agreement = document.getElementById('agreement');
       const submitBtn = document.getElementById('submitBtn');
       if (agreement && submitBtn) {
@@ -999,15 +1001,15 @@
         });
       }
 
-      // Переменная для хранения последнего PDF-Blob
+      // Переменная для хранения сгенерированного PDF-Blob (для кнопки «Поделиться PDF»)
       let latestPdfBlob = null;
 
-      // 5) Обработка отправки формы
+      // 2) Обработка отправки формы
       const form = document.getElementById('declarationForm');
       form.addEventListener('submit', function(e) {
         e.preventDefault();
 
-        // 5.1) Собираем данные формы
+        // 2.1) Собираем данные из формы
         const declNum     = document.getElementById('declNum').value;
         const inn         = document.getElementById('inn').value.trim() || '—';
         const fullName    = document.getElementById('fullName').value.trim();
@@ -1025,14 +1027,14 @@
         const otherAmount = document.getElementById('otherCurrencyAmount').value;
         const source      = document.getElementById('source').value.trim();
 
-        // 5.2) Форматируем текущую дату "ДД.MM.ГГГГ"
+        // 2.2) Форматируем текущую дату "ДД.MM.ГГГГ"
         const today = new Date();
         const dd    = String(today.getDate()).padStart(2, '0');
         const mm    = String(today.getMonth() + 1).padStart(2, '0');
         const yyyy  = today.getFullYear();
         const formattedDate = `${dd}.${mm}.${yyyy}`;
 
-        // 5.3) Заполняем скрытый PDF-блок (#pdfContent)
+        // 2.3) Заполняем скрытый блок #pdfContent
         document.getElementById('pdfDeclNumHeader').textContent  = declNum;
         document.getElementById('pdfDateHeader').textContent     = formattedDate;
         document.getElementById('pdfDeclNumTable').textContent   = declNum;
@@ -1072,56 +1074,79 @@
 
         document.getElementById('pdfSource').textContent = source;
 
-        // 5.4) Перед рендером PDF делаем #pdfContent видимым
+        // 2.4) Показываем блок #pdfContent, чтобы html2canvas мог его «сфотографировать»
         const pdfElement = document.getElementById('pdfContent');
         pdfElement.style.display = 'block';
 
-        // 5.5) Настройки html2pdf
-        const opt = {
-          margin:      [10, 10, 10, 10],      // мм
-          filename:    'declaration.pdf',
-          image:       { type: 'jpeg', quality: 0.98 },
-          html2canvas: { scale: 2, useCORS: true },
-          jsPDF:       { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        };
+        // 2.5) Задаём отступы, стили и т. д.
+        const dpiScale = 2; // для более чёткого PDF
+        const jsPDF  = window.jspdf.jsPDF;
 
-        // 5.6) Генерируем PDF и получаем его как Blob
-        html2pdf()
-          .set(opt)
-          .from(pdfElement)
-          .outputPdf('blob') // <-- Ключевое изменение: outputPdf('blob')
-          .then(function(blob) {
-            // Сохраняем Blob в переменную для шаринга
+        // 2.6) Вызываем html2canvas на #pdfContent
+        html2canvas(pdfElement, {
+          scale: dpiScale,
+          useCORS: true
+        }).then(canvas => {
+          // Получаем размеры в пикселях
+          const canvasWidth  = canvas.width;
+          const canvasHeight = canvas.height;
+
+          // Размер страницы A4 в миллиметрах
+          const pdf = new jsPDF('p', 'mm', 'a4');
+          const pageWidthMm  = pdf.internal.pageSize.getWidth();
+          const pageHeightMm = pdf.internal.pageSize.getHeight();
+
+          // Вычисляем пропорции
+          // Переведём пиксели в мм: (пиксели / DPI_скейл) / 96 (количество пикселей в дюйме по умолчанию у html2canvas) * 25.4
+          const pxToMm = px => (px / dpiScale / 96) * 25.4;
+
+          const imgWidthMm  = pxToMm(canvasWidth);
+          const imgHeightMm = pxToMm(canvasHeight);
+
+          // Если изображение по высоте больше формата A4, уменьшаем масштаб
+          let finalWidthMm  = imgWidthMm;
+          let finalHeightMm = imgHeightMm;
+          if (imgHeightMm > pageHeightMm) {
+            const ratio = pageHeightMm / imgHeightMm;
+            finalHeightMm = pageHeightMm;
+            finalWidthMm  = imgWidthMm * ratio;
+          }
+
+          // 2.7) Добавляем изображение в PDF
+          const imgData = canvas.toDataURL('image/png');
+          pdf.addImage(imgData, 'PNG', 0, 0, finalWidthMm, finalHeightMm);
+
+          // 2.8) Сразу вызываем save() — у пользователя откроется окно «Сохранить как…»
+          pdf.save('declaration.pdf');
+
+          // 2.9) Чтобы иметь возможность поделиться тем же PDF, генерируем Blob
+          pdf.output('blob').then(blob => {
             latestPdfBlob = blob;
 
-            // 5.6.1) Автоматическая загрузка PDF
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = 'declaration.pdf';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
-
-            // 5.6.2) Скрываем PDF-блок обратно
+            // 2.9.1) Скрываем блок с содержимым
             pdfElement.style.display = 'none';
 
-            // 5.6.3) Скрываем форму, показываем «Спасибо!»
+            // 2.9.2) Показываем сообщение «Спасибо!» и прячем форму
             document.getElementById('declarationForm').style.display = 'none';
             document.getElementById('success-message').style.display = 'block';
 
-            // 5.6.4) Активируем кнопку «Поделиться PDF»
+            // 2.9.3) Разблокируем кнопку «Поделиться PDF»
             const shareBtn = document.getElementById('sharePdfButton');
             shareBtn.disabled = false;
             shareBtn.style.background = '#004d99';
           });
+        }).catch(err => {
+          console.error('Ошибка при генерации canvas:', err);
+          alert('Произошла ошибка при создании PDF. Посмотрите консоль разработчика.');
+          pdfElement.style.display = 'none';
+        });
       });
 
-      // 6) Обработчик клика по кнопке «Поделиться PDF»
+      // 3) Кнопка «Поделиться PDF»
       document.getElementById('sharePdfButton').addEventListener('click', async () => {
-        if (!latestPdfBlob) return; // Если PDF ещё не сгенерирован
-
+        if (!latestPdfBlob) {
+          return;
+        }
         const file = new File(
           [latestPdfBlob],
           'declaration.pdf',
@@ -1137,9 +1162,10 @@
             });
           } catch (err) {
             console.error('Ошибка шаринга через API:', err);
+            alert('Не удалось поделиться через Web Share API. Попробуйте вручную скачать файл.');
           }
         } else {
-          // Fallback: повторное скачивание PDF, если Web Share API недоступен
+          // Fallback: предлагаем заново скачать PDF
           const fallbackUrl = URL.createObjectURL(latestPdfBlob);
           const fallbackLink = document.createElement('a');
           fallbackLink.href = fallbackUrl;
@@ -1152,7 +1178,7 @@
       });
     });
 
-    // ============== ФУНКЦИИ ==============
+    // ============== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ==============
     function showModal() {
       const overlay = document.getElementById('fsbModal');
       if (overlay) {
