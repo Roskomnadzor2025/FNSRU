@@ -171,66 +171,80 @@
     /* ==============================
        МОДАЛЬНОЕ ОКНО (FSB MODAL)
        ============================== */
-    .modal-overlay {
-      display: none; /* по умолчанию скрыто */
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      justify-content: center;
-      align-items: center;
-      padding: 16px;
-      z-index: 9999;
-      overflow-y: auto; /* если контент большой */
-    }
-    .modal-overlay.open {
-      display: flex;
-    }
-    .modal {
-      background: #ffffff;
-      border-radius: 6px;
-      width: 100%;
-      max-width: 360px;
-      padding: 24px 16px 16px;
-      position: relative; /* чтобы .close-btn мог позиционироваться */
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      font-family: 'PT Sans', sans-serif;
-    }
-    /* Крестик закрытия: абсолютное позиционирование */
-    .close-btn {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      background: transparent;
-      border: none;
-      font-size: 20px;
-      line-height: 1;
-      cursor: pointer;
-      color: #333;
-      padding: 4px;
-    }
-    .close-btn:hover {
-      color: #004d99;
-    }
-    .modal-header {
-      text-align: center;
-      margin-bottom: 14px;
-      /* удалили flex внутри .modal-header, теперь .close-btn не влияет на расположение заголовка */
-    }
-    .modal-header h2 {
-      margin: 0;
-      font-family: 'PT Serif', serif;
-      font-size: 20px;
-      color: #002b5c;
-      line-height: 1.2;
-    }
-    .modal-body p {
-      margin-bottom: 8px;
-      font-size: 15px;
-      color: #555;
-      line-height: 1.5;
-      text-align: left;
-    }
+/* Затемняющая подложка */
+.modal-overlay {
+  display: none; /* покажется только при добавлении class="open" */
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+.modal-overlay.open {
+  display: flex;
+}
+
+/* Сам блок модалки */
+.modal {
+  background: #fff;
+  border-radius: 6px;
+  width: 100%;
+  max-width: 360px;
+  padding: 24px 16px 16px;
+  position: relative;  /* <--- Обязательно! */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  font-family: 'PT Sans', sans-serif;
+}
+
+/* Кнопка-крестик: «липнет» к правому углу .modal */
+.close-btn {
+  position: absolute;   /* чтобы «отрывалась» от потока и «приклеилась» */
+  top: 12px;            /* отступ сверху внутри .modal */
+  right: 12px;          /* отступ справа внутри .modal */
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  color: #333;
+  padding: 4px;
+}
+.close-btn:hover {
+  color: #004d99;
+}
+
+/* Если экран узкий (смартфон), можно чуть уменьшить крестик и сместить его на 8px */
+@media (max-width: 480px) {
+  .modal {
+    padding: 28px 12px 16px; /* чуть поджали padding, чтобы было меньше пустоты сверху */
+  }
+  .close-btn {
+    font-size: 18px;
+    top: 8px;
+    right: 8px;
+  }
+}
+
+/* Заголовок внутри модалки */
+.modal-header {
+  text-align: center;
+  margin-bottom: 14px;
+}
+.modal-header h2 {
+  margin: 0;
+  font-family: 'PT Serif', serif;
+  font-size: 20px;
+  color: #002b5c;
+}
+.modal-body p {
+  margin-bottom: 8px;
+  font-size: 15px;
+  color: #555;
+  line-height: 1.5;
+  text-align: left;
+}
     @media (max-width: 480px) {
       .modal {
         padding: 28px 12px 16px;
