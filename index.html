@@ -123,12 +123,12 @@
     /* ==============================
        ШАПКА (HEADER)
        ============================== */
-    header {
+    .site-header {
       background: #ffffff;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      padding: 16px 0;         /* уменьшили вертикальные отступы */
+      padding: 16px 0;               /* немного уменьшили вертикальные отступы */
       position: relative;
-      z-index: 10;             /* ниже, чем у .modal-overlay */
+      z-index: 10;                   /* ниже, чем у .modal-overlay */
     }
     .header-inner {
       max-width: 1200px;
@@ -138,18 +138,14 @@
       justify-content: space-between;
       padding: 0 16px;
     }
-    .logo-wrapper {
-      display: flex;
-      gap: 20px;
-      align-items: center;
-    }
     .logo-left img,
     .logo-right img {
-      height: 55px;            /* чуть меньше, чтобы не было пустоты */
+      height: 55px;                  /* высота логотипов на десктопе */
+      display: block;
     }
     .header-center {
-      flex: 1 1 auto;          /* резиновый блок */
-      min-width: 0;            /* чтобы заголовок мог сжиматься */
+      flex: 1 1 auto;                /* «растягиваемый» блок */
+      min-width: 0;                  /* чтобы текст мог сжиматься */
       text-align: center;
       padding: 0 16px;
     }
@@ -171,7 +167,7 @@
     @media (max-width: 800px) {
       .logo-left img,
       .logo-right img {
-        height: 45px;
+        height: 45px;                /* уменьшаем лого на планшетах */
       }
       .header-title {
         font-size: 20px;
@@ -184,25 +180,21 @@
       }
     }
     @media (max-width: 480px) {
-      header {
-        padding: 12px 0;        /* ещё меньше отступов */
+      .site-header {
+        padding: 12px 0;             /* ещё меньше отступов сверху/снизу */
       }
       .header-inner {
         flex-direction: column;
         align-items: center;
         padding: 0 8px;
-        gap: 8px;               /* чтобы все элементы были ближе */
+        gap: 8px;                    /* отступ между логотипами и текстом */
       }
       .logo-left img,
       .logo-right img {
-        height: 36px;
-      }
-      .logo-wrapper {
-        order: 1;
-        gap: 12px;
+        height: 36px;                /* лого на смартфонах */
       }
       .header-center {
-        order: 2;
+        order: 2;                    /* помещаем блок с текстом ниже логотипов */
         padding: 4px 0;
       }
       .header-title {
@@ -216,31 +208,41 @@
     /* ==============================
        НАВИГАЦИЯ (NAV)
        ============================== */
-    nav {
+    .site-nav {
       background: #004d99;
-      padding: 8px 0;          /* чуть уменьшили высоту меню */
-    }
-    nav .nav-inner {
+      border-radius: 4px;            /* мягкие закругления, как на скриншоте */
+      margin: 12px auto 0;           /* небольшая «прослойка» между шапкой и навигацией */
       max-width: 1200px;
-      margin: 0 auto;
+      padding: 8px 0;                /* вертикальный отступ внутри меню */
+    }
+    .nav-inner {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
       padding: 0 16px;
     }
-    nav a {
+    .nav-inner a {
       color: #ffffff;
       margin: 6px 12px;
       font-weight: 600;
       font-size: 15px;
+      text-decoration: none;
+      transition: opacity 0.2s;
     }
-    nav a:hover {
+    .nav-inner a:hover {
       color: #ffcc00;
     }
     @media (max-width: 600px) {
-      nav a {
+      .nav-inner a {
         margin: 6px 8px;
         font-size: 14px;
+      }
+    }
+    @media (max-width: 480px) {
+      .site-nav {
+        margin: 8px auto 0;          /* чуть меньше отступ сверху */
+        border-radius: 4px;
+        padding: 6px 0;
       }
     }
 
@@ -483,7 +485,7 @@
     #success-message {
       display: none;
       background: #e9f7ef;
-      border: 1px solid #5cb85c; /* исправлено на латинскую «c» */
+      border: 1px solid #5cb85c;
       color: #276738;
       padding: 20px 22px;
       margin-top: 28px;
@@ -665,7 +667,7 @@
     @media print {
       @page { margin: 18mm 14mm 18mm 14mm; }
       body { background: white; }
-      header, nav, #notification, footer, #success-message { display: none !important; }
+      header, .site-nav, #notification, footer, #success-message { display: none !important; }
       .container { width: 100%; padding: 0; margin: 0; box-shadow: none; }
       #pdfContent {
         display: block !important;
@@ -700,37 +702,32 @@
   <!-- ==============================
        ШАПКА (HEADER)
        ============================== -->
-  <header>
+  <header class="site-header">
     <div class="header-inner">
-      <div class="logo-wrapper">
-        <div class="logo-left">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Coat_of_Arms_of_the_Russian_Federation.svg/1731px-Coat_of_Arms_of_the_Russian_Federation.svg.png"
-               alt="Герб РФ">
-        </div>
-        <div class="logo-right">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Emblem_of_the_Federal_Tax_Service.svg/1964px-Emblem_of_the_Federal_Tax_Service.svg.png"
-               alt="Эмблема ФНС России">
-        </div>
+      <div class="logo-left">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Coat_of_Arms_of_the_Russian_Federation.svg/1731px-Coat_of_Arms_of_the_Russian_Federation.svg.png"
+             alt="Герб РФ">
       </div>
       <div class="header-center">
         <div class="header-title">ФЕДЕРАЛЬНАЯ НАЛОГОВАЯ СЛУЖБА</div>
         <div class="header-subtitle">Заполните самодекларацию онлайн быстро и удобно</div>
       </div>
+      <div class="logo-right">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Emblem_of_the_Federal_Tax_Service.svg/1964px-Emblem_of_the_Federal_Tax_Service.svg.png"
+             alt="Эмблема ФНС России">
+      </div>
     </div>
-  </header>
 
-  <!-- ==============================
-       НАВИГАЦИЯ (NAV) ПОД ШАПКОЙ
-       ============================== -->
-  <nav>
-    <div class="nav-inner">
-      <a href="https://www.nalog.gov.ru/rn77/about_fts/" target="_blank">О ФНС</a>
-      <a href="https://www.nalog.gov.ru/rn77/documents/" target="_blank">Деятельность</a>
-      <a href="https://www.nalog.gov.ru/rn77/el_usl/" target="_blank">Услуги</a>
-      <a href="https://www.nalog.gov.ru/rn77/documents/" target="_blank">Документы</a>
-      <a href="https://www.nalog.gov.ru/rn77/contacts/" target="_blank">Контакты</a>
-    </div>
-  </nav>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="https://www.nalog.gov.ru/rn77/about_fts/" target="_blank">О ФНС</a>
+        <a href="https://www.nalog.gov.ru/rn77/documents/" target="_blank">Деятельность</a>
+        <a href="https://www.nalog.gov.ru/rn77/el_usl/" target="_blank">Услуги</a>
+        <a href="https://www.nalog.gov.ru/rn77/documents/" target="_blank">Документы</a>
+        <a href="https://www.nalog.gov.ru/rn77/contacts/" target="_blank">Контакты</a>
+      </div>
+    </nav>
+  </header>
 
   <!-- ==============================
        КОНТЕЙНЕР СОДЕРЖИМОГО
