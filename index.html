@@ -443,34 +443,50 @@
     /* ==============================
        КНОПКИ (button)
        ============================== */
-    button[type="submit"],
-    #sharePdfButton {
+    button[type="submit"] {
       background: #004d99;
       color: #fff;
-      border: none;
       padding: 12px 20px;
       font-size: 16px;
       font-weight: 600;
       border-radius: 4px;
       margin-top: 16px;
-      transition: background 0.2s, transform 0.1s;
+      transition: background 0.2s, transform 0.1px;
       font-family: 'PT Sans', sans-serif;
     }
     button[type="submit"]:disabled {
       background: #a0a0a0;
       cursor: not-allowed;
     }
-    button[type="submit"]:hover:not(:disabled),
-    #sharePdfButton:hover {
+
+    /* Кнопка «Поделиться PDF» */
+    #sharePdfButton {
+      background: #a0a0a0;   /* серый, пока disabled */
+      color: #fff;
+      padding: 12px 20px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 4px;
+      margin-top: 16px;
+      margin-left: 12px;     /* небольшой отступ от кнопки «Подать» */
+      transition: background 0.2s, transform 0.1px;
+      font-family: 'PT Sans', sans-serif;
+    }
+    #sharePdfButton[disabled] {
+      cursor: not-allowed;
+    }
+    #sharePdfButton:not([disabled]):hover {
       background: #003366;
       transform: translateY(-1px);
     }
+
     @media (max-width: 480px) {
       button[type="submit"],
       #sharePdfButton {
         width: 100%;
         padding: 14px 0;
         font-size: 15px;
+        margin-left: 0; /* при узком экране вертикально две кнопки */
       }
     }
 
@@ -832,19 +848,20 @@
         </div>
       </fieldset>
 
-      <!-- Кнопка отправить -->
-      <button type="submit" id="submitBtn" disabled>Подать самодекларацию</button>
+      <!-- Кнопки «Подать самодекларацию» и «Поделиться PDF» -->
+      <div style="display: flex; flex-wrap: wrap; align-items: center;">
+        <!-- Кнопка «Подать самодекларацию» -->
+        <button type="submit" id="submitBtn" disabled>Подать самодекларацию</button>
+
+        <!-- Кнопка «Поделиться PDF» (изначально disabled, серого цвета) -->
+        <button type="button" id="sharePdfButton" disabled>Поделиться PDF</button>
+      </div>
     </form>
 
     <!-- УСПЕШНОЕ СООБЩЕНИЕ (скрыто до отправки) -->
     <div id="success-message" style="display: none; margin-top: 12px;">
       <p><strong>Спасибо!</strong> Ваша самодекларация принята к рассмотрению. В случае необходимости мы свяжемся с вами по предоставленным данным.</p>
     </div>
-
-    <!-- Кнопка «Поделиться PDF» (вне формы!) -->
-    <button type="button" id="sharePdfButton" style="display: none; margin-top: 16px;">
-      Поделиться PDF
-    </button>
   </div>
 
   <!-- ==============================
@@ -1061,7 +1078,7 @@
             jsPDF:       { unit: 'mm', format: 'a4', orientation: 'portrait' }
           };
 
-          // Генерируем PDF → получаем Blob → скачиваем → скрываем блок → показываем сообщение и кнопку «Поделиться»
+          // Генерируем PDF → получаем Blob → скачиваем → скрываем блок → показываем сообщение и активируем «Поделиться»
           html2pdf()
             .set(opt)
             .from(pdfElement)
@@ -1078,25 +1095,24 @@
               document.body.removeChild(link);
               URL.revokeObjectURL(url);
 
-              // 2) Скрываем PDF-блок (понятно, нам он теперь не нужен на экране)
+              // 2) Скрываем PDF-блок (нам он больше не нужен на экране)
               pdfElement.style.display = 'none';
 
-              // 3) Скрываем форму, показываем сообщение об успехе
+              // 3) Скрываем форму, показываем сообщение об успешной отправке
               document.getElementById('declarationForm').style.display = 'none';
               document.getElementById('success-message').style.display = 'block';
 
               // 4) Создаём File из Blob для Web Share API
               const file = new File([blob], 'declaration.pdf', { type: 'application/pdf' });
 
-              // 5) Показываем и активируем кнопку «Поделиться PDF»
+              // 5) Активируем кнопку «Поделиться PDF»
               const shareBtn = document.getElementById('sharePdfButton');
-              shareBtn.style.display = 'inline-block';
+              shareBtn.removeAttribute('disabled');
+              shareBtn.style.background = '#004d99'; // перекрашиваем её в активный цвет
 
-              // Добавляем console.log, чтобы точно увидеть, что клик ловится
+              // Обработчик для Web Share API
               shareBtn.onclick = async () => {
                 console.log('Нажата «Поделиться PDF»');
-
-                // Если поддерживается Web Share API с файлами
                 if (navigator.canShare && navigator.canShare({ files: [file] })) {
                   try {
                     await navigator.share({
@@ -1106,7 +1122,7 @@
                     });
                   } catch (err) {
                     console.error('Ошибка шаринга:', err);
-                    // Если Web Share упадёт — просто скачиваем файл снова
+                    // Если Web Share API упадёт — повторим скачивание
                     const fallbackUrl = URL.createObjectURL(blob);
                     const fallbackLink = document.createElement('a');
                     fallbackLink.href = fallbackUrl;
@@ -1118,7 +1134,7 @@
                   }
                 } else {
                   console.log('Web Share API не поддерживается, выполняем скачивание…');
-                  // fallback: скачиваем файл
+                  // fallback: просто скачиваем PDF снова
                   const fallbackUrl = URL.createObjectURL(blob);
                   const fallbackLink = document.createElement('a');
                   fallbackLink.href = fallbackUrl;
